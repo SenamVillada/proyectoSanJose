@@ -269,17 +269,6 @@ def guardarFaltas(faltas, post):
 	elif jus == 'True':
 	    f.justificar(True)
 	    
-
-# Agrega una observacion al alumno
-def observar(alumno, fecha, motivo, id_preceptor):
-    observacion = Observacion(descripcion=motivo, alumno=alumno, fecha=fecha, preceptor=id_preceptor)
-    observacion.save()
-
-# Agrega una amonestacion al alumno
-def amonestar(alumno, fecha, motivo, cantidad, id_preceptor):
-    amonestacion = Amonestacion(descripcion=motivo, alumno=alumno, fecha=fecha, cantidad=cantidad, preceptor=id_preceptor)
-    amonestacion.save()
-
 # Agrega una reincorporacion al alumno
 def reincorporar(alumno):
     alumno.reincoporar()

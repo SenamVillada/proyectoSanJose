@@ -166,9 +166,14 @@ class Preceptor(User):
 #Clase alumno:
 class Alumno(User):
     # Atributos de la clase
-    reincorporacion = models.IntegerField("Reincorporacion", max_length=2, default=0)
+    telefono = models.IntegerField("Telefono", max_length=20)
+    legajo = models.AutoField()
+    fechaNac = models.DateField()
+    paternidad = models.Boolean()
+    trabaja = models.Boolean()
     dni = models.IntegerField("Dni", max_length=100)
     curso = models.ForeignKey(Curso)
+    
     
     class Meta:
         verbose_name = 'alumno'
@@ -270,6 +275,29 @@ class Alumno(User):
         self.reincorporacion = (self.reincorporacion + 1)
         self.save()
 
+class Profesor(User):
+    telefono = models.IntegerField("Telefono", max_length=20)
+    domicilio = models.CharField("Direccion", max_length=100)
+    cuil = models.IntegerField("CUIL", max_lenght=20)
+    mail = models.EmailField(max_length=254)
+#    titulo y numero de registro
+    fecha_de_escalafon = models.DateField("Fecha de escalafon")
+    fecha_del_apto_psicofisico = models.DateField("Fecha del apto psicofisico")
+    cargo_opciones = (
+            ('profesor', 'Profesor'),
+            ('directorDeTaller', 'Director de taller'),
+            ('director', 'Director'),
+        )
+    cargo = models.CharField(max_length=16,
+                                choices=cargo_opciones,
+                                default='profesor')
+    licencias = models.Boolean()
+    lugar_de_nacimiento = models.CharField("Lugar de nacimiento", max_length=50)
+    legajo = models.AutoField()
+    fechaNac = models.DateField()
+    dni = models.IntegerField("Dni", max_length=100, primary_key=True)
+    curso = models.ForeignKey(Curso)
+    curriculum = models.FileField("Curriculum",upload_to='curriculums/%Y/%m')
 class Inasistencia (models.Model):
     tipo = models.FloatField()
     justificado = models.BooleanField(default=False)
