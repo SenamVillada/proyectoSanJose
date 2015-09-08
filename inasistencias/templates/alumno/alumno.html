@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<div id="page-wrapper">
+    <div class="row">
+	<div class="col-lg-12">
+	    <h1 class="page-header">{{ alumno.last_name.upper }}, {{ alumno.first_name.capitalize }}</h1>
+	</div>
+	<!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+	<div class="col-lg-3 col-md-6">
+	    <div class="panel panel-blue">
+		<a href="#inasistencias">
+		    <div class="panel-heading">
+			<div class="row">
+			    <div class="col-xs-3">
+				<i class=""></i>
+			    </div>
+			    <div class="col-xs-9 text-right">
+				<div class="huge">{{ alumno.faltas }}</div>
+				<div>Faltas</div>
+			    </div>
+			</div>
+		    </div>
+		</a>
+	    </div>
+	</div>
+	<div class="col-lg-3 col-md-6">
+	    <div class="panel panel-green">
+		<a href="#reincorporaciones">
+		    <div class="panel-heading">
+			<div class="row">
+			    <div class="col-xs-3">
+				<i class=""></i>
+			    </div>
+			    <div class="col-xs-9 text-right">
+				<div class="huge">{{ alumno.reincorporacion }}</div>
+				<div>Reincorporaciones</div>
+			    </div>
+			</div>
+		    </div>
+		</a>
+	    </div>
+	</div>
+	<div class="col-lg-3 col-md-6">
+	    <div class="panel panel-yellow">
+		<a href="#observaciones">
+		    <div class="panel-heading">
+			<div class="row">
+			    <div class="col-xs-3">
+				<i class=""></i>
+			    </div>
+			    <div class="col-xs-9 text-right">
+				<div class="huge">{{ alumno.observaciones }}</div>
+				<div>Observaciones</div>
+			    </div>
+			</div>
+		    </div>
+		</a>
+	    </div>
+	</div>
+	<div class="col-lg-3 col-md-6">
+	    <div class="panel panel-red">
+		<a href="#amonestaciones">
+		    <div class="panel-heading">
+			<div class="row">
+			    <div class="col-xs-3">
+				<i class=""></i>
+			    </div>
+			    <div class="col-xs-9 text-right">
+				<div class="huge">{{ alumno.amonestaciones }}</div>
+				<div>Amonestaciones</div>
+			    </div>
+			</div>
+		    </div>
+		</a>
+	    </div>
+	</div>
+
+    </div>
+    
+    <div class="panel panel-default">
+	<div class="panel-heading">
+	    Detalles
+	</div>
+	    <div class="panel-body">
+    <div class="row">
+    <div class="col-lg-6">
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+		<section id=inasistencias>
+		Inasistencias
+	    </div>
+	    <div class="panel-body">
+			<p> El alumno posee hasta la fecha, <b>{{ alumno.faltas }}</b> faltas aplicadas, de las cuales <b>{{ alumno.justificadas }}</b> han sido justificadas</p>
+
+			{% for inasistencia in alumno.vectorInasistencias %}
+			    {% if inasistencia.tipo != 0 %}
+			    <hr>
+			    <label>{{ inasistencia.fecha }} ({{ inasistencia.cantMixto }})</label>
+			    <div class="pull-right">
+			    <label class="radio-inline">
+				{% if inasistencia.justificado %}
+				    <input type="radio" name="{{ inasistencia.id }}" value="True" checked disabled>Justificada
+				{% else %}
+				    <input type="radio" name="{{ inasistencia.id }}" value="True" disabled>Justificada
+				{% endif %}
+			    </label>
+			    <label class="radio-inline">
+				{% if inasistencia.justificado %}
+				    <input type="radio" name="{{ inasistencia.id }}" value="False" disabled>Injustificada
+				{% else %}
+				    <input type="radio" name="{{ inasistencia.id }}" value="False" checked disabled>Injustificada
+				{% endif %}
+			    </label>
+			    </div>
+			    {% endif %}
+			    
+			{% endfor %}
+
+</section>
+	    </div>
+	</div>
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+    	<section id="observaciones">
+		Observaciones
+	    </div>
+	    <div class="panel-body">
+		    {% if not alumno.vectorObservaciones %}
+			El alumno no tiene observaciones.
+		    {% endif %}
+		    {% for observacion in alumno.vectorObservaciones %}
+			<label> Fecha: </label> {{ observacion.fecha }}</br>
+		        <label>Motivo: </label> {{ observacion.descripcion }}
+		        <hr>
+		    {% endfor %}
+	    </section></div>
+	</div>
+    </div>
+    <div class="col-lg-6">
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+    <section id="reincorporaciones">
+		Reincorporaciones
+	    </div>
+	    <div class="panel-body">
+		<p> El alumno, ha sido reincorporado <b>{{ alumno.reincorporacion }}</b> veces.</p>
+                                      </section>  </div></div>
+
+
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+    	<section id="amonestaciones">
+		Amonestaciones
+	    </div>
+	    <div class="panel-body">
+	    {% if not alumno.vectorAmonestaciones %}
+		El alumno no tiene amonestaciones.
+	    {% endif %}
+        {% for amonestacion in alumno.vectorAmonestaciones %}
+	            <label> Fecha: </label> {{ amonestacion.fecha }}</br>
+		    <label> Cantidad: </label> {{ amonestacion.cantidad }}</br>
+		    <label>Motivo: </label> {{ amonestacion.descripcion }}
+		    <hr>
+		{% endfor %}
+	</section>
+	    </div>
+	</div>
+    </div>
+    
+    </div>
+    
+</div>
+<!-- /#page-wrapper -->
+{% endblock %}

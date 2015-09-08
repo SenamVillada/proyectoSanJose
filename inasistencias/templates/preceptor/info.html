@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<div id="page-wrapper">
+    <div class="row">
+	<div class="col-lg-12">
+	    <h1 class="page-header">{{ curso.numero }}&ordm; {{ curso.division }} - {{ curso.anio }}</h1>
+	</div>
+	<!-- /.col-lg-12 -->
+    </div>
+    
+    <ol class="breadcrumb">
+	<li><a href="{% url 'inasistencias:home' %}">Home</a></li>
+	{% if not usuario.is_staff %}
+	    <li><a href="{% url 'inasistencias:curso' curso.id %}">Curso</a></li>
+	{% endif %}
+	<li class="active">Estadisticas</li>
+    </ol>
+    
+    <div class="row">
+	<div class="col-lg-12">
+	    
+	    {% if not curso.getVacio %}
+	    <div class="panel panel-default">
+		<div class="panel-heading">
+		    Informacion del curso
+		</div>
+		<div class="panel-body">
+		    <div class="row">
+			<div class="col-lg-12">
+			    <h3> Datos mensuales </h3>
+
+	                <div class="col-lg-3 col-md-6">
+	                    <div class="panel panel-primary">
+		                <div class="panel-heading">
+		                    <div class="row">
+			                <div class="col-xs-3">
+			                    <i class=""></i>
+			                </div>
+			                <div class="col-xs-9 text-right">
+			                    <div class="huge">{{ curso.getTotalAsistenciasMensual }}</div>
+			                    <div>Total de Asistencias del Curso</div>
+			                </div>
+		                    </div>
+		                </div>
+	                    </div>
+	                </div>
+	                <div class="col-lg-3 col-md-6">
+	                    <div class="panel panel-green">
+		                <div class="panel-heading">
+		                    <div class="row">
+			                <div class="col-xs-3">
+			                    <i class=""></i>
+			                </div>
+			                <div class="col-xs-9 text-right">
+			                    <div class="huge">{{ curso.getInasistenciasMensual }}</div>
+			                    <div>Total de Inasistencias</div>
+			                </div>
+		                    </div>
+		                </div>
+	                    </div>
+	                </div>
+	                <div class="col-lg-3 col-md-6">
+	                    <div class="panel panel-yellow">
+		                <div class="panel-heading">
+		                    <div class="row">
+			                <div class="col-xs-3">
+			                    <i class=""></i>
+			                </div>
+			                <div class="col-xs-9 text-right">
+			                    <div class="huge">{{ curso.getAsistenciaMediaMensual }}</div>
+			                    <div>Asistencia Media Total</div>
+			                </div>
+		                    </div>
+		                </div>
+	                    </div>
+	                </div>
+	                <div class="col-lg-3 col-md-6">
+	                    <div class="panel panel-red">
+		                <div class="panel-heading">
+		                    <div class="row">
+			                <div class="col-xs-3">
+			                    <i class=""></i>
+			                </div>
+			                <div class="col-xs-9 text-right">
+			                    <div class="huge">{{ curso.getPorcentajeAsistenciaMensual }}%</div>
+			                    <div>Porcentaje de Asistencias</div>
+			                </div>
+		                    </div>
+		                </div>
+	                    </div>
+	                </div>
+
+		        <h3> Datos anuales </h3>
+			    
+	                <div class="col-lg-3 col-md-6">
+	                    <div class="panel panel-primary">
+		                <div class="panel-heading">
+		                    <div class="row">
+			                <div class="col-xs-3">
+			                    <i class=""></i>
+			                </div>
+			                <div class="col-xs-9 text-right">
+			                    <div class="huge">{{ curso.getTotalAsistencias }}</div>
+			                    <div>Total de Asistencias del Curso</div>
+			                </div>
+		                    </div>
+		                </div>
+	                    </div>
+	                </div>
+	                <div class="col-lg-3 col-md-6">
+	                    <div class="panel panel-green">
+		                <div class="panel-heading">
+		                    <div class="row">
+			                <div class="col-xs-3">
+			                    <i class=""></i>
+			                </div>
+			                <div class="col-xs-9 text-right">
+			                    <div class="huge">{{ curso.getInasistencias }}</div>
+			                    <div>Total de Inasistencias</div>
+			                </div>
+		                    </div>
+		                </div>
+	                    </div>
+	                </div>
+	                <div class="col-lg-3 col-md-6">
+	                    <div class="panel panel-yellow">
+		                <div class="panel-heading">
+		                    <div class="row">
+			                <div class="col-xs-3">
+			                    <i class=""></i>
+			                </div>
+			                <div class="col-xs-9 text-right">
+			                    <div class="huge">{{ curso.getAsistenciaMedia }}</div>
+			                    <div>Asistencia Media Total</div>
+			                </div>
+		                    </div>
+		                </div>
+	                    </div>
+	                </div>
+	                <div class="col-lg-3 col-md-6">
+	                    <div class="panel panel-red">
+		                <div class="panel-heading">
+		                    <div class="row">
+			                <div class="col-xs-3">
+			                    <i class=""></i>
+			                </div>
+			                <div class="col-xs-9 text-right">
+			                    <div class="huge">{{ curso.getPorcentajeAsistencia }}%</div>
+			                    <div>Porcentaje de Asistencias</div>
+			                </div>
+		                    </div>
+		                </div>
+	                    </div>
+	                </div>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	    {% endif %}
+	    
+	    <div class="panel panel-default">
+		<div class="panel-heading">
+		    Lista de alumnos
+		</div>
+		<div class="panel-body">
+		    <div class="row">
+			<div class="col-lg-12">
+			    <div class="table-responsive">
+				<table id="tabla" class="display" cellspacing="0" width="100%">
+				    <thead>
+					<tr>
+					  <th>APELLIDO, Nombre</th>
+					  <th>DNI</th>
+					  <th>Email</th>
+					</tr>
+				    </thead>
+				    <tbody>
+					
+				    {% for alumno in curso.alumno_set.all %}
+					<tr>
+					    <td id="editable">{% if not usuario.is_staff %}<a href="{% url 'inasistencias:alumno' alumno.id %}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>{% endif %} {{ alumno.last_name.upper }}, {{ alumno.first_name.capitalize }}</td>
+					    <td id="editable">{{ alumno.dni }}</td>
+					    <td id="editable"><a href="mailto:{{ alumno.email }}">{{ alumno.email }}</a></td>
+					</tr>
+				    {% endfor %}
+				      
+				    </tbody>
+				</table>
+				
+				{% if usuario.is_staff %}
+				    <form role="form" method="post">{% csrf_token %}
+				      <br />
+				      <button type="submit" name="editar" class="btn btn-primary">Editar</button>
+				      <button type="submit" name="pasar" class="btn btn-danger">Pasar de a&ntilde;o</button>
+				    </form>
+				{% endif %}
+			    </div>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>
+
+
+{% endblock %}

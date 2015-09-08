@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+
+{% load obtenerpreceptor %}
+
+{% block contenido %}
+<div id="page-wrapper">
+    <div class="row">
+	<div class="col-lg-12">
+	    
+	    {% if cambios %}
+		<div class="alert alert-success alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+		Los cambios han sido guardados con <a class="alert-link">Exito!</a>
+	    </div>
+	    {% endif %}
+	    
+	    <h1 class="page-header">{{ alumno.last_name.upper }}, {{ alumno.first_name.capitalize }}</h1>
+	</div>
+	<!-- /.col-lg-12 -->
+    </div>
+    
+    <ol class="breadcrumb">
+	<li><a href="{% url 'inasistencias:home' %}">Home</a></li>
+	<li><a href="{% url 'inasistencias:curso' alumno.curso.id %}">Curso</a></li>
+	<li class="active">Alumno</li>
+    </ol>
+    
+    <div class="row">
+	<div class="col-lg-3 col-md-6">
+	    <div class="panel panel-blue">
+		<a href="#faltas">
+		    <div class="panel-heading">
+			<div class="row">
+			    <div class="col-xs-3">
+				<i class=""></i>
+			    </div>
+			    <div class="col-xs-9 text-right">
+				<div class="huge">{{ alumno.faltas }}</div>
+				<div>Faltas</div>
+			    </div>
+			</div>
+		    </div>
+		    <div class="panel-footer">
+			<span class="pull-left">Ver o Agregar</span>
+			<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+			<div class="clearfix"></div>
+		    </div>
+		</a>
+	    </div>
+	</div>
+	<div class="col-lg-3 col-md-6">
+	    <div class="panel panel-green">
+		<a href="#faltas">
+		    <div class="panel-heading">
+			<div class="row">
+			    <div class="col-xs-3">
+				<i class=""></i>
+			    </div>
+			    <div class="col-xs-9 text-right">
+				<div class="huge">{{ alumno.reincorporacion }}</div>
+				<div>Reincorporaciones</div>
+			    </div>
+			</div>
+		    </div>
+		    <div class="panel-footer">
+			<span class="pull-left">Ver o Agregar</span>
+			<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+			<div class="clearfix"></div>
+		    </div>
+		</a>
+	    </div>
+	</div>
+	<div class="col-lg-3 col-md-6">
+	    <div class="panel panel-yellow">
+		<a href="#observaciones">
+		    <div class="panel-heading">
+			<div class="row">
+			    <div class="col-xs-3">
+				<i class=""></i>
+			    </div>
+			    <div class="col-xs-9 text-right">
+				<div class="huge">{{ alumno.observaciones }}</div>
+				<div>Observaciones</div>
+			    </div>
+			</div>
+		    </div>
+		    <div class="panel-footer">
+			<span class="pull-left">Agregar y/o ver</span>
+			<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+			<div class="clearfix"></div>
+		    </div>
+		</a>
+	    </div>
+	</div>
+	<div class="col-lg-3 col-md-6">
+	    <div class="panel panel-red">
+		<a href="#amonestaciones">
+		    <div class="panel-heading">
+			<div class="row">
+			    <div class="col-xs-3">
+				<i class=""></i>
+			    </div>
+			    <div class="col-xs-9 text-right">
+				<div class="huge">{{ alumno.amonestaciones }}</div>
+				<div>Amonestaciones</div>
+			    </div>
+			</div>
+		    </div>
+		    <div class="panel-footer">
+			<span class="pull-left">Agregar y/o ver</span>
+			<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+			<div class="clearfix"></div>
+		    </div>
+		</a>
+	    </div>
+	</div>
+    </div>
+    
+    <div class="row">
+    
+    <div class="col-lg-6">
+	<div class="panel panel-default">
+	    <div class="panel-heading" id="inasistencias">
+		Inasistencias
+	    </div>
+	    <div class="panel-body">
+		<form role="form" method="post">{% csrf_token %}
+		    <div class="form-group">
+			<p> El alumno posee hasta la fecha, <b>{{ alumno.faltas }}</b> faltas aplicadas, de las cuales <b>{{ alumno.justificadas }}</b> han sido justificadas</p><b>Justificar Inasistencias:</b>
+
+				{% for inasistencia in alumno.vectorInasistencias %}
+				    {% if inasistencia.tipo != 0 %}
+				    <hr>
+				    <label>{{ inasistencia.fecha }} ({{ inasistencia.cantMixto }})</label>
+				    <div class="pull-right">
+				    <label class="radio-inline">
+					{% if inasistencia.justificado %}
+					    <input type="radio" name="{{ inasistencia.id }}" value="True" checked>Justificada
+					{% else %}
+					    <input type="radio" name="{{ inasistencia.id }}" value="True">Justificada
+					{% endif %}
+				    </label>
+				    <label class="radio-inline">
+					{% if inasistencia.justificado %}
+					    <input type="radio" name="{{ inasistencia.id }}" value="False">Injustificada
+					{% else %}
+					    <input type="radio" name="{{ inasistencia.id }}" value="False" checked>Injustificada
+					{% endif %}
+				    </label>
+				    </div>
+				    {% else %}
+					<input type="hidden" name="{{ inasistencia.id }}">
+				    {% endif %}
+				{% endfor %}
+			<hr>
+			<button type="submit" name="guardarFaltas" class="btn btn-primary btn-block">Guardar</button>
+		    </div>
+		</form>
+	    </div>
+	</div>
+	
+	<div class="panel panel-default">
+	    <div class="panel-heading" id="observaciones">
+		Observaciones
+	    </div>
+	    <div class="panel-body">
+		<form action="" method="post"> {% csrf_token %}
+		    <label>Agregar Observacion: </label></br>
+			<label>Fecha</label>
+		    <div class="form-group has-success"><input class="form-control" id="fecha2" name="fechaObservacion" value="{% now 'SHORT_DATE_FORMAT' %}" required></div>
+			    <label> Motivo</label>
+		    <div class="form-group has-error"><input class="form-control" name="motivoObservacion" required></div>
+            <input type="hidden" name="alumno" value="{{ alumno.id }}">
+			<input type="hidden" name="preceptor" value="{% preceptor usuario %}">
+		    <button type="submit" class="btn btn-warning btn-block">Guardar</button>
+		</form></br>
+		    {% for observacion in alumno.vectorObservaciones %}
+		        <hr>
+			<label> Fecha: </label> {{ observacion.fecha }}</br>
+		        <label>Motivo: </label> {{ observacion.descripcion }}
+			{% endfor %}
+	    </div>
+	</div>
+    </div>
+	    
+    <div class="col-lg-6">
+	<div class="panel panel-default">
+	    <div class="panel-heading" id="faltas">
+		Reincorporaciones
+	    </div>
+	    <div class="panel-body">
+		<p> El alumno, ha sido reincorporado <b>{{ alumno.reincorporacion }}</b> veces.</p>
+		<button class="btn btn-success btn-block" data-toggle="modal" data-target="#myModal"> Reincorporar</button>
+                            <!-- Modal -->
+                            <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content alert alert-success alert-dismissable">
+                                        <div class="modal-header ">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Exito</h4>
+                                        </div>
+                                        <div class="modal-body alert alert-success alert-dismissable">
+                                            Esta seguro que desea reincorporar al alumno?
+                                        </div>
+                                        <div class="modal-footer">
+					<form action="" method="post">{% csrf_token %}
+					    <input type="hidden" name="alumnoReincorporacion" value="{{ alumno.id }}">
+                                            <button type="submit" class="btn btn-success">Aceptar</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+					</form>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+		</form>
+	    </div>
+	</div>
+	
+	<div class="panel panel-default">
+	    <div class="panel-heading" id="amonestaciones">
+		Amonestaciones
+	    </div>
+	    <div class="panel-body">
+		<form action="" method="post"> {% csrf_token %}
+		    <label>Agregar Amonestaciones: </label></br>
+			<label>Fecha</label>
+			<div class="form-group has-success"><input class="form-control" id="fecha3" name="fechaAmonestacion" value="{% now 'SHORT_DATE_FORMAT' %}" required></div>
+		    <label> Cantidad</label>
+			<div class="form-group has-warning"><input class="form-control" name="cantAmonestacion" required></div>
+		    <label> Motivo</label>
+			<div class="form-group has-error"><input class="form-control" name="motivoAmonestacion" required></div>
+            <input type="hidden" name="alumno" value="{{ alumno.id }}">
+			<input type="hidden" name="preceptor" value="{% preceptor usuario %}">
+		    <button type="submit" class="btn btn-danger btn-block">Guardar</button>
+		</form>
+        {% for amonestacion in alumno.vectorAmonestaciones %}
+	            <hr><label> Fecha: </label> {{ amonestacion.fecha }}</br>
+		    <label> Cantidad: </label> {{ amonestacion.cantidad }}</br>
+		    <label>Motivo: </label> {{ amonestacion.descripcion }}
+		{% endfor %}
+	    </div>
+	</div>
+    </div>
+    
+    </div>
+    
+</div>
+<!-- /#page-wrapper -->
+{% endblock %}
