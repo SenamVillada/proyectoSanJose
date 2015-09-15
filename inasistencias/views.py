@@ -9,12 +9,9 @@ from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.decorators import login_required
 from django import forms
 
-
-from .models import Document
 from .forms import DocumentForm
 
 from inasistencias.templatetags.faltas import formatear_fecha
-from inasistencias.models import Curso, Preceptor, Alumno, Curso, Inasistencia, Observacion, Amonestacion
 
 import os
 

@@ -167,10 +167,10 @@ class Preceptor(User):
 class Alumno(User):
     # Atributos de la clase
     telefono = models.IntegerField("Telefono", max_length=20)
-    legajo = models.AutoField()
+    legajo = models.AutoField(primary_key=True)
     fechaNac = models.DateField()
-    paternidad = models.Boolean()
-    trabaja = models.Boolean()
+    paternidad = models.BooleanField()
+    trabaja = models.BooleanField()
     dni = models.IntegerField("Dni", max_length=100)
     curso = models.ForeignKey(Curso)
     
@@ -278,7 +278,7 @@ class Alumno(User):
 class Profesor(User):
     telefono = models.IntegerField("Telefono", max_length=20)
     domicilio = models.CharField("Direccion", max_length=100)
-    cuil = models.IntegerField("CUIL", max_lenght=20)
+    cuil = models.IntegerField("CUIL", max_length=20)
     mail = models.EmailField(max_length=254)
 #    titulo y numero de registro
     fecha_de_escalafon = models.DateField("Fecha de escalafon")
@@ -291,9 +291,9 @@ class Profesor(User):
     cargo = models.CharField(max_length=16,
                                 choices=cargo_opciones,
                                 default='profesor')
-    licencias = models.Boolean()
+    licencias = models.BooleanField()
     lugar_de_nacimiento = models.CharField("Lugar de nacimiento", max_length=50)
-    legajo = models.AutoField()
+    legajo = models.AutoField(primary_key=True)
     fechaNac = models.DateField()
     dni = models.IntegerField("Dni", max_length=100, primary_key=True)
     curso = models.ForeignKey(Curso)
@@ -331,10 +331,10 @@ class Materia(models.Model):
         	('seminario', 'Seminario'),
             ('taller', 'Taller'),
     	)
-    tipo = models.CharField(max_length=,
+    tipo = models.CharField(max_length=80,
                                       choices=tipo_opciones,
                                       default='asignatura')
-    relatividad = models.ManyToManyField(Materia,null=True)
+    relatividad = models.ManyToManyField('Materia',null=True)
     
     def __unicode__(self):
 	    return self.nombre
