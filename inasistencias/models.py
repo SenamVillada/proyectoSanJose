@@ -166,15 +166,30 @@ class Preceptor(User):
 #Clase alumno:
 class Alumno(User):
     # Atributos de la clase
-    telefono = models.IntegerField("Telefono", max_length=20)
+    telefonoF = models.IntegerField("Telefono Fijo", max_length=20)
+    telefonoC = models.IntegerField("Telefono Celular", max_length=20)
     legajo = models.AutoField(primary_key=True)
+    mail = models.EmailField(max_length=254)
     fechaNac = models.DateField()
     paternidad = models.BooleanField()
     trabaja = models.BooleanField()
     dni = models.IntegerField("Dni", max_length=100)
     curso = models.ForeignKey(Curso)
+    domicilio = models.Charfield(max_length=none)
+    estado_opciones = (
+            ('casado', 'Casado/a'),
+            ('soltero', 'Soltero/a'),
+            ('viudo', 'Viudo/a'),
+            ('divorciado', 'Divorciado/a'),
+            ('conyuge', 'Conyuge'),
+        )
+    estadoCivil = models.CharField(max_length=16,
+                                choices=estado_opciones,
+                                default='soltero')
     
     
+    lugar_de_nacimiento = models.CharField("Lugar de nacimiento", max_length=50)
+
     class Meta:
         verbose_name = 'alumno'
         verbose_name_plural = 'alumnos'
@@ -276,8 +291,9 @@ class Alumno(User):
         self.save()
 
 class Profesor(User):
-    telefono = models.IntegerField("Telefono", max_length=20)
-    domicilio = models.CharField("Direccion", max_length=100)
+    telefonoF = models.IntegerField("Telefono Fijo", max_length=20)
+    telefonoC = models.IntegerField("Telefono Celular", max_length=20)
+    domicilio = models.Charfield(max_length=none)
     cuil = models.IntegerField("CUIL", max_length=20)
     mail = models.EmailField(max_length=254)
 #    titulo y numero de registro
@@ -298,6 +314,19 @@ class Profesor(User):
     dni = models.IntegerField("Dni", max_length=100, primary_key=True)
     curso = models.ForeignKey(Curso)
     curriculum = models.FileField("Curriculum",upload_to='curriculums/%Y/%m')
+    estado_opciones = (
+            ('casado', 'Casado/a'),
+            ('soltero', 'Soltero/a'),
+            ('viudo', 'Viudo/a'),
+            ('divorciado', 'Divorciado/a'),
+            ('conyuge', 'Conyuge'),
+        )
+    estadoCivil = models.CharField(max_length=16,
+                                choices=estado_opciones,
+                                default='soltero')
+    tituloRegistro = models.Charfield("Titulo de Registro",max_length=200)
+    numeroRegistro = models.IntegerField("Numero de Registro", max_length=100)
+    
 class Inasistencia (models.Model):
     tipo = models.FloatField()
     justificado = models.BooleanField(default=False)
