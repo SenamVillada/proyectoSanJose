@@ -93,3 +93,5 @@ class Matricula(models.Model):
                                  max_length=12,
                                  choices=condicion_opciones,
                                  default='regular')
+
+esto es fruta!!!
