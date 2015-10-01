@@ -21,8 +21,8 @@ class Alumno(User):
     telefonoC = models.IntegerField("Telefono Celular", max_length=20)
     trabaja = models.BooleanField()
     
-    def __str__(self):
-	    return "{}, {}".format(self.nombre , self.apellido)
+    def __unicode__(self):
+	    return self.last_name + ", " + self.first_name
 
 class Cargo(models.Model)
     nombre = models.CharField("Nombre", max_lenght=30)

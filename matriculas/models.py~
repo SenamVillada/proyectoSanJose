@@ -80,7 +80,11 @@ class Matricula(models.Model):
     horario = models.CharField("Horario", max_lenght=200)
     aprobada = models.BooleanField("Aprobada?")
     alumno = models.ForeignKey(Alumno)
-    profsor = models.ForeignKey(Profesor)
+    profesor = models.ForeignKey(Profesor)
+    materia = models.ForeingKey(Materia)
+
+    def __unicode__(self):
+        self.alumno.first_name + ", " + self.alumno.last_name + " - " + self.materia.nombre + " - " + str(self.anio)
 
 class Log(models.Model):
     fecha = models.DateField("Fecha")
