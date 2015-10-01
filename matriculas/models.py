@@ -78,6 +78,7 @@ class Matricula(models.Model):
 class Asistencia(models.Model):
     fecha = models.DateField("Fecha", auto_now=True)
     vino = models.BooleanField("Vino?")
+    matricula = models.ForeignKey(Matricula)
 
 class Nota(models.Model):
     fecha = models.DateField("Fecha", auto_now=True)

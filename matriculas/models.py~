@@ -12,12 +12,12 @@ class Cargo(models.Model):
 class Persona(User):
     dni = models.IntegerField("DNI")
     domicilio = models.CharField("Domicilio", max_length=300)
-    estado_opciones = (
+    estadoOpciones = (
             ('casado', 'Casado/a'),
             ('soltero', 'Soltero/a'),
             ('viudo', 'Viudo/a'),
             ('divorciado', 'Divorciado/a'))
-    estadoCivil = models.CharField("Estado Civil", max_length=16, choices=estado_opciones, default='soltero')
+    estadoCivil = models.CharField("Estado Civil", max_length=16, choices=estadoOpciones, default='soltero')
     fechaNacimiento = models.DateField("Fecha de Nacimiento")
     lugarNacimiento = models.CharField("Lugar de Nacimiento", max_length=50)
     telefonoFijo = models.IntegerField("Telefono Fijo")
@@ -54,12 +54,12 @@ class Materia(models.Model):
     nombre = models.CharField("Nombre de la Materia", max_length=30)
     correlativasCursado = models.ManyToManyField('self')
     correlativasRendir = models.ManyToManyField('self')
-    tipo_opciones = (
+    tipoOpciones = (
         	('asignatura', 'Asignatura'),
         	('seminario', 'Seminario'),
             ('taller', 'Taller'),
     	)
-    tipo = models.CharField("Tipo de Materia", max_length=80, choices=tipo_opciones, default='asignatura')
+    tipo = models.CharField("Tipo de Materia", max_length=80, choices=tipoOpciones, default='asignatura')
 
     def __unicode__(self):
 	    return self.nombre
