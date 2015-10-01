@@ -1,5 +1,5 @@
 from django.contrib import admin
-from administracion.models import *
+from matriculas.models import *
 
 admin.site.register(Alumno)
 admin.site.register(Cargo)

@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Alumno(User):
-    dni = models.IntegerField("DNI", max_length=100)
-    domicilio = models.CharField("Domicilio", max_length=none)
+    dni = models.IntegerField("DNI")
+    domicilio = models.CharField("Domicilio", max_length=300)
     estado_opciones = (
             ('casado', 'Casado/a'),
             ('soltero', 'Soltero/a'),
@@ -15,14 +15,14 @@ class Alumno(User):
     lugar_de_trabajo = models.CharField("Lugar de Trabajo", max_length=50)
     hora_de_trabajo = models.CharField("Horario de Trabajo", max_length=200)
     paternidad = models.BooleanField("Paternidad")
-    telefonoF = models.IntegerField("Telefono Fijo", max_length=20)
-    telefonoC = models.IntegerField("Telefono Celular", max_length=20)
+    telefonoF = models.IntegerField("Telefono Fijo")
+    telefonoC = models.IntegerField("Telefono Celular")
     
     def __unicode__(self):
 	    return self.last_name + ", " + self.first_name
 
-class Cargo(models.Model)
-    nombre = models.CharField("Nombre", max_lenght=30)
+class Cargo(models.Model):
+    nombre = models.CharField("Nombre", max_length = 20)
     fecha_alta = models.DateField("Fecha de Alta")
     fecha_baja = models.DateField("Fecha de Baja")
 
@@ -30,11 +30,11 @@ class Cargo(models.Model)
         return self.nombre
 
 class Profesor(User):
-    cargo = models.ForeingKey(Cargo)
-    cuil = models.IntegerField("CUIL", max_length=20)
+    cargo = models.ForeignKey(Cargo)
+    cuil = models.IntegerField("CUIL")
     curriculum = models.FileField("Curriculum",upload_to='curriculums/%Y/%m')
-    dni = models.IntegerField("DNI", max_length=100, primary_key=True)
-    domicilio = models.Charfield("Domicilio", max_length=none)
+    dni = models.IntegerField("DNI")
+    domicilio = models.CharField("Domicilio", max_length=300)
     estado_opciones = (
             ('casado', 'Casado/a'),
             ('soltero', 'Soltero/a'),
@@ -46,10 +46,10 @@ class Profesor(User):
     fecha_del_apto_psicofisico = models.DateField("Fecha del Apto Psicofisico")
     fechaNacimiento = models.DateField("Fecha de Nacimiento")
     lugar_de_nacimiento = models.CharField("Lugar de Nacimiento", max_length=50)
-    numeroRegistro = models.IntegerField("Numero de Registro", max_length=100)
-    telefonoF = models.IntegerField("Telefono Fijo", max_length=20)
-    telefonoC = models.IntegerField("Telefono Celular", max_length=20)
-    titulo = models.Charfield("Titulo",max_length=200)
+    numeroRegistro = models.IntegerField("Numero de Registro")
+    telefonoF = models.IntegerField("Telefono Fijo")
+    telefonoC = models.IntegerField("Telefono Celular")
+    titulo = models.CharField("Titulo",max_length=200)
     
     def __unicode__(self):
 	    return self.last_name + ", " + self.first_name
@@ -57,11 +57,11 @@ class Profesor(User):
 class Licencia(models.Model):
     fecha_inicio = models.DateField("Fecha de Alta")
     fecha_final = models.DateField("Fecha de Baja")
-    motivo = models.CharField("Motivo", max_lenght=200)
-    profesor = models.ForeingKey(Profesor)
+    motivo = models.CharField("Motivo", max_length=200)
+    profesor = models.ForeignKey(Profesor)
 
 class Materia(models.Model):
-    nombre = models.CharField("Nombre de la Materia", max_lenght=30)
+    nombre = models.CharField("Nombre de la Materia", max_length=30)
     correlativas_de_cursado = models.ManyToManyField("Correlativas de Cursado", null = True)
     correlativas_de_rendir = models.ManyToManyField("Correlativas de Rendir", null = True)
     tipo_opciones = (
@@ -76,18 +76,22 @@ class Materia(models.Model):
 
 class Matricula(models.Model):
     anio = models.DateField(auto_now=True)
-    horario = models.CharField("Horario", max_lenght=200)
+    horario = models.CharField("Horario", max_length=200)
     aprobada = models.BooleanField("Aprobada?")
     alumno = models.ForeignKey(Alumno)
     profesor = models.ForeignKey(Profesor)
-    materia = models.ForeingKey(Materia)
+    materia = models.ForeignKey(Materia)
 
     def __unicode__(self):
         self.alumno.first_name + ", " + self.alumno.last_name + " - " + self.materia.nombre + " - " + str(self.anio)
 
+class Asistencia(models.Model):
+    fecha = models.DateField("Fecha", auto_now=True)
+    vino = models.BooleanField("Vino?")
+
 class Log(models.Model):
     fecha = models.DateField("Fecha")
-    log = models.CharField("Log", max_lenght=200)
+    log = models.CharField("Log", max_length=200)
 
     def __unicode__(self):
         return str(self.fecha) + self.log
