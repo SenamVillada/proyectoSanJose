@@ -46,7 +46,6 @@ class Profesor(User):
     fecha_del_apto_psicofisico = models.DateField("Fecha del Apto Psicofisico")
     fechaNac = models.DateField()
     legajo = models.AutoField(primary_key=True)
-    licencias = models.BooleanField()
     lugar_de_nacimiento = models.CharField("Lugar de Nacimiento", max_length=50)
     numeroRegistro = models.IntegerField("Numero de Registro", max_length=100)
     telefonoF = models.IntegerField("Telefono Fijo", max_length=20)
@@ -79,14 +78,14 @@ class Materia(models.Model):
 class Matricula(models.Model):
     anio = models.DateField(auto_now=True)
     horario = models.CharField("Horario", max_lenght=200)
-    condicion_opciones = (
-            ('regular','Regular'),
-            ('libre','Libre'),
-            ('promocionado','Promocionado'),
-        )
-    condicion = models.Charfield("Condición del alumno",
-                                 max_length=12,
-                                 choices=condicion_opciones,
-                                 default='regular')
+    aprobada = models.BooleanField("Aprobada?")
     alumno = models.ForeignKey(Alumno)
-    profsor = models.ForeignKey(Profesor)
+    profesor = models.ForeignKey(Profesor)
+    materia = models.ForeingKey(Materia)
+
+    def __unicode__(self):
+        self.alumno.first_name + ", " + self.alumno.last_name + " - " + self.materia.nombre + " - " + str(self.anio)
+
+class Log(models.Model):
+    fecha = models.DateField("Fecha")
+    log = models.CharField("Log", max_lenght=200)

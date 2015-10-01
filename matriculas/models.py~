@@ -46,7 +46,6 @@ class Profesor(User):
     fecha_del_apto_psicofisico = models.DateField("Fecha del Apto Psicofisico")
     fechaNac = models.DateField()
     legajo = models.AutoField(primary_key=True)
-    licencias = models.BooleanField()
     lugar_de_nacimiento = models.CharField("Lugar de Nacimiento", max_length=50)
     numeroRegistro = models.IntegerField("Numero de Registro", max_length=100)
     telefonoF = models.IntegerField("Telefono Fijo", max_length=20)
@@ -63,8 +62,9 @@ class Licencia(models.Model):
     profesor = models.ForeingKey(Profesor)
 
 class Materia(models.Model):
-    nombre = models.CharField("Nombre",max_length=100)
-    relatividad = models.ManyToManyField('Materia',null=True)    
+    nombre = models.CharField("Nombre de la Materia", max_lenght=30)
+    correlativas_de_cursado = models.ManyToManyField("Correlativas de Cursado", null = True)
+    correlativas_de_rendir = models.ManyToManyField("Correlativas de Rendir", null = True)
     tipo_opciones = (
         	('asignatura', 'Asignatura'),
         	('seminario', 'Seminario'),
@@ -75,25 +75,13 @@ class Materia(models.Model):
     def __unicode__(self):
 	    return self.nombre
 
-class Materia(models.Model):
-    nombre = models.CharField("Nombre de la Materia", max_lenght=30)
-    correlativas_de_cursado = models.ManyToManyField("Correlativas de Cursado")
-    correlativas_de_rendir = models.ManyToManyField("Correlativas de Rendir")
-
-    def __unicode__(self):
-	    return self.nombre
-
 class Matricula(models.Model):
     anio = models.DateField(auto_now=True)
     horario = models.CharField("Horario", max_lenght=200)
-    condicion_opciones = (
-            ('regular','Regular'),
-            ('libre','Libre'),
-            ('promocionado','Promocionado'),
-        )
-    condicion = models.Charfield("Condición del alumno",
-                                 max_length=12,
-                                 choices=condicion_opciones,
-                                 default='regular')
+    aprobada = models.BooleanField("Aprobada?")
     alumno = models.ForeignKey(Alumno)
     profsor = models.ForeignKey(Profesor)
+
+class Log(models.Model):
+    fecha = models.DateField("Fecha")
+    log = models.CharField("Log", max_lenght=200)
