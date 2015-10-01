@@ -62,8 +62,8 @@ class Licencia(models.Model):
 
 class Materia(models.Model):
     nombre = models.CharField("Nombre de la Materia", max_length=30)
-    correlativas_de_cursado = models.ManyToManyField("Correlativas de Cursado", null = True)
-    correlativas_de_rendir = models.ManyToManyField("Correlativas de Rendir", null = True)
+    correlativas_de_cursado = models.ManyToManyField('self')
+    correlativas_de_rendir = models.ManyToManyField('self')
     tipo_opciones = (
         	('asignatura', 'Asignatura'),
         	('seminario', 'Seminario'),

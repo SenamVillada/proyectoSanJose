@@ -89,6 +89,15 @@ class Asistencia(models.Model):
     fecha = models.DateField("Fecha", auto_now=True)
     vino = models.BooleanField("Vino?")
 
+class Nota(models.Model):
+    fecha = models.DateField("Fecha", auto_now=True)
+    calificacion = models.IntegerField("Calificacion")
+    observacion = models.CharField("Observacion", max_length=100)
+    matricula = models.ForeignKey(Matricula)
+
+    def __unicode__():
+        return str(calificacion)
+
 class Log(models.Model):
     fecha = models.DateField("Fecha")
     log = models.CharField("Log", max_length=200)
