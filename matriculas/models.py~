@@ -101,7 +101,12 @@ class Matricula(models.Model):
                                  max_length=12,
                                  choices=condicion_opciones,
                                  default='regular')
+<<<<<<< HEAD
     alumno = models.ForeignKey(Alumno)
     profsor = models.ForeignKey(Profesor)
     alumno = models.ForeignKey(Alumno)
 
+=======
+
+esto es fruta!!!
+>>>>>>> 17fe9cbec11535ca1236f53c84ef43983fe95303
