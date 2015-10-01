@@ -1,22 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
-# Create your models here.
 class Alumno(User):
-    # Atributos de la clase
     dni = models.IntegerField("Dni", max_length=100)
     domicilio = models.CharField(max_length=none)
     estado_opciones = (
             ('casado', 'Casado/a'),
             ('soltero', 'Soltero/a'),
             ('viudo', 'Viudo/a'),
-            ('divorciado', 'Divorciado/a'),
-            ('conyuge', 'Conyuge'),
+            ('divorciado', 'Divorciado/a')
         )
-    estadoCivil = models.CharField(max_length=16,
-                                choices=estado_opciones,
-                                default='soltero')
+    estadoCivil = models.CharField(max_length=16, choices=estado_opciones, default='soltero')
     fechaNac = models.DateField()
     legajo = models.AutoField(primary_key=True)
     lugar_de_nacimiento = models.CharField("Lugar de Nacimiento", max_length=50)
@@ -30,15 +24,13 @@ class Alumno(User):
     def __str__(self):
 	    return "{}, {}".format(self.nombre , self.apellido)
 
+class Cargo(models.Model)
+    nombre = models.CharField("Nombre", max_lenght=30)
+    fecha_alta = models.DateField("Fecha de Alta")
+    fecha_baja = models.DateField("Fecha de Baja")
+
 class Profesor(User):
-    cargo_opciones = (
-            ('profesor', 'Profesor'),
-            ('directorDeTaller', 'Director de taller'),
-            ('director', 'Director'),
-        )
-    cargo = models.CharField(max_length=16,
-                                choices=cargo_opciones,
-                                default='profesor')
+    cargo = models.ForeingKey(Cargo)
     cuil = models.IntegerField("CUIL", max_length=20)
     curriculum = models.FileField("Curriculum",upload_to='curriculums/%Y/%m')
     dni = models.IntegerField("Dni", max_length=100, primary_key=True)
@@ -47,12 +39,9 @@ class Profesor(User):
             ('casado', 'Casado/a'),
             ('soltero', 'Soltero/a'),
             ('viudo', 'Viudo/a'),
-            ('divorciado', 'Divorciado/a'),
-            ('conyuge', 'Conyuge'),
+            ('divorciado', 'Divorciado/a')
         )
-    estadoCivil = models.CharField(max_length=16,
-                                choices=estado_opciones,
-                                default='soltero')
+    estadoCivil = models.CharField(max_length=16, choices=estado_opciones, default='soltero')
     fecha_de_escalafon = models.DateField("Fecha de Escalafon")
     fecha_del_apto_psicofisico = models.DateField("Fecha del Apto Psicofisico")
     fechaNac = models.DateField()
@@ -64,8 +53,14 @@ class Profesor(User):
     telefonoC = models.IntegerField("Telefono Celular", max_length=20)
     titulo = models.Charfield("Titulo",max_length=200)
     
-    def __str__(self):
+    def __unicode__(self):
 	    return "{}, {}".format(self.nombre , self.apellido)
+
+class Licencia(models.Model):
+    fecha_inicio = models.DateField("Fecha de Alta")
+    fecha_final = models.DateField("Fecha de Baja")
+    motivo = models.CharField("Motivo", max_lenght=200)
+    profesor = models.ForeingKey(Profesor)
 
 class Materia(models.Model):
     nombre = models.CharField("Nombre",max_length=100)
@@ -75,9 +70,7 @@ class Materia(models.Model):
         	('seminario', 'Seminario'),
             ('taller', 'Taller'),
     	)
-    tipo = models.CharField(max_length=80,
-                                      choices=tipo_opciones,
-                                      default='asignatura')
+    tipo = models.CharField(max_length=80, choices=tipo_opciones, default='asignatura')
 
     def __unicode__(self):
 	    return self.nombre
@@ -92,6 +85,7 @@ class Materia(models.Model):
 
 class Matricula(models.Model):
     anio = models.DateField(auto_now=True)
+    horario = models.CharField("Horario", max_lenght=200)
     condicion_opciones = (
             ('regular','Regular'),
             ('libre','Libre'),
@@ -101,12 +95,5 @@ class Matricula(models.Model):
                                  max_length=12,
                                  choices=condicion_opciones,
                                  default='regular')
-<<<<<<< HEAD
     alumno = models.ForeignKey(Alumno)
     profsor = models.ForeignKey(Profesor)
-    alumno = models.ForeignKey(Alumno)
-
-=======
-
-esto es fruta!!!
->>>>>>> 17fe9cbec11535ca1236f53c84ef43983fe95303
