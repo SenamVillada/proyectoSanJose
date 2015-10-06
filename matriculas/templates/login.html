@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,29 +13,29 @@
     <title>Instituo San Jose</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static "css/admin/bootstrap.min.css" %}" rel="stylesheet" />
 
     <!-- MetisMenu CSS -->
-    <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="{% static "css/plugins/metisMenu/metisMenu.min.css" %}" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="}css/sb-admin-2.css" rel="stylesheet">
+    <link href="css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="fonts/font-awesome/fonts/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="{% static "fonts/font-awesome/fonts/font-awesome-4.1.0/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
     
-    <link href='img/admin/logo.png' rel='shortcut icon' type='image/png'>
+    <link href="{% static "img/admin/logo.png" %}" rel='shortcut icon' type='image/png'>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<!-- BOOTSTRAP STYLES-->
-    <link href="css/admin/bootstrap.css" rel="stylesheet" />
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{% static "css/admin/bootstrap.css" %}" rel="stylesheet" />
+    <link href="{% static "css/admin/bootstrap.min.css" %}" rel="stylesheet" />
      <!-- FONTAWESOME STYLES
     <link href=" css/admin/font-awesome.css" rel="stylesheet" />-->
      <!-- MORRIS CHART STYLES
     <link href=" js/ morris/morris-0.4.3.min.css" rel="stylesheet" />-->
         <!-- CUSTOM STYLES-->
-    <link href="css/admin/custom.css" rel="stylesheet" />
+    <link href="{% static "css/admin/custom.css" %}" rel="stylesheet" />
      <!-- GOOGLE FONTS-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -48,7 +49,7 @@
     <div class="container">
 	<div class="row" style="padding:0px 3px 0px 3px;">
 	    <div class="col-md-4 col-md-offset-4 centrar">
-            <img src="img/admin/logo.png">
+            <img src="{% static "img/admin/logo.png" %}">
 		<div class="login-panel panel panel-default logincentrado" style="margin-top: 0px;border-top-width: 0px;border-bottom-width: 0px;margin-bottom: 0px;">
 		    <div class="panel-heading">
 			<h2 class="panel-title">Loguearse</h2>
@@ -76,12 +77,12 @@
         </div>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.jsb"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="plugins/metisMenu/metisMenu.min.js"></script>
+    <script src="{% static "plugins/metisMenu/metisMenu.min.js" %}"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="js/sb-admin-2.js"></script>
+    <script src="{% static "js/sb-admin-2.js" %}"></script>
 
 </body>
