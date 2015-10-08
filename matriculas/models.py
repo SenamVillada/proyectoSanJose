@@ -64,6 +64,10 @@ class Materia(models.Model):
     def __unicode__(self):
 	    return self.nombre
 
+    def verMateria(self):
+        texto = "Nombre: "+self.nombre+"\nTipo de materia: "+self.tipo+"\nCorrelativas de cursado: "+self.correlativasCursado+"\nCorrelativas para rendir: "+self.correlativasRendir
+        return texto
+
 class Matricula(models.Model):
     anio = models.DateField(auto_now=True)
     horario = models.CharField("Horario", max_length=200)
