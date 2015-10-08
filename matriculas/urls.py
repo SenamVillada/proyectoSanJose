@@ -1,9 +1,11 @@
 from django.conf.urls import patterns, include, url
 from config import settings
+from . import views
 
 urlpatterns = patterns('',
-
-    url(r'^$', 'config.views.home', name='home'),
+    url(r'^$', views.index, name='inicio'),
+    url(r'^login/', views.user_login, name='login'),
+    #url(r'^$', 'config.views.home', name='home'),
     url(r'^login/$', 'config.views.login', name='login'),
     url(r'^logout/$', 'config.views.logout', name='logout'),
     url(r'^alumnos/$', 'config.views.alumnos', name='alumnos'),
