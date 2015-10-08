@@ -1,12 +1,14 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url='/login')
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return render_to_response("inicio.html", RequestContext(request))
 
 #---------------------------------------LOGIN---------------------------------------------
 def user_login(request):
@@ -21,7 +23,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/inicio/')
+                return HttpResponseRedirect('/')
             else:
                 return HttpResponse("Tu cuenta no esta habilitada")
         else:
@@ -30,3 +32,8 @@ def user_login(request):
     else:
         return render_to_response('login.html', {}, context)
 #---------------------------------------END LOGIN------------------------------------------
+#---------------------------------------LOGOUT---------------------------------------------
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+#---------------------------------------END LOGOUT-----------------------------------------
