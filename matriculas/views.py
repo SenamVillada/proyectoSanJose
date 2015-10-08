@@ -37,3 +37,15 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 #---------------------------------------END LOGOUT-----------------------------------------
+#---------------------------------------Alumnos---------------------------------------------
+def alumnos(request):
+    return render_to_response("alumnos.html", RequestContext(request))
+#---------------------------------------END Alumnos-----------------------------------------
+#---------------------------------------MATERIAS---------------------------------------------
+def materias(request):
+    return render_to_response("materias.html", RequestContext(request))
+#---------------------------------------END MATERIAS-----------------------------------------
+#---------------------------------------PROFESORES---------------------------------------------
+def profesores(request):
+    return render_to_response("profesores1.html", RequestContext(request))
+#---------------------------------------END PROFESORES-----------------------------------------
