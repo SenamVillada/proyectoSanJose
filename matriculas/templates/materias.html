@@ -58,39 +58,37 @@
     <nav class="navbar-default navbar-side" role="navigation">
         <div class="centradodiv">
             <div class="container-fluid">
-                <a href="inicio.html"><img src="{% static "img/admin/logo.png" %}"></a>
+                <a href="/"><img src="{% static 'img/admin/logo.png' %}"></a>
             </div>
             <div class="container-fluid centrado" id="div-usuario" style="color:#fff;">
-                Bienvenido/a, <span class="resaltado">Agustín</span>
-                <br><a>Salir</a>
+                <span class="">Bienvenido/a, <span class="resaltado">{{user.username}}</span></span>
+                <br><a href="{% url 'matriculas:logout' %}">Salir</a>
             </div>
         </div>
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu" >
                     <li>
-                        <a   href="inicio.html"><i class="fa fa-desktop fa-2x"></i>Inicio</a>
+                        <a   href="/"><i class="fa fa-desktop fa-2x"></i>Inicio</a>
                     </li>
                     <li>
-                        <a  href="alumnos.html"><i class="fa fa-user fa-2x"></i>Alumnos</a>
+                        <a   href="/alumnos"><i class="fa fa-user fa-2x"></i>Alumnos</a>
                     </li>
                     <li>
-                        <a  href="profesores.html"><i class="fa fa-briefcase fa-2x"></i>Profesores</a>
+                        <a  href="/profesores"><i class="fa fa-briefcase fa-2x"></i>Profesores</a>
                     </li>
                     <li>
-                        <a class="active-menu" href="materias.html"><i class="fa fa-book fa-2x"></i>Materias</a>
+                        <a class="active-menu"  href="/materias"><i class="fa fa-book fa-2x"></i>Materias</a>
                     </li>
                 </ul>
             </div>
-        
-		<div id="sub-footer" class="sub-footer">
+            <div id="sub-footer" class="sub-footer">
 				Desarrollado por SENAM
 				<br><br>
 				Copyright © 2015 Instituto Parroquial San José.
 				<br><br>
 				Todos los Derechos Reservados.
 		</div>  
-            
-    </nav>  
+    </nav>
         <!-- /. NAV SIDE  -->
         
         <div id="page-wrapper" >

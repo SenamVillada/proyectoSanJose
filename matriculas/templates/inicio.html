@@ -29,7 +29,7 @@
     <nav class="navbar-default navbar-side" role="navigation">
         <div class="centradodiv">
             <div class="container-fluid">
-                <a href="inicio.html"><img src="{% static 'img/admin/logo.png' %}"></a>
+                <a href="/"><img src="{% static 'img/admin/logo.png' %}"></a>
             </div>
             <div class="container-fluid centrado" id="div-usuario" style="color:#fff;">
                 <span class="">Bienvenido/a, <span class="resaltado">{{user.username}}</span></span>
@@ -39,16 +39,16 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu" >
                     <li>
-                        <a class="active-menu"  href="inicio.html"><i class="fa fa-desktop fa-2x"></i>Inicio</a>
+                        <a class="active-menu"  href="/"><i class="fa fa-desktop fa-2x"></i>Inicio</a>
                     </li>
                     <li>
                         <a  href="/alumnos"><i class="fa fa-user fa-2x"></i>Alumnos</a>
                     </li>
                     <li>
-                        <a  href="profesores.html"><i class="fa fa-briefcase fa-2x"></i>Profesores</a>
+                        <a  href="/profesores"><i class="fa fa-briefcase fa-2x"></i>Profesores</a>
                     </li>
                     <li>
-                        <a  href="materias.html"><i class="fa fa-book fa-2x"></i>Materias</a>
+                        <a  href="/materias"><i class="fa fa-book fa-2x"></i>Materias</a>
                     </li>
                 </ul>
             </div>
@@ -68,13 +68,13 @@
                     <!-- <div class="col-md-12">
                     <h2>Administracion del Sistema</h2>   
                     <h5>Bienvenido al sistema <b>agustin</b> !</h5> -->
-                    <a href="alumnos.html"><div class="col-md-5 col-sm-5 col-xs-5 boton-inicio">
+                    <a href="/alumnos"><div class="col-md-5 col-sm-5 col-xs-5 boton-inicio">
                     <h1 class="text-center h1"><span class="fa fa-user fa-1x" aria-hidden="true"></span> Alumnos</h1>
                         </div></a>
-                    <a href="profesores.html"><div class="col-md-5 col-sm-5 col-xs-5 boton-inicio">
+                    <a href="/profesores"><div class="col-md-5 col-sm-5 col-xs-5 boton-inicio">
                     <h1 class="text-center h1"><span class="fa fa-briefcase fa-1x" aria-hidden="true"></span> Profesores</h1>
                         </div></a>
-                    <a href="materias.html"><div class="col-md-5 col-sm-5 col-xs-5 boton-inicio">
+                    <a href="/materias"><div class="col-md-5 col-sm-5 col-xs-5 boton-inicio">
                     <h1 class="text-center h1"><span class="fa fa-book fa-1x" aria-hidden="true"></span> Materias</h1>
                         </div></a>
                     

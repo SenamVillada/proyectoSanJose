@@ -47,5 +47,5 @@ def materias(request):
 #---------------------------------------END MATERIAS-----------------------------------------
 #---------------------------------------PROFESORES---------------------------------------------
 def profesores(request):
-    return render_to_response("profesores1.html", RequestContext(request))
+    return render_to_response("profesores.html", RequestContext(request))
 #---------------------------------------END PROFESORES-----------------------------------------

@@ -51,7 +51,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
 	'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join('/home/agustin/Documentos/Carpetas del cole/7mo/Programacion/proyectoSanJose', 'sanjose.db'),
+        'NAME': os.path.join('../proyectoSanJose', 'sanjose.db'),
         #'ENGINE': 'django.db.backends.mysql',
         #'NAME': 'senam123',
         #'USER': 'senam123',
