@@ -127,30 +127,16 @@
 					</tr>
 				</thead>
 				<tbody class="searcheable">
+                    {% for Materia in materias %}
 					<tr>
-                        <td>Mates</td>
+                        <td>{{ Materia.nombre }}</td>
                         <td>10:30 a 11:30</td>
-                        <td>Pepe</td>
-                        <td>Quisio</td>
-						<td>Quisio</td>
+                        <td>-e</td>
+                        <td>{{ Materia.tipo }}</td>
+						<td>-</td>
 						<td><button type="submit" name="editar" class="btn btn-primary">Editar</button></td>
                     </tr>
-                    <tr>
-                        <td>Español</td>
-                        <td>10:30 a 11:30</td>
-                        <td>Manolo</td>
-                        <td>Quisio</td>
-						<td>Quisio</td>
-						<td><button type="submit" name="editar" class="btn btn-primary">Editar</button></td> 
-                    </tr>
-                    <tr>
-                        <td>History</td>
-                        <td>10:30 a 11:30</td>
-                        <td>Pepe</td>
-                        <td>Quisio</td>
-						<td>Quisio</td>
-						<td><button type="submit" name="editar" class="btn btn-primary">Editar</button></td>
-                    </tr>
+                    {% endfor %}
 				</tbody>
 				</table>
                     <button type="submit" name="crear" class="btn btn-primary">Crear</button>
