@@ -6,7 +6,7 @@ class Cargo(models.Model):
     fechaAlta = models.DateField("Fecha de Alta")
     fechaBaja = models.DateField("Fecha de Baja")
 
-    def __unicode__():
+    def __str__(self):
         return self.nombre
 
 class Persona(User):
@@ -22,7 +22,11 @@ class Persona(User):
     lugarNacimiento = models.CharField("Lugar de Nacimiento", max_length=50)
     telefonoFijo = models.IntegerField("Telefono Fijo")
     telefonoMovil = models.IntegerField("Telefono Celular")
-    sexo = models.CharField("Sexo", max_length=1)
+    sexoOpciones = (
+            ('masculino', 'Masculino'),
+            ('femenino', 'Femenino'))
+    sexo = models.CharField("Sexo", max_length=16, choices=sexoOpciones, default='masculino')
+    
 
 class Alumno(Persona):
     lugarDeTrabajo = models.CharField("Lugar de Trabajo", max_length=50)
@@ -41,7 +45,7 @@ class Profesor(Persona):
     titulo = models.CharField("Titulo",max_length=200)
     cargo = models.ForeignKey(Cargo)
     
-    def __unicode__(self):
+    def __str__(self):
 	    return self.last_name + ", " + self.first_name
 
 class Licencia(models.Model):
@@ -52,8 +56,8 @@ class Licencia(models.Model):
 
 class Materia(models.Model):
     nombre = models.CharField("Nombre de la Materia", max_length=30)
-    correlativasCursado = models.ManyToManyField('self')
-    correlativasRendir = models.ManyToManyField('self')
+    correlativasCursado = models.ManyToManyField('self',blank=True, null=True)
+    correlativasRendir = models.ManyToManyField('self',blank=True, null=True)
     tipoOpciones = (
         	('asignatura', 'Asignatura'),
         	('seminario', 'Seminario'),
