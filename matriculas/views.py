@@ -35,7 +35,6 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
-<<<<<<< HEAD
 #---------------------------------------END LOGOUT-----------------------------------------
 #---------------------------------------ERROR LOGIN---------------------------------------------
 def error_login(request):
@@ -43,9 +42,6 @@ def error_login(request):
 #---------------------------------------END ERROR LOGIN-----------------------------------------
 #---------------------------------------Alumnos---------------------------------------------
 @login_required(login_url='/login')
-=======
-
->>>>>>> 7be1d9859f3f0706025ae292e7b59227d8ed0ee2
 def alumnos(request):
 
     if request.method == 'POST':
@@ -65,7 +61,6 @@ def materias(request):
 
 def profesores(request):
     return render_to_response("profesores.html", RequestContext(request))
-<<<<<<< HEAD
 #---------------------------------------END PROFESORES-----------------------------------------
 #---------------------------------------MOSTRAR MATERIAS---------------------------------------------
 def mostrarMaterias(request):
@@ -73,5 +68,3 @@ def mostrarMaterias(request):
     return render_to_response('materias.html', {"materias":materias}, context)
     
 #---------------------------------------END PROFESORES-----------------------------------------
-=======
->>>>>>> 7be1d9859f3f0706025ae292e7b59227d8ed0ee2
