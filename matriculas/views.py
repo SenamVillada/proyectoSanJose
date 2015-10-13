@@ -29,7 +29,7 @@ def user_login(request):
                 return HttpResponse("Tu cuenta no esta habilitada")
         else:
             print "Invalid login details: {0}, {1}".format(username, password)
-            return HttpResponseRedirect('../error')
+            return HttpResponseRedirect('/error_login')
     else:
         return render_to_response('login.html', {}, context)
 #---------------------------------------END LOGIN------------------------------------------
@@ -38,6 +38,10 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 #---------------------------------------END LOGOUT-----------------------------------------
+#---------------------------------------ERROR LOGIN---------------------------------------------
+def error_login(request):
+    return render_to_response("errorLogin.html", RequestContext(request))
+#---------------------------------------END ERROR LOGIN-----------------------------------------
 #---------------------------------------Alumnos---------------------------------------------
 @login_required(login_url='/login')
 def alumnos(request):
@@ -55,7 +59,7 @@ def profesores(request):
 #---------------------------------------END PROFESORES-----------------------------------------
 #---------------------------------------MOSTRAR MATERIAS---------------------------------------------
 def mostrarMaterias(request):
-    materias = materias.objects
+    materias = Materia.objects.all()
     return render_to_response('materias.html', {"materias":materias}, context)
     
 #---------------------------------------END PROFESORES-----------------------------------------
