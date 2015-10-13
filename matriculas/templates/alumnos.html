@@ -124,54 +124,14 @@
                             </thead>
                             <tbody>
                                 <!-- Lo que contiene la tabla -->
+                                {% for matricula in materias %}
                                 <tr>
-                                    <td>Lengua</td>
-                                    <td>Regular</td>
+                                    <td>{{ matricula.materia.nombre }}</td>
+                                    <td></td>
                                     <td>80%</td>
                                     <td>Si</td>
                                 </tr>
-                                <tr>
-                                    <td>Matematicas</td>
-                                    <td>Regular</td>
-                                    <td>95%</td>
-                                    <td>Si</td>
-                                  </tr>
-                                <tr>
-                                    <td>Historia</td>
-                                    <td>Libre</td>
-                                    <td>0%</td>
-                                    <td>Si</td>
-                                </tr>
-                                <tr>
-                                    <td>Fisica</td>
-                                    <td>Libre</td>
-                                    <td>0%</td>
-                                    <td>Si</td>
-                                </tr>
-                                <tr>
-                                    <td>Lengua</td>
-                                    <td>Regular</td>
-                                    <td>80%</td>
-                                    <td>Si</td>
-                                </tr>
-                                <tr>
-                                    <td>Matematicas</td>
-                                    <td>Regular</td>
-                                    <td>95%</td>
-                                    <td>Si</td>
-                                  </tr>
-                                <tr>
-                                    <td>Historia</td>
-                                    <td>Libre</td>
-                                    <td>0%</td>
-                                    <td>Si</td>
-                                </tr>
-                                <tr>
-                                    <td>Fisica</td>
-                                    <td>Libre</td>
-                                    <td>0%</td>
-                                    <td>Si</td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                         </div>
