@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
@@ -37,18 +38,18 @@ def user_logout(request):
     return HttpResponseRedirect('/')
 
 def alumnos(request):
-
+    alumnos = Alumno.objects.all()
     if request.method == 'POST':
         try:
             dni = request.POST['buscarAlumnoDni']
             alumno = Alumno.objects.get(dni = dni)
-            return render_to_response("alumnos.html",{'alumno':alumno}, RequestContext(request))
-
+            materias = alumno.matricula_set.all()
+            return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
         except:
             print error
-            return render_to_response("alumnos.html",{'errorAlumno':True}, RequestContext(request))
+            return render_to_response("alumnos.html",{'errorAlumno':True, 'alumnos':alumnos}, RequestContext(request))
 
-    return render_to_response("alumnos.html", RequestContext(request))
+    return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
 
 def materias(request):
     return render_to_response("materias.html", RequestContext(request))

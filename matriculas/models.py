@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -32,9 +33,16 @@ class Alumno(Persona):
     lugarDeTrabajo = models.CharField("Lugar de Trabajo", max_length=50)
     horaDeTrabajo = models.CharField("Horario de Trabajo", max_length=200)
     paternidad = models.BooleanField("Paternidad")
+    anioEgreso = models.IntegerField("Año de Egreso", blank=True, null=True)
     
     def __unicode__(self):
 	    return self.last_name + ", " + self.first_name
+
+    def egreso(self):
+        if (self.anioEgreso != None):
+            return True
+        else:
+            return False
 
 class Profesor(Persona):
     cuil = models.IntegerField("CUIL")
