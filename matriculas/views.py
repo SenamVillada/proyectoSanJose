@@ -11,7 +11,6 @@ from matriculas.models import *
 def index(request):
     return render_to_response("inicio.html", RequestContext(request))
 
-#---------------------------------------LOGIN---------------------------------------------
 def user_login(request):
     context = RequestContext(request)
 
@@ -32,11 +31,11 @@ def user_login(request):
             return HttpResponseRedirect('/error_login')
     else:
         return render_to_response('login.html', {}, context)
-#---------------------------------------END LOGIN------------------------------------------
-#---------------------------------------LOGOUT---------------------------------------------
+
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
+<<<<<<< HEAD
 #---------------------------------------END LOGOUT-----------------------------------------
 #---------------------------------------ERROR LOGIN---------------------------------------------
 def error_login(request):
@@ -44,18 +43,29 @@ def error_login(request):
 #---------------------------------------END ERROR LOGIN-----------------------------------------
 #---------------------------------------Alumnos---------------------------------------------
 @login_required(login_url='/login')
+=======
+
+>>>>>>> 7be1d9859f3f0706025ae292e7b59227d8ed0ee2
 def alumnos(request):
+
+    if request.method == 'POST':
+        try:
+            dni = request.POST['buscarAlumnoDni']
+            alumno = Alumno.objects.get(dni = dni)
+            return render_to_response("alumnos.html",{'alumno':alumno}, RequestContext(request))
+
+        except:
+            print error
+            return render_to_response("alumnos.html",{'errorAlumno':True}, RequestContext(request))
+
     return render_to_response("alumnos.html", RequestContext(request))
-#---------------------------------------END Alumnos-----------------------------------------
-#---------------------------------------MATERIAS---------------------------------------------
-@login_required(login_url='/login')
+
 def materias(request):
     return render_to_response("materias.html", RequestContext(request))
-#---------------------------------------END MATERIAS-----------------------------------------
-#---------------------------------------PROFESORES---------------------------------------------
-@login_required(login_url='/login')
+
 def profesores(request):
     return render_to_response("profesores.html", RequestContext(request))
+<<<<<<< HEAD
 #---------------------------------------END PROFESORES-----------------------------------------
 #---------------------------------------MOSTRAR MATERIAS---------------------------------------------
 def mostrarMaterias(request):
@@ -63,3 +73,5 @@ def mostrarMaterias(request):
     return render_to_response('materias.html', {"materias":materias}, context)
     
 #---------------------------------------END PROFESORES-----------------------------------------
+=======
+>>>>>>> 7be1d9859f3f0706025ae292e7b59227d8ed0ee2

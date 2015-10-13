@@ -83,7 +83,7 @@
                 <!-- Tamaño del div es de 12 -->
                 <div class="col-lg-12">
                     <center><h2>Administracion de alumnos</h2></center>
-                    <center><h5>Bienvenido al sistema <b>seba</b> !</h5></center> 
+                    <center><h5>Bienvenido al sistema <b>{{user.username}}</b> !</h5></center> 
                 </div>
             </div>
         </div>
@@ -98,11 +98,11 @@
                             Alumnos
                         </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form role="form" method="post">{% csrf_token %}
                             <div class="col-lg-5">
                                 <!-- Buscardor de alumnos -->
                                 <div class="form-group">
-                                    <input class="form-control" type="text" id="buscar" placeholder="DNI del alumno" style="margin-top:10px">
+                                    <input class="form-control" type="text" name="buscarAlumnoDni" id="buscarAlumnoDni" placeholder="DNI del alumno" value="{{alumno.dni}}" style="margin-top:10px">
                                 </div>
                             </div>
                             <div class="col-lg-7">
@@ -148,6 +148,30 @@
                                     <td>0%</td>
                                     <td>Si</td>
                                 </tr>
+                                <tr>
+                                    <td>Lengua</td>
+                                    <td>Regular</td>
+                                    <td>80%</td>
+                                    <td>Si</td>
+                                </tr>
+                                <tr>
+                                    <td>Matematicas</td>
+                                    <td>Regular</td>
+                                    <td>95%</td>
+                                    <td>Si</td>
+                                  </tr>
+                                <tr>
+                                    <td>Historia</td>
+                                    <td>Libre</td>
+                                    <td>0%</td>
+                                    <td>Si</td>
+                                </tr>
+                                <tr>
+                                    <td>Fisica</td>
+                                    <td>Libre</td>
+                                    <td>0%</td>
+                                    <td>Si</td>
+                                </tr>
                             </tbody>
                         </table>
                         </div>
@@ -158,32 +182,42 @@
                     <div class="col-lg-6 informacion-alumno">
                         <form role="form">
                             <div class="form-group">
-                                <label for="nombre">Nombre/s:</label>
+                                <label for="nombre">Nombre/s: </label> {{alumno.first_name}}
                             </div>
                             <div class="form-group">
-                                <label for="nombre">Apellido:</label>
+                                <label for="nombre">Apellido: </label> {{alumno.last_name}}
                             </div>
                             <div class="form-group">
-                                <label for="nombre">DNI:</label>
+                                <label for="nombre">DNI: </label> {{alumno.dni}}
                             </div>
                             <div class="form-group">
-                                <label for="nombre">Teléfono:</label>
+                                <label for="nombre">Sexo: </label> {{alumno.sexo}}
                             </div>
                             <div class="form-group">
-                                <label for="nombre">Dirección:</label>
+                                <label for="nombre">Teléfono: </label> {{alumno.telefonoFijo}} / {{alumno.telefonoMovil}}
                             </div>
                             <div class="form-group">
-                                <label for="nombre">Legajo:</label>
+                                <label for="nombre">Dirección: </label> {{alumno.domicilio}}
                             </div>
                             <div class="form-group">
-                                <label for="nombre">Paternidad:</label>
+                                <label for="nombre">Estado Civil: </label> {{alumno.estadoCivil}}
                             </div>
                             <div class="form-group">
-                                <label for="nombre">Fecha de nacimiento:</label>
+                                <label for="nombre">E-mail: </label> <a href="mailto:{{alumno.email}}">{{alumno.email}}</a>
                             </div>
                             <div class="form-group">
-                                <label for="nombre">Ocupación:</label>
+                                <label for="nombre">Fecha de nacimiento: </label> {{alumno.lugarNacimiento}}, {{alumno.fechaNacimiento.day}}/{{alumno.fechaNacimiento.month}}/{{alumno.fechaNacimiento.year}}
                             </div>
+                            <div class="form-group">
+                                <label for="nombre">Lugar de Trabajo: </label> {{alumno.lugarDeTrabajo}}
+                            </div>
+                            <div class="form-group">
+                                <label for="nombre">Hora de Trabajo: </label> {{alumno.horaDeTrabajo}}
+                            </div>
+                            <div class="form-group">
+                                <label for="nombre">Paternidad: </label> {% if alumno.paternidad %}Sí{% else %}No{% endif %}
+                            </div>
+                            
                         </form>
                     </div>
                 </div>
