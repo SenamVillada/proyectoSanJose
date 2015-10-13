@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
+from matriculas.models import *
 
 # Create your views here.
 @login_required(login_url='/login')
@@ -38,14 +39,23 @@ def user_logout(request):
     return HttpResponseRedirect('/')
 #---------------------------------------END LOGOUT-----------------------------------------
 #---------------------------------------Alumnos---------------------------------------------
+@login_required(login_url='/login')
 def alumnos(request):
     return render_to_response("alumnos.html", RequestContext(request))
 #---------------------------------------END Alumnos-----------------------------------------
 #---------------------------------------MATERIAS---------------------------------------------
+@login_required(login_url='/login')
 def materias(request):
     return render_to_response("materias.html", RequestContext(request))
 #---------------------------------------END MATERIAS-----------------------------------------
 #---------------------------------------PROFESORES---------------------------------------------
+@login_required(login_url='/login')
 def profesores(request):
     return render_to_response("profesores.html", RequestContext(request))
+#---------------------------------------END PROFESORES-----------------------------------------
+#---------------------------------------MOSTRAR MATERIAS---------------------------------------------
+def mostrarMaterias(request):
+    materias = materias.objects
+    return render_to_response('materias.html', {"materias":materias}, context)
+    
 #---------------------------------------END PROFESORES-----------------------------------------
