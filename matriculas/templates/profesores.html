@@ -129,34 +129,15 @@
                                         </tr>
                                     </thead>
                                     <tbody class="searcheable">
+                                        {% for profesor in profesores %}
                                         <tr>
-                                            <td>Pablo Canepa</td>
-                                            <td>F.A.T.</td>
-                                            <td>Martes y Jueves</td>
+                                            <td>{{profesor.name}}</td>
+                                            <td>-</td>
+                                            <td>-</td>
                                             <td><a href="#"><i class="fa fa-eye" title="Más información" ></i></a></td>
                                             <td><a href="#" style="margin-left:12%"><i class="fa fa-pencil" title="Más información" ></i></a></td>
                                         </tr>
-                                        <tr>
-                                            <td>Nicolas Ledesma</td>
-                                            <td>F.A.T.</td>
-                                            <td>Martes y Jueves</td>
-                                            <td><a href="#"><i class="fa fa-eye" title="Más información"></i></a></td>
-                                            <td><a href="#" style="margin-left:12%"><i class="fa fa-pencil" title="Más información" ></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Javier Guinard</td>
-                                            <td>Nuevas Tecnologias</td>
-                                            <td>Miercoles</td>
-                                            <td><a href="#"><i class="fa fa-eye" title="Más información"></i></a></td>
-                                            <td><a href="#" style="margin-left:12%"><i class="fa fa-pencil" title="Más información" ></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Melisa Saucedo</td>
-                                            <td>Ingles</td>
-                                            <td>Martes y Jueves</td>
-                                            <td><a href="#"><i class="fa fa-eye" title="Más información"></i></a></td>
-                                            <td><a href="#" style="margin-left:12%"><i class="fa fa-pencil" title="Más información" ></i></a></td>
-                                        </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                                 </div>

@@ -57,14 +57,10 @@ def alumnos(request):
     return render_to_response("alumnos.html", RequestContext(request))
 
 def materias(request):
-    return render_to_response("materias.html", RequestContext(request))
+    materias = Materia.objects.all()
+    return render_to_response('materias.html', {"materias":materias},RequestContext(request))
 
 def profesores(request):
-    return render_to_response("profesores.html", RequestContext(request))
-#---------------------------------------END PROFESORES-----------------------------------------
-#---------------------------------------MOSTRAR MATERIAS---------------------------------------------
-def mostrarMaterias(request):
-    materias = Materia.objects.all()
-    return render_to_response('materias.html', {"materias":materias}, context)
-    
+    profesores = Profesor.objects.all()
+    return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
 #---------------------------------------END PROFESORES-----------------------------------------

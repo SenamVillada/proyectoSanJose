@@ -38,7 +38,7 @@ class Alumno(Persona):
 
 class Profesor(Persona):
     cuil = models.IntegerField("CUIL")
-    curriculum = models.FileField("Curriculum",upload_to='curriculums/%Y/%m')
+    curriculum = models.FileField("Curriculum",upload_to='curriculums/%Y/%m',blank=True)
     fechaEscalafon = models.DateField("Fecha de Escalafon")
     fechaAptoPsicofisico = models.DateField("Fecha del Apto Psicofisico")
     numeroRegistro = models.IntegerField("Numero de Registro")

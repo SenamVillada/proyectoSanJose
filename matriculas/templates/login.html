@@ -13,29 +13,29 @@
     <title>Instituo San Jose</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="{% static "css/admin/bootstrap.min.css" %}" rel="stylesheet" />
+    <link href="{% static 'css/admin/bootstrap.min.css' %}" rel="stylesheet" />
 
     <!-- MetisMenu CSS -->
-    <link href="{% static "css/plugins/metisMenu/metisMenu.min.css" %}" rel="stylesheet">
+    <link href="{% static 'css/plugins/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="{% static "fonts/font-awesome/fonts/font-awesome-4.1.0/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fonts/font-awesome/fonts/font-awesome-4.1.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     
-    <link href="{% static "img/admin/logo.png" %}" rel='shortcut icon' type='image/png'>
+    <link href="{% static 'img/admin/logo.png' %}" rel='shortcut icon' type='image/png'>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<!-- BOOTSTRAP STYLES-->
-    <link href="{% static "css/admin/bootstrap.css" %}" rel="stylesheet" />
-    <link href="{% static "css/admin/bootstrap.min.css" %}" rel="stylesheet" />
+    <link href="{% static 'css/admin/bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/admin/bootstrap.min.css' %}" rel="stylesheet" />
      <!-- FONTAWESOME STYLES
     <link href=" css/admin/font-awesome.css" rel="stylesheet" />-->
      <!-- MORRIS CHART STYLES
     <link href=" js/ morris/morris-0.4.3.min.css" rel="stylesheet" />-->
         <!-- CUSTOM STYLES-->
-    <link href="{% static "css/admin/custom.css" %}" rel="stylesheet" />
+    <link href="{% static 'css/admin/custom.css' %}" rel="stylesheet" />
      <!-- GOOGLE FONTS-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -43,17 +43,11 @@
  
 </head>
 
-<body>
-    <div id="page-wrapper" style="padding-bottom: 25px; margin-left:0px;">
-    <div id="page-inner" style="margin: 0px 0px 0px 0px; padding:  0px 0px 0px 0px;">
-    <div class="container">
-	<div class="row" style="padding:0px 3px 0px 3px;">
-	    <div class="col-md-4 col-md-offset-4 centrar">
-            <img src="{% static "img/admin/logo.png" %}">
-		<div class="login-panel panel panel-default logincentrado" style="margin-top: 0px;border-top-width: 0px;border-bottom-width: 0px;margin-bottom: 0px;">
-		    <div class="panel-heading">
-			<h2 class="panel-title">Loguearse</h2>
-		    </div>
+<body style="background:#FAFAFA;">
+    <div class="col-md-4 col-md-offset-4 centrar" style="padding:30px; background:#C9FFC9; border: 3px solid #C9FFC9; border-radius: 15px; margin-top:20px;">
+            <img src="{% static 'img/admin/logo.png' %}">
+		<div style="margin-top: 0px;border-top-width: 0px;border-bottom-width: 0px;margin-bottom: 0px;">
+			<h2 style="color:grey;">Login</h2>
 		    <div class="panel-body">
 			<form action="" role="form" method="POST">
                 {% csrf_token %}
@@ -72,18 +66,14 @@
 		    </div>
 		</div>
 	    </div>
-	</div>
-    </div>
-        </div>
-        </div>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="{% static "plugins/metisMenu/metisMenu.min.js" %}"></script>
+    <script src="{% static 'plugins/metisMenu/metisMenu.min.js' %}"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="{% static "js/sb-admin-2.js" %}"></script>
+    <script src="{% static 'js/sb-admin-2.js' %}"></script>
 
 </body>
