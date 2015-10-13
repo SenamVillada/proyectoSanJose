@@ -4,33 +4,33 @@
 
 <head>
     
-    <link href="{% static "img/admin/logo.png" %}" rel='shortcut icon' type='image/png'>
+    <link href="{% static 'img/admin/logo.png' %}" rel='shortcut icon' type='image/png'>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inicio</title>
+    <title>Materias</title>
 	<!-- BOOTSTRAP STYLES-->
-    <link href="{% static "css/admin/bootstrap.css" %}" rel="stylesheet" />
+    <link href="{% static 'css/admin/bootstrap.css' %}" rel="stylesheet" />
      <!-- FONTAWESOME STYLES-->
-    <link href="{% static "fonts/font-awesome/css/font-awesome.css" %}" rel="stylesheet" />
+    <link href="{% static 'fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
      <!-- MORRIS CHART STYLES
     <link href=" js/ morris/morris-0.4.3.min.css" rel="stylesheet" />-->
         <!-- CUSTOM STYLES-->
-    <link href="{% static "css/admin/custom.css" %}" rel="stylesheet" />
+    <link href="{% static 'css/admin/custom.css' %}" rel="stylesheet" />
      <!-- GOOGLE FONTS-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     
-    <script src="{% static "js/jquery.js" %}"></script> 
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static 'js/jquery.js' %}"></script> 
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 	
 	    <!-- jQuery Version 1.11.0 -->
-    <script src="{% static "js/jquery-1.11.0.js" %}"></script>
+    <script src="{% static 'js/jquery-1.11.0.js' %}"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
     
     <!-- jQueryUi Version 1.8 -->
-    <script src="{% static "js/jquery-ui.js" %}"></script>
+    <script src="{% static 'js/jquery-ui.js' %}"></script>
     
-    <script src="{% static "js/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
     <script type="text/javascript">
 	// Tabla de alumnos
 	$(document).ready(function () {
@@ -127,30 +127,16 @@
 					</tr>
 				</thead>
 				<tbody class="searcheable">
+                    {% for Materia in materias %}
 					<tr>
-                        <td>Mates</td>
+                        <td>{{ Materia }}</td>
                         <td>10:30 a 11:30</td>
-                        <td>Pepe</td>
-                        <td>Quisio</td>
-						<td>Quisio</td>
+                        <td>-</td>
+                        <td>{{ Materia.tipo }}</td>
+						<td>-</td>
 						<td><button type="submit" name="editar" class="btn btn-primary">Editar</button></td>
                     </tr>
-                    <tr>
-                        <td>Español</td>
-                        <td>10:30 a 11:30</td>
-                        <td>Manolo</td>
-                        <td>Quisio</td>
-						<td>Quisio</td>
-						<td><button type="submit" name="editar" class="btn btn-primary">Editar</button></td> 
-                    </tr>
-                    <tr>
-                        <td>History</td>
-                        <td>10:30 a 11:30</td>
-                        <td>Pepe</td>
-                        <td>Quisio</td>
-						<td>Quisio</td>
-						<td><button type="submit" name="editar" class="btn btn-primary">Editar</button></td>
-                    </tr>
+                    {% endfor %}
 				</tbody>
 				</table>
                     <button type="submit" name="crear" class="btn btn-primary">Crear</button>
