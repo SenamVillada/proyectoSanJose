@@ -4,13 +4,13 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
+from matriculas.models import *
 
 # Create your views here.
 @login_required(login_url='/login')
 def index(request):
     return render_to_response("inicio.html", RequestContext(request))
 
-#---------------------------------------LOGIN---------------------------------------------
 def user_login(request):
     context = RequestContext(request)
 
@@ -31,21 +31,27 @@ def user_login(request):
             return HttpResponseRedirect('../error')
     else:
         return render_to_response('login.html', {}, context)
-#---------------------------------------END LOGIN------------------------------------------
-#---------------------------------------LOGOUT---------------------------------------------
+
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
-#---------------------------------------END LOGOUT-----------------------------------------
-#---------------------------------------Alumnos---------------------------------------------
+
 def alumnos(request):
+
+    if request.method == 'POST':
+        try:
+            dni = request.POST['buscarAlumnoDni']
+            alumno = Alumno.objects.get(dni = dni)
+            return render_to_response("alumnos.html",{'alumno':alumno}, RequestContext(request))
+
+        except:
+            print error
+            return render_to_response("alumnos.html",{'errorAlumno':True}, RequestContext(request))
+
     return render_to_response("alumnos.html", RequestContext(request))
-#---------------------------------------END Alumnos-----------------------------------------
-#---------------------------------------MATERIAS---------------------------------------------
+
 def materias(request):
     return render_to_response("materias.html", RequestContext(request))
-#---------------------------------------END MATERIAS-----------------------------------------
-#---------------------------------------PROFESORES---------------------------------------------
+
 def profesores(request):
     return render_to_response("profesores.html", RequestContext(request))
-#---------------------------------------END PROFESORES-----------------------------------------
