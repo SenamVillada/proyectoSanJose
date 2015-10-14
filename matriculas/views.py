@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
@@ -35,32 +36,47 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
+<<<<<<< HEAD
 #---------------------------------------END LOGOUT-----------------------------------------
 #---------------------------------------ERROR LOGIN---------------------------------------------
+=======
+
+>>>>>>> 20d4e6a4ad661769d027ab2c50faf36aa07669cc
 def error_login(request):
     return render_to_response("errorLogin.html", RequestContext(request))
-#---------------------------------------END ERROR LOGIN-----------------------------------------
-#---------------------------------------Alumnos---------------------------------------------
-@login_required(login_url='/login')
-def alumnos(request):
 
+@login_required(login_url='/login')
+<<<<<<< HEAD
+=======
+
+>>>>>>> 20d4e6a4ad661769d027ab2c50faf36aa07669cc
+def alumnos(request):
+    alumnos = Alumno.objects.all()
     if request.method == 'POST':
         try:
             dni = request.POST['buscarAlumnoDni']
             alumno = Alumno.objects.get(dni = dni)
-            return render_to_response("alumnos.html",{'alumno':alumno}, RequestContext(request))
-
+            materias = alumno.matricula_set.all()
+            return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
         except:
             print error
-            return render_to_response("alumnos.html",{'errorAlumno':True}, RequestContext(request))
+            return render_to_response("alumnos.html",{'errorAlumno':True, 'alumnos':alumnos}, RequestContext(request))
 
-    return render_to_response("alumnos.html", RequestContext(request))
+    return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
 
 def materias(request):
     materias = Materia.objects.all()
     return render_to_response('materias.html', {"materias":materias},RequestContext(request))
 
 def profesores(request):
+<<<<<<< HEAD
     profesores = Profesor.objects.all()
     return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
 #---------------------------------------END PROFESORES-----------------------------------------
+=======
+    return render_to_response("profesores.html", RequestContext(request))
+
+def mostrarMaterias(request):
+    materias = Materia.objects.all()
+    return render_to_response('materias.html', {"materias":materias}, context)
+>>>>>>> 20d4e6a4ad661769d027ab2c50faf36aa07669cc
