@@ -123,51 +123,36 @@
 					  <th>Profesor</th>
 					  <th>Tipo</th>
 					  <th>Correlatividades</th>
+                      <th>Editar</th>
 					</tr>
 				</thead>
 				<tbody class="searcheable">
-                    {% for matricula in matriculas %}
+                    {% for materia in materias %}
 					<tr>
-                        <td>{{ matricula.materia.nombre }}</td>
-                        <td>10:30 a 11:30</td>
-                        <td>-</td>
+                        <td>{{ materia.nombre }}</td>
+                        <td>{{ materia.horario }}</td>
                         <td>{{ materia.tipo }}</td>
-						<td>-</td>
-						<td><button type="submit" name="editar" class="btn btn-primary">Editar</button></td>
+						<td><strong>Correlativas de Cursado:</strong> {% for correlativa in materia.correlativasCursado.all %}
+                            <br>{{ correlativa.nombre }}
+                            {% endfor %}
+                            <br><strong>Correlativas de Rendir:</strong> 
+                            {% for correlativa in materia.correlativasRendir.all %}<br>{{ correlativa.nombre }}
+                            {% endfor %}</td>
+						<td>
+                            <a href="{{ BASE_URL }}/admin/matriculas/materia/{{materia.id}}" target="_blank" class="btn btn-primary">Editar</button>    
+                        </td>
                     </tr>
                     {% endfor %}
 				</tbody>
 				</table>
-                    <button type="submit" name="crear" class="btn btn-primary">Crear</button>
-				
-				    <form role="form" method="post">
-				      <br />
-				    </form>
+                    <a href="{{ BASE_URL }}/admin/matriculas/materia/add" target="_blank" class="btn btn-primary">Crear</a> 
 			    </div>
 			</div>
 		    </div>
 		</div>
-        </div>
-             <!-- /. PAGE INNER  -->
-            </div>
-         <!-- /. PAGE WRAPPER  -->
-        </div>
-        
-     <!-- /. WRAPPER  -->
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS 
-    <script src="assets/js/jquery-1.10.2.js"></script>-->
-      <!-- BOOTSTRAP SCRIPTS 
-    <script src="assets/js/bootstrap.min.js"></script>-->
-    <!-- METISMENU SCRIPTS 
-    <script src="assets/js/jquery.metisMenu.js"></script>-->
-     <!-- MORRIS CHART SCRIPTS 
-     <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-    <script src="assets/js/morris/morris.js"></script>-->
-      <!-- CUSTOM SCRIPTS 
-    <script src="assets/js/custom.js"></script>-->
-    
-   
+    </div>
+    </div>
+</div>   
 </body>
     
 </html>

@@ -7,6 +7,8 @@ from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from matriculas.models import *
 
+
+
 # Create your views here.
 @login_required(login_url='/login')
 def index(request):
@@ -56,8 +58,9 @@ def alumnos(request):
 
 @login_required(login_url='/login')
 def materias(request):
-    matriculas = Matricula.objects.all().values('materia', 'profesor').distinct()
-    return render_to_response('materias.html', {"matriculas":matriculas},RequestContext(request))
+    materiasTotal = Materia.objects.all()
+    print materiasTotal
+    return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
 
 @login_required(login_url='/login')
 def profesores(request):

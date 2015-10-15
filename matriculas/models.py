@@ -73,6 +73,7 @@ class Materia(models.Model):
     nombre = models.CharField("Nombre de la Materia", max_length=30)
     correlativasCursado = models.ManyToManyField('self',blank=True)
     correlativasRendir = models.ManyToManyField('self',blank=True)
+    profesor = models.ForeignKey(Profesor)
     tipoOpciones = (
         	('asignatura', 'Asignatura'),
         	('seminario', 'Seminario'),
@@ -92,7 +93,6 @@ class Matricula(models.Model):
     horario = models.CharField("Horario", max_length=200)
     aprobada = models.BooleanField("Aprobada?")
     alumno = models.ForeignKey(Alumno)
-    profesor = models.ForeignKey(Profesor)
     materia = models.ForeignKey(Materia)
     finalizada = models.BooleanField("Finalizada?", default="False")
 
