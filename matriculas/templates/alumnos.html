@@ -86,6 +86,11 @@
                     <center><h5>Bienvenido al sistema <b>{{user.username}}</b> !</h5></center> 
                 </div>
             </div>
+            {% if errorAlumno %}
+            <div class="alert alert-danger">
+                <strong>Error: </strong>No se ha encontrado el alumno.
+            </div>
+            {% endif %}
         </div>
         <!-- Seccion alumnos -->
         <div id="page-inner">
@@ -119,7 +124,6 @@
                                     <th>Materia</th>
                                     <th>Condición</th>
                                     <th>Asistencia</th>
-                                    <th>Matricula</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -127,9 +131,8 @@
                                 {% for matricula in materias %}
                                 <tr>
                                     <td>{{ matricula.materia.nombre }}</td>
-                                    <td></td>
-                                    <td>80%</td>
-                                    <td>Si</td>
+                                    <td>{{ matricula.condicion }}</td>
+                                    <td>{{ matricula.porcentajeAsistencia }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -140,6 +143,7 @@
                     </div>
                     <!-- Informacion general del alumno buscado -->
                     <div class="col-lg-6 informacion-alumno">
+                        {% if alumno %}
                         <div class="form-group">
                             <label for="nombre">Nombre/s: </label> {{alumno.first_name}}
                         </div>
@@ -182,6 +186,7 @@
                         <div class="form-group col-lg-offset-11">
                             <label for="nombre"><a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'>Editar</a></label>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -236,26 +241,7 @@
                 </div>
             </div>
         </div>
-         <!-- /. PAGE WRAPPER  -->
-    
-   
-        </div>
-        
-     <!-- /. WRAPPER  -->
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS 
-    <script src="assets/js/jquery-1.10.2.js"></script>-->
-      <!-- BOOTSTRAP SCRIPTS 
-    <script src="assets/js/bootstrap.min.js"></script>-->
-    <!-- METISMENU SCRIPTS 
-    <script src="assets/js/jquery.metisMenu.js"></script>-->
-     <!-- MORRIS CHART SCRIPTS 
-     <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-    <script src="assets/js/morris/morris.js"></script>-->
-      <!-- CUSTOM SCRIPTS 
-    <script src="assets/js/custom.js"></script>-->
-    
-   
+    </div>   
 </body>
     
 </html>

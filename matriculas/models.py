@@ -79,16 +79,34 @@ class Materia(models.Model):
     def verMateria(self):
         texto = "Nombre: "+self.nombre+"\nTipo de materia: "+self.tipo+"\nCorrelativas de cursado: "+self.correlativasCursado+"\nCorrelativas para rendir: "+self.correlativasRendir
         return texto
+
 class Matricula(models.Model):
-    anio = models.DateField(auto_now=True)
+    anio = models.IntegerField("Año")
     horario = models.CharField("Horario", max_length=200)
     aprobada = models.BooleanField("Aprobada?")
     alumno = models.ForeignKey(Alumno)
     profesor = models.ForeignKey(Profesor)
     materia = models.ForeignKey(Materia)
+    finalizada = models.BooleanField("Finalizada?", default="False")
 
     def __unicode__(self):
-        self.alumno.first_name + ", " + self.alumno.last_name + " - " + self.materia.nombre + " - " + str(self.anio)
+        return self.alumno.first_name + ", " + self.alumno.last_name + " - " + self.materia.nombre + " - " + str(self.anio)
+    
+    def condicion(self):
+        if (self.aprobada == True):
+            return "Aprobada"
+        if (self.esRegular == True):
+            return "Regular"
+        if (self.finalizada == True):
+            return "Desaprobada/Libre"
+        else:
+            return "Cursando"
+    
+    def porcentajeAsistencia(self):
+        return "80%"
+    
+    def esRegular(self):
+        return False
 
 class Asistencia(models.Model):
     fecha = models.DateField("Fecha", auto_now=True)

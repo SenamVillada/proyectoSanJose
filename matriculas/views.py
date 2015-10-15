@@ -50,7 +50,6 @@ def alumnos(request):
             materias = alumno.matricula_set.all()
             return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
         except:
-            print error
             return render_to_response("alumnos.html",{'errorAlumno':True, 'alumnos':alumnos}, RequestContext(request))
 
     return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
