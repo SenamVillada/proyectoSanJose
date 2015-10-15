@@ -36,20 +36,11 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
-<<<<<<< HEAD
-#---------------------------------------END LOGOUT-----------------------------------------
-#---------------------------------------ERROR LOGIN---------------------------------------------
-=======
 
->>>>>>> 20d4e6a4ad661769d027ab2c50faf36aa07669cc
 def error_login(request):
     return render_to_response("errorLogin.html", RequestContext(request))
 
 @login_required(login_url='/login')
-<<<<<<< HEAD
-=======
-
->>>>>>> 20d4e6a4ad661769d027ab2c50faf36aa07669cc
 def alumnos(request):
     alumnos = Alumno.objects.all()
     if request.method == 'POST':
@@ -69,14 +60,10 @@ def materias(request):
     return render_to_response('materias.html', {"materias":materias},RequestContext(request))
 
 def profesores(request):
-<<<<<<< HEAD
     profesores = Profesor.objects.all()
     return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
-#---------------------------------------END PROFESORES-----------------------------------------
-=======
     return render_to_response("profesores.html", RequestContext(request))
 
 def mostrarMaterias(request):
     materias = Materia.objects.all()
     return render_to_response('materias.html', {"materias":materias}, context)
->>>>>>> 20d4e6a4ad661769d027ab2c50faf36aa07669cc
