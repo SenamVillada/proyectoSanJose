@@ -9,7 +9,6 @@ __pycache__/
 
 #binario de la base de datos
 *.db
-*.sqlite
 
 # Distribution / packaging
 .Python
