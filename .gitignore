@@ -6,7 +6,8 @@ __pycache__/
 *.py~
 # C extensions
 *.so
-
+#carpeta migrations
+matriculas/migrations
 #binario de la base de datos
 *.db
 *.sqlite
