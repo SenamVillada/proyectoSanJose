@@ -1,82 +1,97 @@
-{% load staticfiles %}
+    
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-
 <head>
-    
-    <link href="{% static 'img/admin/logo.png' %}" rel='shortcut icon' type='image/png'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href='img/admin/logo.png' rel='shortcut icon' type='image/png'>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inicio</title>
 	<!-- BOOTSTRAP STYLES-->
-    <link href="{% static 'css/admin/bootstrap.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/admin/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="css/admin/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
      <!-- FONTAWESOME STYLES-->
-    <link href="{% static 'fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+   <!--<link href="css/font-awesome.min.css" rel="stylesheet" />-->
      <!-- MORRIS CHART STYLES
     <link href=" js/ morris/morris-0.4.3.min.css" rel="stylesheet" />-->
     <!-- CUSTOM STYLES-->
-    <link href="{% static 'css/admin/custom.css' %}" rel="stylesheet" />
+    <link href="css/admin/custom.css" rel="stylesheet" />
      <!-- GOOGLE FONTS-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Latest compiled and minified CSS -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/morris/raphael.min.js"></script>
+    <script src="js/plugins/morris/morris.min.js"></script>
+    <script src="js/plugins/morris/morris-data.js"></script>
+	    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
     
+    <!-- jQueryUi Version 1.8 -->
+    <script src="js/jquery-ui.js"></script>
+    
+    <script src="js/jquery.dataTables.min.js"></script>
 </head>
 <body>
     <!-- /. NAV TOP  -->
-    <nav class="navbar-default navbar-side" role="navigation">
-        <div class="centradodiv">
-            <div class="container-fluid">
-                <a href="/"><img src="{% static 'img/admin/logo.png' %}"></a>
-            </div>
-            <div class="container-fluid centrado" id="div-usuario" style="color:#fff;">
-                <span class="">Bienvenido/a, <span class="resaltado">{{user.username}}</span></span>
-                <br><a href="{% url 'matriculas:logout' %}">Salir</a>
-            </div>
-        </div>
+    <header class="cd-main-header">
+		<a href="#0" class="cd-logo"><img style="margin-top: 1%; margin-left: 1%;" src="img/admin/logo2.png" alt="Logo"></a>
+		<a href="#0" class="cd-nav-trigger"><span></span></a>
+
+		<nav class="cd-nav">
+			<ul class="cd-top-nav">
+			</ul>
+		</nav>
+	</header>
+	  <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
-                <ul class="nav" id="main-menu" >
+							<ul class="nav" id="main-menu" >
+							<div style="background: #1F5B1F; color:#ffffff;margin-bottom:1%;" >
+								<center><br><br><br><br><div>Bienvenido/a, </div><label><span class="resaltado">Judith</span></center></label>
+								<br><div href="">Salir</div></label>
+							</div>
                     <li>
-                        <a class="active-menu"  href="/"><i class="fa fa-desktop fa-2x"></i>Inicio</a>
+                        <a  class="active-menu" href="inicio.html"><i class="fa fa-home"></i>Inicio</a>
                     </li>
                     <li>
-                        <a  href="/alumnos"><i class="fa fa-user fa-2x"></i>Alumnos</a>
+                        <a  href="materias.html"><i class="fa fa-book"></i>Materias</a>
                     </li>
                     <li>
-                        <a  href="/profesores"><i class="fa fa-briefcase fa-2x"></i>Profesores</a>
+                        <a href="alumnos.html"><i class="fa fa-list"></i>Alumnos</a>
                     </li>
-                    <li>
-                        <a  href="/materias"><i class="fa fa-book fa-2x"></i>Materias</a>
+										<li>
+                        <a href="profesores.html"><i class="fa fa-list"></i>Profesores</a>
                     </li>
                 </ul>
             </div>
-            <div id="sub-footer" class="sub-footer">
-				Desarrollado por SENAM
-				<br><br>
-				Copyright © 2015 Instituto Parroquial San José.
-				<br><br>
-				Todos los Derechos Reservados.
-		</div>  
-    </nav>  
+    </nav>
         <!-- /. NAV SIDE  -->
         
         <div id="page-wrapper" >
-            <div id="page-inner">
+            <div id="page-inner" style="padding-bottom: 12%;">
                 <div class="row" >
                     <!-- <div class="col-md-12">
                     <h2>Administracion del Sistema</h2>   
                     <h5>Bienvenido al sistema <b>agustin</b> !</h5> -->
-                    <a href="/alumnos"><div class="col-md-5 col-sm-5 col-xs-5 boton-inicio">
-                    <h1 class="text-center h1"><span class="fa fa-user fa-1x" aria-hidden="true"></span> Alumnos</h1>
-                        </div></a>
-                    <a href="/profesores"><div class="col-md-5 col-sm-5 col-xs-5 boton-inicio">
-                    <h1 class="text-center h1"><span class="fa fa-briefcase fa-1x" aria-hidden="true"></span> Profesores</h1>
-                        </div></a>
-                    <a href="/materias"><div class="col-md-5 col-sm-5 col-xs-5 boton-inicio">
-                    <h1 class="text-center h1"><span class="fa fa-book fa-1x" aria-hidden="true"></span> Materias</h1>
-                        </div></a>
+                    <a href="alumnos.html">
+                        <div class="col-lg-4 col-sm-5 col-lg-offset-1 boton-inicio">
+                        <h1 class="verticalcenter h1"><span class="fa fa-user fa-1x" aria-hidden="true"></span> Alumnos</h1>
+                        </div>
+                    </a>
+                    <a href="profesores.html">
+                        <div class="col-lg-4 col-sm-5 col-lg-offset-1 boton-inicio">
+                        <h1 class="verticalcenter h1"><span class="fa fa-briefcase fa-1x" aria-hidden="true"></span> Profesores</h1>
+                        </div>
+                    </a>
+                    <a href="materias.html">
+                        <div class="col-lg-4 col-sm-5 col-lg-offset-1 boton-inicio">
+                        <h1 class="verticalcenter h1"><span class="fa fa-book fa-1x" aria-hidden="true"></span> Materias</h1>
+                        </div>
+                    </a>
                     
                 </div>
                  <!-- /. ROW  -->
@@ -85,6 +100,13 @@
                 </div>
             </div>
              <!-- /. PAGE INNER  -->
+	<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
+				    Desarrollado por SENAM
+            <br><br>
+            Copyright © 2015 Instituto Parroquial San José.
+            <br><br>
+            Todos los Derechos Reservados.
+				</footer>
         </div>
          <!-- /. PAGE WRAPPER  -->
         
@@ -104,5 +126,5 @@
     
    
 </body>
-
+    
 </html>
