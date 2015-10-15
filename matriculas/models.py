@@ -124,8 +124,7 @@ class Matricula(models.Model):
             return True
         else:
             return False
-        
-    
+
     def esRegular(self):
         return False
 

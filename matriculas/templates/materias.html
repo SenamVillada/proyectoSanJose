@@ -126,12 +126,12 @@
 					</tr>
 				</thead>
 				<tbody class="searcheable">
-                    {% for item in materias %}
+                    {% for matricula in matriculas %}
 					<tr>
-                        <td>{{ item.nombre }}</td>
+                        <td>{{ matricula.materia.nombre }}</td>
                         <td>10:30 a 11:30</td>
                         <td>-</td>
-                        <td>{{ item.tipo }}</td>
+                        <td>{{ materia.tipo }}</td>
 						<td>-</td>
 						<td><button type="submit" name="editar" class="btn btn-primary">Editar</button></td>
                     </tr>
