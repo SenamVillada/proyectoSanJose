@@ -44,13 +44,13 @@ def error_login(request):
 def alumnos(request):
     alumnos = Alumno.objects.all()
     if request.method == 'POST':
-        #try:
+        try:
             dni = request.POST['buscarAlumnoDni']
             alumno = Alumno.objects.get(dni = dni)
             materias = alumno.matricula_set.all()
             return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
-        #except:
-            #return render_to_response("alumnos.html",{'errorAlumno':True, 'alumnos':alumnos}, RequestContext(request))
+        except:
+            return render_to_response("alumnos.html",{'errorAlumno':True, 'alumnos':alumnos}, RequestContext(request))
 
     return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
 
