@@ -115,7 +115,7 @@
                                 <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/add" target='_blank'>Crear Nuevo</a>
                             </div>
                         </form>
-                        <div class="col-lg-12">
+                        <div class="col-lg-12"  style="padding-top:10px; max-height: 305px; overflow-y: scroll;">
                         <!-- Tabla de informacion de todos los alumnos registrados -->
                         <table class="table table-hover">
                             <thead>
@@ -142,7 +142,7 @@
                     </div>
                     </div>
                     <!-- Informacion general del alumno buscado -->
-                    <div class="col-lg-6 informacion-alumno">
+                    <div class="col-lg-6 informacion-alumno" style="padding-top:10px; height: 305px; overflow-y: scroll;">
                         {% if alumno %}
                         <div class="form-group">
                             <label for="nombre">Nombre/s: </label> {{alumno.first_name}}
@@ -183,7 +183,7 @@
                         <div class="form-group">
                             <label for="nombre">¿Egreso?: </label> {% if alumno.egreso %}Sí{% else %}No{% endif %}
                         </div>
-                        <div class="form-group col-lg-offset-11">
+                        <div class="form-group col-lg-offset-10">
                             <label for="nombre"><a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'>Editar</a></label>
                         </div>
                         {% endif %}
