@@ -27,13 +27,16 @@ class Persona(User):
             ('masculino', 'Masculino'),
             ('femenino', 'Femenino'))
     sexo = models.CharField("Sexo", max_length=16, choices=sexoOpciones, default='masculino')
-    
 
 class Alumno(Persona):
     lugarDeTrabajo = models.CharField("Lugar de Trabajo", max_length=50)
     horaDeTrabajo = models.CharField("Horario de Trabajo", max_length=200)
     paternidad = models.BooleanField("Paternidad")
     anioEgreso = models.IntegerField("Año de Egreso", blank=True, null=True)
+    
+    class Meta:
+        verbose_name = 'Alumno'
+        verbose_name_plural = 'Alumnos'
     
     def __unicode__(self):
 	    return self.last_name + ", " + self.first_name
@@ -52,6 +55,10 @@ class Profesor(Persona):
     numeroRegistro = models.IntegerField("Numero de Registro")
     titulo = models.CharField("Titulo",max_length=200)
     cargo = models.ForeignKey(Cargo)
+    
+    class Meta:
+        verbose_name = 'Profesor'
+        verbose_name_plural = 'Profesores'
     
     def __str__(self):
 	    return self.last_name + ", " + self.first_name
@@ -103,13 +110,27 @@ class Matricula(models.Model):
             return "Cursando"
     
     def porcentajeAsistencia(self):
-        return "80%"
+        asistencias = self.asistencia_set.all()
+        vinoAClase = asistencias.filter(vino=True)
+        if (asistencias.count() != 0):
+            porcentaje = ((vinoAClase.count()/asistencias.count())*100)
+        else:
+            porcentaje = False
+        return porcentaje
+        
+    def siVinoAlgunaVez(self):
+        asistencias = self.asistencia_set.all()
+        if (asistencias.count() != 0):
+            return True
+        else:
+            return False
+        
     
     def esRegular(self):
         return False
 
 class Asistencia(models.Model):
-    fecha = models.DateField("Fecha", auto_now=True)
+    fecha = models.DateField("Fecha")
     vino = models.BooleanField("Vino?")
     matricula = models.ForeignKey(Matricula)
 

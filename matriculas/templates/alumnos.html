@@ -132,7 +132,7 @@
                                 <tr>
                                     <td>{{ matricula.materia.nombre }}</td>
                                     <td>{{ matricula.condicion }}</td>
-                                    <td>{{ matricula.porcentajeAsistencia }}</td>
+                                    <td>{% if matricula.siVinoAlgunaVez %} {{ matricula.porcentajeAsistencia }}% {% else %} ----- {% endif %}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
