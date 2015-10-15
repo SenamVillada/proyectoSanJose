@@ -36,7 +36,7 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
-#---------------------------------------END LOGOUT-----------------------------------------
+#---------------------------------------END LOGOUT---------------------------------------------
 #---------------------------------------ERROR LOGIN---------------------------------------------
 def error_login(request):
     return render_to_response("errorLogin.html", RequestContext(request))
@@ -55,13 +55,22 @@ def alumnos(request):
             return render_to_response("alumnos.html",{'errorAlumno':True, 'alumnos':alumnos}, RequestContext(request))
 
     return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
-
+@login_required(login_url='/login')
 def materias(request):
     materias = Materia.objects.all()
     return render_to_response('materias.html', {"materias":materias},RequestContext(request))
-
+@login_required(login_url='/login')
 def profesores(request):
     profesores = Profesor.objects.all()
+    if request.method == 'POST':
+        try:
+            idProf = request.POST['buscarProfesorId']
+            profe = Profesor.objects.get(id = idProf)
+            #materias = Materias.objects.get()
+            return render_to_response("profesor.html",{'profesor':profesor}, RequestContext(request))
+        except:
+            print error
+            return render_to_response("profesor.html",{'errorProfesor':True, 'profesor':profesor}, RequestContext(request))
     return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
 #---------------------------------------END PROFESORES-----------------------------------------
 def mostrarMaterias(request):
