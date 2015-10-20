@@ -129,7 +129,7 @@
                                     <tbody class="searcheable">
                                         {% for profesor in profesores %}
                                         <tr>
-                                            <td>{{profesor.last_name}}, {{profesor.first_name}}</td>
+                                            <td>{{profesor.last_name.upper.upper}}, {{profesor.first_name.capitalize}}</td>
                                             <td><form method="post" role="form">{% csrf_token %}
                                                     <input type="hidden" name="buscarProfesorId" id="buscarProfesorId" value="{{profesor.id}}">
                                                     <button type="submit" name="btnProfesorId" class="btn btn-default btn-xs"><i class="fa fa-eye" title="Ver" ></i></button></form></td>
@@ -152,12 +152,12 @@
                         <form role="form" style="margin-top:10px"> 
                             <div class="col-sm-6">
                                 <div class="form-group" style="margin-top:10px;">
-                                    <label for="nombre">Nombre/s:</label><h> {{profesor.first_name}}</h>
+                                    <label for="nombre">Nombre/s:</label><h> {{profesor.first_name.capitalize}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group" style="margin-top:10px;">
-                                    <label>Apellido:</label><h> {{profesor.last_name}}</h>
+                                    <label>Apellido:</label><h> {{profesor.last_name.upper}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-12">

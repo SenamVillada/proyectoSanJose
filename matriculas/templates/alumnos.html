@@ -144,10 +144,10 @@
                     <div class="col-lg-6 informacion informacion-alumno">
                         {% if alumno %}
                         <div class="form-group">
-                            <label for="nombre">Nombre/s: </label> {{alumno.first_name}}
+                            <label for="nombre">Nombre/s: </label> {{alumno.first_name.capitalize}}
                         </div>
                         <div class="form-group">
-                            <label for="nombre">Apellido: </label> {{alumno.last_name}}
+                            <label for="nombre">Apellido: </label> {{alumno.last_name.upper}}
                         </div>
                         <div class="form-group">
                             <label for="nombre">DNI: </label> {{alumno.dni}}
@@ -224,7 +224,7 @@
                                         {% for egresado in alumnos %}
                                         {% if egresado.egreso %}
                                         <tr>
-                                            <td style="text-align: center; ">{{ egresado.last_name }}, {{ egresado.first_name }}</td>
+                                            <td style="text-align: center; ">{{ egresado.last_name.upper }}, {{ egresado.first_name.capitalize }}</td>
                                             <td style="text-align: center; ">{{ egresado.anioEgreso }}</td>
                                             <td style="text-align: center; "><form role="form" method="post">{% csrf_token %}<input type="hidden" name="buscarAlumnoDni" id="buscarAlumnoDni" value="{{egresado.dni}}"><button type="submit" name="buscar" class="btn btn-primary">Cargar</button></form></td>
                                         </tr>
