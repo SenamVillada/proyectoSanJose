@@ -26,11 +26,10 @@
 }
 
 .boton-inicio{
-    /*text-shadow: 1px 1px 1px black;*/
+    text-shadow: 1px 1px 1px black;
     color: #fff;
     background-color: #006700;
     height:200px;
-    margin-left: 5%;
     margin-top:5%;
     border-radius: 15px;
     box-shadow: 5px 5px 3px #DEDEDE;
@@ -54,19 +53,36 @@
 
 .informacion-alumno{
     background-color: #F2F2F2;
-    height: 350px;
     border-radius: 15px;
     }
-.informacion-profe{
+
+.informacion-profesores{
     background-color: #F2F2F2;
-    height: 450px;
     border-radius: 15px;
-    }
+}
+
 .btn-success {
     color: #fff;
     background-color: #006700;
     border-color: #4cae4c;
 }
+table {
+    counter-reset: rowNumber;
+}
+
+table tbody tr {
+    counter-increment: rowNumber;
+}
+
+table tbody td:first-child::before {
+    content: counter(rowNumber);
+    min-width: 1em;
+    margin-right: 0.5em;
+}
+tbody #tablaProfes {
+    overflow-y: auto;
+    display: block;
+    }
 /*==============================================
     GENERAL  STYLES    
     =============================================*/
@@ -87,13 +103,20 @@ body {
 }
 #page-inner {
     width:100%;
-    margin:10px 0px 10px 0px;
+		height:auto;
     background-color:#fff!important;
     padding:10px;
+		margin-top:3%;
 }
 
 .text-center {
     text-align:center;
+}
+.verticalcenter{
+    vertical-align: middle;
+    margin-top: 50%;
+    position: absolute;
+    margin-left: 20%;
 }
 .no-boder {
     border:1px solid #f3f3f3;
@@ -308,7 +331,8 @@ max-width:170px;
 }
 .sidebar-collapse , .sidebar-collapse .nav{
 	background:none;
-    margin-top: 1.4%;
+    margin-to
+	p: 1.4%;
     width: 100%;
     /*height: 100%; */
 }
@@ -430,7 +454,7 @@ line-height: 1.428571429;
  
  @media(min-width:768px) {
      #page-wrapper{
-        margin: 0 0 0 260px;
+	margin-left:14.7%;
         padding: 15px 30px;
 		
     }
@@ -439,7 +463,7 @@ line-height: 1.428571429;
     .navbar-side {
         z-index: 1;
         position: fixed;
-        width: 260px;
+        width: 14.7%;
         height: 100%;
     }
 
@@ -449,4 +473,27 @@ line-height: 1.428571429;
    
 }
 
+.cd-main-header {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  height: 45px;
+  width: 100%;
+  background: #3e454c;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.cd-main-header::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+@media only screen and (min-width: 768px) {
+  .cd-main-header {
+    position: fixed;
+    height: 55px;
+  }
+}
 
