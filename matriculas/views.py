@@ -75,12 +75,17 @@ def materias(request):
 @login_required(login_url='/login')
 def profesores(request):
     profesores = Profesor.objects.all()
-    print request.POST
     if request.method == 'POST':
         try:
             idProf = request.POST['buscarProfesorId']
             profesor = Profesor.objects.get(id = int(idProf))
-            return render_to_response("profesores.html",{'profesor':profesor,"profesores":profesores}, RequestContext(request))
+            materias = profesor.materia_set.all()
+            horarios = []
+            for i in range(materias.__len__()):
+                materiasEnI = materias[i].horario_set.all()
+                for j in range(materiasEnI.count()):
+                    horarios.append(materiasEnI[j])
+            return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios}, RequestContext(request))
         except:
             return render_to_response("profesores.html",{'errorProfesor':True}, RequestContext(request))
     return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))

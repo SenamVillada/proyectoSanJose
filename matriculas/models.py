@@ -144,12 +144,12 @@ class Nota(models.Model):
 class Horario(models.Model):
     materia = models.ForeignKey(Materia)
     diaOpciones = (
-        	('lunes', 'Lunes'),
-        	('martes', 'Martes'),
-            ('miercoles', 'Miercoles'),
-            ('jueves', 'Jueves'),
-            ('viernes', 'Viernes'),
-            ('sabado', 'Sabado'),
+        	('Lunes', 'Lunes'),
+        	('Martes', 'Martes'),
+            ('Miercoles', 'Miercoles'),
+            ('Jueves', 'Jueves'),
+            ('Viernes', 'Viernes'),
+            ('Sabado', 'Sabado'),
     	)
     dia = models.CharField("Día", max_length=10, choices=diaOpciones, default='lunes')
     horaInicio = models.CharField("Hora de Inicio", max_length=20, default="00:00")

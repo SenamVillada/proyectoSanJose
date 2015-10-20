@@ -146,6 +146,7 @@
                     <!-- Informacion general del alumno buscado -->
                     <div class="col-lg-6 informacion informacion-alumno">
                         {% if alumno %}
+                        <br>
                         <div class="form-group">
                             <label for="nombre">Nombre/s: </label> {{alumno.first_name.capitalize}}
                         </div>
@@ -185,7 +186,7 @@
                         <div class="form-group">
                             <label for="nombre">¿Egreso?: </label> {% if alumno.egreso %}Sí{% else %}No{% endif %}
                         </div>
-                        <div class="form-group col-lg-offset-11">
+                        <div class="form-group col-lg-offset-10">
                             <label for="nombre"><a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'>Editar</a></label>
                         </div>
                         {% endif %}

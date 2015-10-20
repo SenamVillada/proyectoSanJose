@@ -104,7 +104,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <button type="submit" name="crear" class="btn btn-default">Nuevo</button>
+                                    <a href="{{ BASE_URL }}/admin/matriculas/profesor/add" target="_blank" class="btn btn-default" style="margin-top:10px">Crear Nuevo</a>
                                 </div>
                             </form>
                             <div class="col-lg-12">
@@ -131,148 +131,115 @@
                                 </table>
                                 </div>
                             </div>
+                            
+                            {% if profesor %}
+                            <div class="col-lg-12">  
+                                <div class="col-lg-7 informacion informacion-alumno" style="overflow-y: scroll;">
+                                    <div class="col-sm-12">
+                                        <div class="form-group" style="margin-top:10px;">
+                                            <label for="nombre">Nombre/s:</label><h> {{profesor.first_name.capitalize}}</h>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Apellido:</label><h> {{profesor.last_name.upper}}</h>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Lugar y fecha de nacimiento:</label><h> {{profesor.lugarNacimiento}}, {{profesor.fechaNacimiento}}</h>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Estado civil:</label><h> {{profesor.estadoCivil}}</h>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Cuil:</label><h> {{profesor.cuil}}</h>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Domicilio:</label><h> {{profesor.domicilio}}</h>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Teléfono:</label><h> {{profesor.telefonoFijo}}</h>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Celular:</label><h> {{profesor.telefonoMovil}}</h>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>E-Mail:</label><h> <a href="mailto:{{profesor.email}}">{{profesor.email}}</a></h>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Titulo y Nº de registro:</label><h> {{profesor.titulo}}, {{profesor.numeroRegistro}}</h>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Fecha de escalafón:</label><h> {{profesor.fechaEscalafon}}</h>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Fecha de apto psicofisico:</label><h> {{profesor.fechaAptoPsicofisico}}</h>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Cargo (cantidad de horas - alta y baja):</label><h> {{profesor.cargo}}</h>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group" style="margin-bottom: 10px;">
+                                            <label>Licencias:</label><h> -</h>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-10 col-lg-5">
+                                    <div class="table-responsive">
+                                    <table class="table table-hover" id="tablaProfes">
+                                        <thead>
+                                            <tr>
+                                              <th>Materia</th>
+                                              <th>Día</th>
+                                              <th>Horario</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for horario in horarios %}
+                                            <tr>
+                                                <td>{{ horario.materia.nombre }}</td>
+                                                <td>{{ horario.dia }}</td>
+                                                <td>de {{ horario.horaInicio }} a {{ horario.horaFinal }} hs.</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="page-inner">
-            <div class="row">
-                <div class="col-lg-12">  
-                    <div class="col-sm-10 col-lg-6 informacion-profe">
-                        <form role="form" style="margin-top:10px"> 
-                            <div class="col-sm-6">
-                                <div class="form-group" style="margin-top:10px;">
-                                    <label for="nombre">Nombre/s:</label><h> {{profesor.first_name.capitalize}}</h>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group" style="margin-top:10px;">
-                                    <label>Apellido:</label><h> {{profesor.last_name.upper}}</h>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Lugar y fecha de nacimiento:</label><h> {{profesor.lugarNacimiento}}, {{profesor.fechaNacimiento}}</h>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Estado civil:</label><h> {{profesor.estadoCivil}}</h>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Cuil:</label><h> {{profesor.cuil}}</h>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Domicilio:</label><h> {{profesor.domicilio}}</h>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Teléfono:</label><h> {{profesor.telefonoFijo}}</h>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Celular:</label><h> {{profesor.telefonoMovil}}</h>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Mail:</label><h> {{profesor.email}}</h>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Titulo y Nº de registro:</label><h> {{profesor.titulo}}, {{profesor.numeroRegistro}}</h>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Fecha de escalafón:</label><h> {{profesor.fechaEscalafon}}</h>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Fecha de apto psicofisico:</label><h> {{profesor.fechaAptoPsicofisico}}</h>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Cargo (cantidad de horas - alta y baja):</label><h> {{profesor.cargo}}</h>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group" style="margin-bottom: 10px;">
-                                    <label>Licencias:</label><h> -</h>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-sm-10 col-lg-5 col-lg-offset-1 informacion-profesores">
-                        <div class="table-responsive">
-                        <table class="table table-hover" id="tablaProfes">
-                            <thead>
-                                <tr>
-                                  <th>Materia</th>
-                                  <th>Día</th>
-                                  <th>Horario</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Ingles</td>
-                                    <td>Martes</td>
-                                    <td>08:00/08:40hs</td>
-                                </tr>
-                                <tr>
-                                    <td>Ingles</td>
-                                    <td>Martes</td>
-                                    <td>10:00/12:00hs</td>
-                                </tr>
-                                <tr>
-                                    <td>Ingles</td>
-                                    <td>Jueves</td>
-                                    <td>10:00/12:00hs</td>
-                                </tr>
-                                <tr>
-                                    <td>Ingles</td>
-                                    <td>Jueves</td>
-                                    <td>10:00/12:00hs</td>
-                                </tr>
-                                <tr>
-                                    <td>Ingles</td>
-                                    <td>Jueves</td>
-                                    <td>10:00/12:00hs</td>
-                                </tr>
-                                <tr>
-                                    <td>Ingles</td>
-                                    <td>Jueves</td>
-                                    <td>10:00/12:00hs</td>
-                                </tr>
-                                <tr>
-                                    <td>Ingles</td>
-                                    <td>Jueves</td>
-                                    <td>10:00/12:00hs</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-				<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
-					Desarrollado por SENAM
-          <br><br>
-          Copyright © 2015 Instituto Parroquial San José.
-          <br><br>
-          Todos los Derechos Reservados.
-				</footer>
+        <footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
+            Desarrollado por SENAM<br><br>
+            Copyright © 2015 Instituto Parroquial San José.<br><br>
+            Todos los Derechos Reservados.
+        </footer>
     </div>
 </body>
 </html>
