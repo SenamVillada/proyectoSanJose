@@ -73,6 +73,7 @@ class Materia(models.Model):
     nombre = models.CharField("Nombre de la Materia", max_length=30)
     correlativasCursado = models.ManyToManyField('self',blank=True)
     correlativasRendir = models.ManyToManyField('self',blank=True)
+    profesor = models.ForeignKey(Profesor)
     tipoOpciones = (
         	('asignatura', 'Asignatura'),
         	('seminario', 'Seminario'),
@@ -89,10 +90,8 @@ class Materia(models.Model):
 
 class Matricula(models.Model):
     anio = models.IntegerField("Año")
-    horario = models.CharField("Horario", max_length=200)
     aprobada = models.BooleanField("Aprobada?")
     alumno = models.ForeignKey(Alumno)
-    profesor = models.ForeignKey(Profesor)
     materia = models.ForeignKey(Materia)
     finalizada = models.BooleanField("Finalizada?", default="False")
 
@@ -139,8 +138,25 @@ class Nota(models.Model):
     observacion = models.CharField("Observacion", max_length=100)
     matricula = models.ForeignKey(Matricula)
 
-    def __unicode__():
+    def __unicode__(self):
         return str(calificacion)
+    
+class Horario(models.Model):
+    materia = models.ForeignKey(Materia)
+    diaOpciones = (
+        	('lunes', 'Lunes'),
+        	('martes', 'Martes'),
+            ('miercoles', 'Miercoles'),
+            ('jueves', 'Jueves'),
+            ('viernes', 'Viernes'),
+            ('sabado', 'Sabado'),
+    	)
+    dia = models.CharField("Día", max_length=10, choices=diaOpciones, default='lunes')
+    horaInicio = models.CharField("Hora de Inicio", max_length=20, default="00:00")
+    horaFinal = models.CharField("Hora de Final", max_length=20, default="00:00")
+
+    def __unicode__(self):
+        return self.materia.nombre
 
 class Log(models.Model):
     fecha = models.DateField("Fecha")

@@ -6,6 +6,9 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from matriculas.models import *
+import time
+
+
 
 # Create your views here.
 @login_required(login_url='/login')
@@ -56,8 +59,18 @@ def alumnos(request):
 
 @login_required(login_url='/login')
 def materias(request):
-    matriculas = Matricula.objects.all().values('materia', 'profesor').distinct()
-    return render_to_response('materias.html', {"matriculas":matriculas},RequestContext(request))
+    materiasTotal = Materia.objects.all()
+    if request.method == 'POST':
+        try:
+            idmateria = request.POST['buscarProfesorId']
+            materia = Materia.objects.get(id = idmateria)
+            horarios = materia.horario_set.all()
+            anio = int(time.strftime('%Y'))
+            matriculasAsistentes = materia.matricula_set.all().filter(anio=anio)
+            return render_to_response('materias.html', {"materias":materiasTotal, "materiaBuscada":materia, "horarios":horarios, "alumnosAsistentes":matriculasAsistentes},RequestContext(request))
+        except:
+            return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
+    return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
 
 @login_required(login_url='/login')
 def profesores(request):
