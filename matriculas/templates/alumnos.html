@@ -4,21 +4,28 @@
 
 <head>
     
-    <link href="{% static 'img/admin/logo.png' %}" rel='shortcut icon' type='image/png'>
+    <link href="{% static '../static/img/admin/logo.png' %}" rel='shortcut icon' type='image/png'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Administracion de alumnos</title>
 	<!-- BOOTSTRAP STYLES-->
-    <link href="{% static 'css/admin/bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static '../static/css/admin/bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static '../static/css/bootstrap.min.css' %}" rel="stylesheet" />
      <!-- FONTAWESOME STYLES -->
-    <link href="{% static 'fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
+    <link href="{% static '../static/fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
      <!-- MORRIS CHART STYLES
     <link href=" js/ morris/morris-0.4.3.min.css" rel="stylesheet" />-->
         <!-- CUSTOM STYLES-->
-    <link href="{% static 'css/admin/custom.css' %}" rel="stylesheet" />
+    <link href="{% static '../static/css/admin/custom.css' %}" rel="stylesheet" />
      <!-- GOOGLE FONTS-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		  <!-- jQuery Version 1.11.0 -->
+    <script src="{% static '../static/js/jquery-1.11.0.js' %}"></script>
+    <!-- jQueryUi Version 1.8 -->
+    <script src="{% static '../static/js/jquery-ui.js' %}"></script>
+    <script src="{% static '../static/js/jquery.dataTables.min.js' %}"></script>
     <script type="text/javascript">
 	// Tabla de alumnos
 	$(document).ready(function () {
@@ -42,39 +49,35 @@
 </head>
 <body>
     <!-- /. NAV TOP  -->
-    <nav class="navbar-default navbar-side" role="navigation">
-        <div class="centradodiv">
-            <div class="container-fluid">
-                <a href="/"><img src="{% static 'img/admin/logo.png' %}"></a>
-            </div>
-            <div class="container-fluid centrado" id="div-usuario" style="color:#fff;">
-                <span class="">Bienvenido/a, <span class="resaltado">{{user.username}}</span></span>
-                <br><a href="{% url 'matriculas:logout' %}">Salir</a>
-            </div>
-        </div>
-            <div class="sidebar-collapse">
-                <ul class="nav" id="main-menu" >
-                    <li>
-                        <a   href="/"><i class="fa fa-desktop fa-2x"></i>Inicio</a>
-                    </li>
-                    <li>
-                        <a class="active-menu"  href="/alumnos"><i class="fa fa-user fa-2x"></i>Alumnos</a>
-                    </li>
-                    <li>
-                        <a  href="/profesores"><i class="fa fa-briefcase fa-2x"></i>Profesores</a>
-                    </li>
-                    <li>
-                        <a  href="/materias"><i class="fa fa-book fa-2x"></i>Materias</a>
-                    </li>
-                </ul>
-            </div>
-            <div id="sub-footer" class="sub-footer">
-				Desarrollado por SENAM
-				<br><br>
-				Copyright © 2015 Instituto Parroquial San José.
-				<br><br>
-				Todos los Derechos Reservados.
-		</div>  
+    <header class="cd-main-header">
+			<a href="/" class="cd-logo"><img style="margin-top: 1%; margin-left: 1%;" src="{% static 'img/admin/logo2.png' %}" alt="Logo"></a>
+			<a href="/" class="cd-nav-trigger"><span></span></a>
+			<nav class="cd-nav">
+				<ul class="cd-top-nav">
+				</ul>
+			</nav>
+		</header>
+	  <nav class="navbar-default navbar-side" role="navigation">
+    	<div class="sidebar-collapse">
+				<ul class="nav" id="main-menu" >
+					<div style="background: #1F5B1F; color:#ffffff;margin-bottom:1%;" >
+						<center><br><br><br><br><div>Bienvenido/a, </div><label><span class="resaltado">{{user.username}}</span></center></label>
+						<br><div href="{% url 'matriculas:logout' %}">Salir</div></label>
+					</div>
+          <li>
+    	      <a href="/"><i class="fa fa-home"></i>Inicio</a>
+          </li>
+          <li>
+    	      <a  href="/materias"><i class="fa fa-book"></i>Materias</a>
+    			</li>
+          <li>
+      	    <a href="/alumnos" class="active-menu" ><i class="fa fa-list"></i>Alumnos</a>
+          </li>
+					<li>
+            <a href="/profesores"><i class="fa fa-list"></i>Profesores</a>
+          </li>
+				</ul>
+			</div>
     </nav>
     <!-- Seccion bienvenida al sistema  -->
     <div id="page-wrapper" >
@@ -240,6 +243,13 @@
                 </div>
             </div>
         </div>
+			<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
+					Desarrollado por SENAM
+          <br><br>
+          Copyright © 2015 Instituto Parroquial San José.
+          <br><br>
+          Todos los Derechos Reservados.
+				</footer>
     </div>   
 </body>
     
