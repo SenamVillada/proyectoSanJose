@@ -113,7 +113,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <button type="submit" name="crear" class="btn btn-primary">Nuevo</button>
+                                    <button type="submit" name="crear" class="btn btn-default">Nuevo</button>
                                 </div>
                             </form>
                             <div class="col-lg-12">
@@ -132,8 +132,8 @@
                                             <td>{{profesor.last_name}}, {{profesor.first_name}}</td>
                                             <td><form method="post" role="form">{% csrf_token %}
                                                     <input type="hidden" name="buscarProfesorId" id="buscarProfesorId" value="{{profesor.id}}">
-                                                    <button type="submit" name="btnProfesorId" class="btn btn-info btn-xs"><i class="fa fa-eye" title="Ver" ></i></button></form></td>
-                                            <td><a class="btn btn-info btn-xs" href="{{ BASE_URL }}/admin/matriculas/profesor/{{profesor.id}}" target="_blank"><i class="fa fa-pencil" title="Editar"></i></a></td>
+                                                    <button type="submit" name="btnProfesorId" class="btn btn-default btn-xs"><i class="fa fa-eye" title="Ver" ></i></button></form></td>
+                                            <td><a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/profesor/{{profesor.id}}" target="_blank"><i class="fa fa-pencil" title="Editar"></i></a></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -148,76 +148,76 @@
         <div id="page-inner">
             <div class="row">
                 <div class="col-lg-12">  
-                    <div class="col-sm-10 col-lg-6 informacion-profesores">
+                    <div class="col-sm-10 col-lg-6 informacion-profe">
                         <form role="form" style="margin-top:10px"> 
                             <div class="col-sm-6">
                                 <div class="form-group" style="margin-top:10px;">
-                                    <label for="nombre">Nombre/s:  </label><h>{{profesor.first_name}}</h>
+                                    <label for="nombre">Nombre/s:</label><h> {{profesor.first_name}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group" style="margin-top:10px;">
-                                    <label>Apellido:</label><h>{{profesor.last_name}}</h>
+                                    <label>Apellido:</label><h> {{profesor.last_name}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Lugar y fecha de nacimiento:</label><h>{{profesor.lugarNacimiento}}, {{profesor.fechaNacimiento}}</h>
+                                    <label>Lugar y fecha de nacimiento:</label><h> {{profesor.lugarNacimiento}}, {{profesor.fechaNacimiento}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Estado civil:</label><h>{{profesor.estadoCivil}}</h>
+                                    <label>Estado civil:</label><h> {{profesor.estadoCivil}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Cuil:</label><h>{{profesor.cuil}}</h>
+                                    <label>Cuil:</label><h> {{profesor.cuil}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Domicilio:</label><h>{{profesor.domicilio}}</h>
+                                    <label>Domicilio:</label><h> {{profesor.domicilio}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Teléfono:</label><h>{{profesor.telefonoFijo}}</h>
+                                    <label>Teléfono:</label><h> {{profesor.telefonoFijo}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Celular:</label><h>{{profesor.telefonoMovil}}</h>
+                                    <label>Celular:</label><h> {{profesor.telefonoMovil}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Mail:</label><h>{{profesor.email}}</h>
+                                    <label>Mail:</label><h> {{profesor.email}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Titulo y Nº de registro:</label><h>{{profesor.titulo}}, {{profesor.numeroRegistro}}</h>
+                                    <label>Titulo y Nº de registro:</label><h> {{profesor.titulo}}, {{profesor.numeroRegistro}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Fecha de escalafón:</label><h>{{profesor.fechaEscalafon}}</h>
+                                    <label>Fecha de escalafón:</label><h> {{profesor.fechaEscalafon}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Fecha de apto psicofisico::</label><h>{{profesor.fechaAptoPsicofisico}}</h>
+                                    <label>Fecha de apto psicofisico:</label><h> {{profesor.fechaAptoPsicofisico}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Cargo (cantidad de horas - alta y baja):</label><h>{{profesor.cargo}}</h>
+                                    <label>Cargo (cantidad de horas - alta y baja):</label><h> {{profesor.cargo}}</h>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group" style="margin-bottom: 10px;">
-                                    <label>Licencias:</label><h>-</h>
+                                    <label>Licencias:</label><h> -</h>
                                 </div>
                             </div>
                         </form>
