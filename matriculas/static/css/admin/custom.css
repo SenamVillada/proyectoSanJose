@@ -26,7 +26,7 @@
 }
 
 .boton-inicio{
-    text-shadow: 1px 1px 1px black;
+    /*text-shadow: 1px 1px 1px black;*/
     color: #fff;
     background-color: #006700;
     height:200px;
@@ -55,6 +55,11 @@
 .informacion-alumno{
     background-color: #F2F2F2;
     height: 350px;
+    border-radius: 15px;
+    }
+.informacion-profe{
+    background-color: #F2F2F2;
+    height: 450px;
     border-radius: 15px;
     }
 .btn-success {

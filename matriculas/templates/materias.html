@@ -1,40 +1,36 @@
-    
+{% load staticfiles %}    
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href='img/admin/logo.png' rel='shortcut icon' type='image/png'>
+    
+    <link href="{% static 'img/admin/logo.png' %}" rel='shortcut icon' type='image/png'>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Materias</title>
 	<!-- BOOTSTRAP STYLES-->
-    <link href="css/admin/bootstrap.css" rel="stylesheet" />
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{% static 'css/admin/bootstrap.css' %}" rel="stylesheet" />
      <!-- FONTAWESOME STYLES-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
-   <!--<link href="css/font-awesome.min.css" rel="stylesheet" />-->
+    <link href="{% static 'fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
      <!-- MORRIS CHART STYLES
     <link href=" js/ morris/morris-0.4.3.min.css" rel="stylesheet" />-->
-    <!-- CUSTOM STYLES-->
-    <link href="css/admin/custom.css" rel="stylesheet" />
+        <!-- CUSTOM STYLES-->
+    <link href="{% static 'css/admin/custom.css' %}" rel="stylesheet" />
      <!-- GOOGLE FONTS-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Latest compiled and minified CSS -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
+    
+    <script src="{% static 'js/jquery.js' %}"></script> 
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+	
 	    <!-- jQuery Version 1.11.0 -->
-    <script src="js/jquery-1.11.0.js"></script>
+    <script src="{% static 'js/jquery-1.11.0.js' %}"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
     
     <!-- jQueryUi Version 1.8 -->
-    <script src="js/jquery-ui.js"></script>
+    <script src="{% static 'js/jquery-ui.js' %}"></script>
     
-    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
     <script type="text/javascript">
 	// Tabla de alumnos
 	$(document).ready(function () {
@@ -59,36 +55,39 @@
 </head>
 <body>
     <!-- /. NAV TOP  -->
-    <header class="cd-main-header">
-		<a href="#0" class="cd-logo"><img style="margin-top: 1%; margin-left: 1%;" src="img/admin/logo2.png" alt="Logo"></a>
-		<a href="#0" class="cd-nav-trigger"><span></span></a>
-
-		<nav class="cd-nav">
-			<ul class="cd-top-nav">
-			</ul>
-		</nav>
-	</header>
-	  <nav class="navbar-default navbar-side" role="navigation">
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="centradodiv">
+            <div class="container-fluid">
+                <a href="/"><img src="{% static 'img/admin/logo.png' %}"></a>
+            </div>
+            <div class="container-fluid centrado" id="div-usuario" style="color:#fff;">
+                <span class="">Bienvenido/a, <span class="resaltado">{{user.username}}</span></span>
+                <br><a href="{% url 'matriculas:logout' %}">Salir</a>
+            </div>
+        </div>
             <div class="sidebar-collapse">
-							<ul class="nav" id="main-menu" >
-							<div style="background: #1F5B1F; color:#ffffff;margin-bottom:1%;" >
-								<center><br><br><br><br><div>Bienvenido/a, </div><label><span class="resaltado">Judith</span></center></label>
-								<br><div href="">Salir</div></label>
-							</div>
+                <ul class="nav" id="main-menu" >
                     <li>
-                        <a  href="inicio.html"><i class="fa fa-home"></i>Inicio</a>
+                        <a   href="/"><i class="fa fa-desktop fa-2x"></i>Inicio</a>
                     </li>
                     <li>
-                        <a class="active-menu"  href="materias.html"><i class="fa fa-book"></i>Materias</a>
+                        <a   href="/alumnos"><i class="fa fa-user fa-2x"></i>Alumnos</a>
                     </li>
                     <li>
-                        <a href="alumnos.html"><i class="fa fa-list"></i>Alumnos</a>
+                        <a  href="/profesores"><i class="fa fa-briefcase fa-2x"></i>Profesores</a>
                     </li>
-										<li>
-                        <a href="profesores.html"><i class="fa fa-list"></i>Profesores</a>
+                    <li>
+                        <a class="active-menu"  href="/materias"><i class="fa fa-book fa-2x"></i>Materias</a>
                     </li>
                 </ul>
             </div>
+            <div id="sub-footer" class="sub-footer">
+				Desarrollado por SENAM
+				<br><br>
+				Copyright © 2015 Instituto Parroquial San José.
+				<br><br>
+				Todos los Derechos Reservados.
+		</div>  
     </nav>
         <!-- /. NAV SIDE  -->
         
@@ -101,7 +100,7 @@
                     </div>
              <!-- /. PAGE INNER  -->
                  </div>
-            <div id="page-inner" style="padding-bottom: 11%;">
+            <div id="page-inner">
                 <div class="row">
                 </div>
                 
@@ -117,52 +116,58 @@
 
                     <input id="filter" type="text" class="form-control" placeholder="Escriba Aqui...">
                 </div> <br>
-                <table id="tabla" class="table table-hover" cellspacing="0" width="100%">
+                <table id="tabla" class="display" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 					  <th>Materia</th>
-					  <th>Horario</th>
 					  <th>Profesor</th>
 					  <th>Tipo</th>
 					  <th>Correlatividades</th>
-                      <th>Editar</th>
 					</tr>
 				</thead>
 				<tbody class="searcheable">
-                    {% for materia in materias %}
+                    {% for matricula in matriculas %}
 					<tr>
-                        <td>{{ materia.nombre }}</td>
-                        <td>{{ materia.horario }}</td>
+                        <td>{{ matricula.materia.nombre }}</td>
+                        <td>10:30 a 11:30</td>
+                        <td>-</td>
                         <td>{{ materia.tipo }}</td>
-						<td><strong>Correlativas de Cursado:</strong> {% for correlativa in materia.correlativasCursado.all %}
-                            <br>{{ correlativa.nombre }}
-                            {% endfor %}
-                            <br><strong>Correlativas de Rendir:</strong> 
-                            {% for correlativa in materia.correlativasRendir.all %}<br>{{ correlativa.nombre }}
-                            {% endfor %}</td>
-						<td>
-                            <a href="{{ BASE_URL }}/admin/matriculas/materia/{{materia.id}}" target="_blank" class="btn btn-primary">Editar</button>    
-                        </td>
+						<td>-</td>
+						<td><button type="submit" name="editar" class="btn btn-primary">Editar</button></td>
+                    </tr>
+                    {% endfor %}
 				</tbody>
 				</table>
-                    <a href="{{ BASE_URL }}/admin/matriculas/materia/add" target="_blank" class="btn btn-primary">Crear</a> 
+                    <button type="submit" name="crear" class="btn btn-primary">Crear</button>
+				
+				    <form role="form" method="post">
+				      <br />
+				    </form>
 			    </div>
 			</div>
 		    </div>
 		</div>
-    </div>
-    </div>
-</div>   
         </div>
+             <!-- /. PAGE INNER  -->
             </div>
-	<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
-				    Desarrollado por SENAM
-            <br><br>
-            Copyright © 2015 Instituto Parroquial San José.
-            <br><br>
-            Todos los Derechos Reservados.
-				</footer>
+         <!-- /. PAGE WRAPPER  -->
         </div>
+        
+     <!-- /. WRAPPER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS 
+    <script src="assets/js/jquery-1.10.2.js"></script>-->
+      <!-- BOOTSTRAP SCRIPTS 
+    <script src="assets/js/bootstrap.min.js"></script>-->
+    <!-- METISMENU SCRIPTS 
+    <script src="assets/js/jquery.metisMenu.js"></script>-->
+     <!-- MORRIS CHART SCRIPTS 
+     <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
+    <script src="assets/js/morris/morris.js"></script>-->
+      <!-- CUSTOM SCRIPTS 
+    <script src="assets/js/custom.js"></script>-->
+    
+   
 </body>
     
 </html>
