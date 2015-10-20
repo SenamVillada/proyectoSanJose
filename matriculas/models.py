@@ -90,7 +90,6 @@ class Materia(models.Model):
 
 class Matricula(models.Model):
     anio = models.IntegerField("Año")
-    horario = models.CharField("Horario", max_length=200)
     aprobada = models.BooleanField("Aprobada?")
     alumno = models.ForeignKey(Alumno)
     materia = models.ForeignKey(Materia)
@@ -139,8 +138,25 @@ class Nota(models.Model):
     observacion = models.CharField("Observacion", max_length=100)
     matricula = models.ForeignKey(Matricula)
 
-    def __unicode__():
+    def __unicode__(self):
         return str(calificacion)
+    
+class Horario(models.Model):
+    materia = models.ForeignKey(Materia)
+    diaOpciones = (
+        	('lunes', 'Lunes'),
+        	('martes', 'Martes'),
+            ('miercoles', 'Miercoles'),
+            ('jueves', 'Jueves'),
+            ('viernes', 'Viernes'),
+            ('sabado', 'Sabado'),
+    	)
+    dia = models.CharField("Día", max_length=10, choices=diaOpciones, default='lunes')
+    horaInicio = models.CharField("Hora de Inicio", max_length=20, default="00:00")
+    horaFinal = models.CharField("Hora de Final", max_length=20, default="00:00")
+
+    def __unicode__(self):
+        return self.materia.nombre
 
 class Log(models.Model):
     fecha = models.DateField("Fecha")

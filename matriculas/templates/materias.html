@@ -116,58 +116,111 @@
 
                     <input id="filter" type="text" class="form-control" placeholder="Escriba Aqui...">
                 </div> <br>
-                <table id="tabla" class="display" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-					  <th>Materia</th>
-					  <th>Profesor</th>
-					  <th>Tipo</th>
-					  <th>Correlatividades</th>
-					</tr>
-				</thead>
-				<tbody class="searcheable">
-                    {% for matricula in matriculas %}
-					<tr>
-                        <td>{{ matricula.materia.nombre }}</td>
-                        <td>10:30 a 11:30</td>
-                        <td>-</td>
-                        <td>{{ materia.tipo }}</td>
-						<td>-</td>
-						<td><button type="submit" name="editar" class="btn btn-primary">Editar</button></td>
-                    </tr>
-                    {% endfor %}
-				</tbody>
+                <table id="tabla" class="display table table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                          <th>Materia</th>
+                          <th>Profesor</th>
+                          <th>Ver</th>
+                          <th>Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="searcheable">
+                        {% for materia in materias %}
+                        <tr>
+                            <td>{{ materia.nombre }}</td>
+                            <td>{{ materia.profesor.last_name }}, {{ materia.profesor.first_name }}</td>
+                            <td>
+                                <form method="post" role="form">{% csrf_token %}
+                                    <input type="hidden" name="buscarProfesorId" id="buscarMateriaId" value="{{materia.id}}">
+                                        <button type="submit" name="btnMateriaId" class="btn btn-default btn-xs">
+                                            <i class="fa fa-eye" title="Ver" ></i>
+                                    </button>
+                                </form>
+                            </td>
+                            <td>
+                                <a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/materia/{{materia.id}}" target="_blank">
+                                    <i class="fa fa-pencil" title="Editar"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
 				</table>
-                    <button type="submit" name="crear" class="btn btn-primary">Crear</button>
-				
-				    <form role="form" method="post">
-				      <br />
-				    </form>
-			    </div>
-			</div>
-		    </div>
-		</div>
-        </div>
-             <!-- /. PAGE INNER  -->
+                                <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/materia/add" target="_blank">Crear Nueva</a>
+			                 </div>
+			             </div>
+		              </div>
+                    {% if materiaBuscada %}
+                        <div class="col-lg-8 informacion informacion-alumno" style="overflow-y: scroll;">
+                            <br /><label>Nombre de la Materia: </label> {{ materiaBuscada.nombre }}<br /><br />
+                            <label>Profesor: </label> {{ materiaBuscada.profesor.last_name }}, {{ materiaBuscada.profesor.first_name }}<br /><br />
+                            <label>Correlativas de Cursado: </label> 
+                                {% for correlativa in materiaBuscada.correlativasCursado.all %}
+                                    {{ correlativa.nombre }},
+                                {% endfor %}
+                            <br /><br />
+                            <label>Correlativas de Rendir: </label>
+                                {% for correlativa in materiaBuscada.correlativasRendir.all %}
+                                    {{ correlativa.nombre }},
+                                {% endfor %}
+                            <br /><br /><br />
+                            <label>Lista de Alumnos</label>
+                            <div class="col-lg-12 informacion-profesores">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="tablaProfes">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>DNI</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for matricula in alumnosAsistentes %}
+                                            <tr>
+                                                <td>{{ matricula.alumno.last_name }}, {{ matricula.alumno.first_name }}</td>
+                                                <td>{{ matricula.alumno.dni}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="col-lg-4 informacion-profesores">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="tablaProfes">
+                                    <thead>
+                                        <tr>
+                                            <th>Día</th>
+                                            <th>Horario</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            {% for horario in horarios %}
+                                                <td>{{ horario.dia }}</td>
+                                                <td>de {{ horario.horaInicio }} a {{ horario.horaFinal }} hs.</td>
+                                                <td>
+                                                    <a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/horario/{{horario.id}}" target="_blank">
+                                                        <i class="fa fa-pencil" title="Editar"></i>
+                                                    </a>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/horario/add" target="_blank">Agregar</a>
+                        </div>
+            
+                    {% endif %}
+		        </div>
             </div>
-         <!-- /. PAGE WRAPPER  -->
         </div>
-        
-     <!-- /. WRAPPER  -->
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS 
-    <script src="assets/js/jquery-1.10.2.js"></script>-->
-      <!-- BOOTSTRAP SCRIPTS 
-    <script src="assets/js/bootstrap.min.js"></script>-->
-    <!-- METISMENU SCRIPTS 
-    <script src="assets/js/jquery.metisMenu.js"></script>-->
-     <!-- MORRIS CHART SCRIPTS 
-     <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-    <script src="assets/js/morris/morris.js"></script>-->
-      <!-- CUSTOM SCRIPTS 
-    <script src="assets/js/custom.js"></script>-->
-    
-   
+    </div>   
 </body>
     
 </html>
