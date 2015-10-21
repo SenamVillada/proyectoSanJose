@@ -57,23 +57,23 @@
 		</header>
 	  <nav class="navbar-default navbar-side" role="navigation">
     	<div class="sidebar-collapse">
-				<ul class="nav" id="main-menu" >
+								<ul class="nav" id="main-menu" >
 					<div style="background: #1F5B1F; color:#ffffff;margin-bottom:1%;" >
 						<center><br><br><br><br><div>Bienvenido/a, </div><label><span class="resaltado">{{user.username}}</span></center></label>
-						<br><div href="{% url 'matriculas:logout' %}">Salir</div></label>
+						<br><a href="{% url 'matriculas:logout' %}">Salir</a>
 					</div>
           <li>
-    	      <a href="/"><i class="fa fa-home"></i>Inicio</a>
+    	      <a   href="/"><i class="fa fa-home"></i>Inicio</a>
           </li>
           <li>
-    	      <a  href="/materias"><i class="fa fa-book"></i>Materias</a>
-    			</li>
-          <li>
-      	    <a href="/alumnos"><i class="fa fa-list"></i>Alumnos</a>
+      	    <a class="active-menu" href="/alumnos"><i class="fa fa-users"></i>Alumnos</a>
           </li>
 					<li>
-            <a href="/profesores" class="active-menu" ><i class="fa fa-list"></i>Profesores</a>
+            <a href="/profesores"><i class="fa fa-briefcase"></i>Profesores</a>
           </li>
+        <li>
+    	      <a  href="/materias"><i class="fa fa-book"></i>Materias</a>
+    	</li>
 				</ul>
 			</div>
     </nav>
