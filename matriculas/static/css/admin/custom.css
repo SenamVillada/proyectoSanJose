@@ -26,7 +26,6 @@
 }
 
 .boton-inicio{
-    text-shadow: 1px 1px 1px black;
     color: #fff;
     background-color: #006700;
     height:200px;
@@ -66,7 +65,7 @@
     background-color: #006700;
     border-color: #4cae4c;
 }
-table {
+/* table {
     counter-reset: rowNumber;
 }
 
@@ -79,10 +78,20 @@ table tbody td:first-child::before {
     min-width: 1em;
     margin-right: 0.5em;
 }
+*/
 tbody #tablaProfes {
     overflow-y: auto;
     display: block;
     }
+wrapper-bajado{
+    margin-top: 50px;
+    }
+.sidebar-collapse .nav .alerta > li > a:hover,
+.sidebar-collapse .nav .alerta > li > a:focus {
+	
+	background:#db4437;!important
+	outline:0;
+}
 /*==============================================
     GENERAL  STYLES    
     =============================================*/
@@ -475,7 +484,7 @@ line-height: 1.428571429;
 
 .cd-main-header {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   top: 0;
   left: 0;
   height: 45px;

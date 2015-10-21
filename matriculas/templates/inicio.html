@@ -42,7 +42,7 @@
 				<ul class="nav" id="main-menu" >
 					<div style="background: #1F5B1F; color:#ffffff;margin-bottom:1%;" >
 						<center><br><br><br><br><div>Bienvenido/a, </div><label><span class="resaltado">{{user.username}}</span></center></label>
-						<br><a href="{% url 'matriculas:logout' %}">Salir</a>
+						<br>
 					</div>
           <li>
     	      <a  class="active-menu" href="/"><i class="fa fa-home"></i>Inicio</a>
@@ -56,12 +56,18 @@
         <li>
     	      <a  href="/materias"><i class="fa fa-book"></i>Materias</a>
     	</li>
+        <li>
+    	      <a  href="/egresados"><i class="fa fa-graduation-cap"></i>Egresados</a>
+    	</li>
+        <li>
+    	      <a  href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
+    	</li>
 				</ul>
 			</div>
     </nav>
         <!-- /. NAV SIDE  -->
         
-        <div id="page-wrapper" >
+        <div id="page-wrapper" class="wrapper-bajado">
             <div id="page-inner">
                 <div class="row" >
                     <!-- <div class="col-md-12">
@@ -71,11 +77,17 @@
 										<div class="col-lg-4 col-sm-5 col-lg-offset-1 boton-inicio">
                     <h1 class="verticalcenter text-center h1"><span class="fa fa-user fa-1x" aria-hidden="true"></span> Alumnos</h1>
                         </div></a>
+                    <a href="/profesores">
                     <div class="col-lg-4 col-sm-5 col-lg-offset-1 boton-inicio">
                     <h1 class="verticalcenter text-center h1"><span class="fa fa-briefcase fa-1x" aria-hidden="true"></span> Profesores</h1>
                         </div></a>
+                    <a href="/materias">
                     <div class="col-lg-4 col-sm-5 col-lg-offset-1 boton-inicio">
                     <h1 class="verticalcenter text-center h1"><span class="fa fa-book fa-1x" aria-hidden="true"></span> Materias</h1>
+                        </div></a>
+                    <a href="/egresados">
+                    <div class="col-lg-4 col-sm-5 col-lg-offset-1 boton-inicio">
+                    <h1 class="verticalcenter text-center h1"><span class="fa fa-graduation-cap fa-1x" aria-hidden="true"></span> Egresados</h1>
                         </div></a>
                     
                 </div>

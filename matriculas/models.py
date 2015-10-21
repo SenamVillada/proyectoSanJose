@@ -14,19 +14,19 @@ class Persona(User):
     dni = models.IntegerField("DNI")
     domicilio = models.CharField("Domicilio", max_length=300)
     estadoOpciones = (
-            ('casado', 'Casado/a'),
-            ('soltero', 'Soltero/a'),
-            ('viudo', 'Viudo/a'),
-            ('divorciado', 'Divorciado/a'))
-    estadoCivil = models.CharField("Estado Civil", max_length=16, choices=estadoOpciones, default='soltero')
+            ('Casado', 'Casado/a'),
+            ('Soltero', 'Soltero/a'),
+            ('Viudo', 'Viudo/a'),
+            ('Divorciado', 'Divorciado/a'))
+    estadoCivil = models.CharField("Estado Civil", max_length=16, choices=estadoOpciones, default='Soltero')
     fechaNacimiento = models.DateField("Fecha de Nacimiento")
     lugarNacimiento = models.CharField("Lugar de Nacimiento", max_length=50)
     telefonoFijo = models.IntegerField("Telefono Fijo")
     telefonoMovil = models.IntegerField("Telefono Celular")
     sexoOpciones = (
-            ('masculino', 'Masculino'),
-            ('femenino', 'Femenino'))
-    sexo = models.CharField("Sexo", max_length=16, choices=sexoOpciones, default='masculino')
+            ('Masculino', 'Masculino'),
+            ('Femenino', 'Femenino'))
+    sexo = models.CharField("Sexo", max_length=16, choices=sexoOpciones, default='Masculino')
 
 class Alumno(Persona):
     lugarDeTrabajo = models.CharField("Lugar de Trabajo", max_length=50)
@@ -75,11 +75,11 @@ class Materia(models.Model):
     correlativasRendir = models.ManyToManyField('self',blank=True)
     profesor = models.ForeignKey(Profesor)
     tipoOpciones = (
-        	('asignatura', 'Asignatura'),
-        	('seminario', 'Seminario'),
-            ('taller', 'Taller'),
+        	('Asignatura', 'Asignatura'),
+        	('Seminario', 'Seminario'),
+            ('Taller', 'Taller'),
     	)
-    tipo = models.CharField("Tipo de Materia", max_length=80, choices=tipoOpciones, default='asignatura')
+    tipo = models.CharField("Tipo de Materia", max_length=80, choices=tipoOpciones, default='Asignatura')
 
     def __unicode__(self):
 	    return self.nombre
@@ -144,14 +144,14 @@ class Nota(models.Model):
 class Horario(models.Model):
     materia = models.ForeignKey(Materia)
     diaOpciones = (
-        	('lunes', 'Lunes'),
-        	('martes', 'Martes'),
-            ('miercoles', 'Miercoles'),
-            ('jueves', 'Jueves'),
-            ('viernes', 'Viernes'),
-            ('sabado', 'Sabado'),
+        	('Lunes', 'Lunes'),
+        	('Martes', 'Martes'),
+            ('Miercoles', 'Miercoles'),
+            ('Jueves', 'Jueves'),
+            ('Viernes', 'Viernes'),
+            ('Sabado', 'Sabado'),
     	)
-    dia = models.CharField("Día", max_length=10, choices=diaOpciones, default='lunes')
+    dia = models.CharField("Día", max_length=10, choices=diaOpciones, default='Lunes')
     horaInicio = models.CharField("Hora de Inicio", max_length=20, default="00:00")
     horaFinal = models.CharField("Hora de Final", max_length=20, default="00:00")
 

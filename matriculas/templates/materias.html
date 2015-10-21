@@ -59,13 +59,13 @@
 		</header>
 	  <nav class="navbar-default navbar-side" role="navigation">
     	<div class="sidebar-collapse">
-								<ul class="nav" id="main-menu" >
+            <ul class="nav" id="main-menu" >
 					<div style="background: #1F5B1F; color:#ffffff;margin-bottom:1%;" >
 						<center><br><br><br><br><div>Bienvenido/a, </div><label><span class="resaltado">{{user.username}}</span></center></label>
-						<br><a href="{% url 'matriculas:logout' %}">Salir</a>
+						<br>
 					</div>
           <li>
-    	      <a  class="active-menu" href="/"><i class="fa fa-home"></i>Inicio</a>
+    	      <a href="/"><i class="fa fa-home"></i>Inicio</a>
           </li>
           <li>
       	    <a href="/alumnos"><i class="fa fa-users"></i>Alumnos</a>
@@ -74,22 +74,28 @@
             <a href="/profesores"><i class="fa fa-briefcase"></i>Profesores</a>
           </li>
         <li>
-    	      <a  href="/materias"><i class="fa fa-book"></i>Materias</a>
+    	      <a  class="active-menu" href="/materias"><i class="fa fa-book"></i>Materias</a>
+    	</li>
+            <li>
+    	      <a  href="/egresados"><i class="fa fa-graduation-cap"></i>Egresados</a>
+    	</li>
+                <li>
+    	      <a  href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
     	</li>
 				</ul>
 			</div>
     </nav>
         <!-- /. NAV SIDE  -->
         
-        <div id="page-wrapper" >
-                        <div id="page-inner">
+        <div id="page-wrapper" class="wrapper-bajado">
+                    <!--     <div id="page-inner">
                 <div class="row">
                     <div class="col-lg-12">
                      <center><h2>Administracion de Materias</h2></center>
                     </div>
                     </div>
-             <!-- /. PAGE INNER  -->
-                 </div>
+              /. PAGE INNER  
+                 </div>-->
             <div id="page-inner">
                 <div class="row">
                 </div>
@@ -102,10 +108,15 @@
 		    <div class="row">
 			<div class="col-lg-12">
 			    <div class="table-responsive">
-				<div class="input-group"> <span class="input-group-addon">Buscar</span>
-
+                <div class="col-lg-10">
+				<div class="input-group" style="margin-top:10px">
+                    <span class="input-group-addon">Buscar</span>
                     <input id="filter" type="text" class="form-control" placeholder="Escriba Aqui...">
-                </div> <br>
+                </div>
+                    </div>
+                <div class="col-lg-offset-10">
+                    <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/materia/add" target="_blank"><i class="fa fa-plus-circle"></i> Crear Nueva</a>
+                </div>
                 <table id="tabla" class="display table table-hover" cellspacing="0" width="100%">
                     <thead>
                         <tr>
@@ -119,7 +130,7 @@
                         {% for materia in materias %}
                         <tr>
                             <td>{{ materia.nombre }}</td>
-                            <td>{{ materia.profesor.last_name }}, {{ materia.profesor.first_name }}</td>
+                            <td>{{ materia.profesor.last_name.upper }}, {{ materia.profesor.first_name.capitalize }}</td>
                             <td>
                                 <form method="post" role="form">{% csrf_token %}
                                     <input type="hidden" name="buscarProfesorId" id="buscarMateriaId" value="{{materia.id}}">
@@ -137,18 +148,19 @@
                         {% endfor %}
                     </tbody>
 				</table>
-                                <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/materia/add" target="_blank">Crear Nueva</a>
 			                 </div>
 			             </div>
 		              </div>
                     {% if materiaBuscada %}
                         <div class="col-lg-8 informacion informacion-alumno" style="overflow-y: scroll;">
                             <br /><label>Nombre de la Materia: </label> {{ materiaBuscada.nombre }}<br /><br />
-                            <label>Profesor: </label> {{ materiaBuscada.profesor.last_name }}, {{ materiaBuscada.profesor.first_name }}<br /><br />
+                            <label>Profesor: </label> {{ materiaBuscada.profesor.last_name.upper }}, {{ materiaBuscada.profesor.first_name.capitalize }}<br /><br />
                             <label>Correlativas de Cursado: </label> 
                                 {% for correlativa in materiaBuscada.correlativasCursado.all %}
                                     {{ correlativa.nombre }},
                                 {% endfor %}
+                            <br /><br />
+                            <label>Tipo de Materia: </label> {{materiaBuscada.tipo}}
                             <br /><br />
                             <label>Correlativas de Rendir: </label>
                                 {% for correlativa in materiaBuscada.correlativasRendir.all %}
@@ -168,7 +180,7 @@
                                         <tbody>
                                             {% for matricula in alumnosAsistentes %}
                                             <tr>
-                                                <td>{{ matricula.alumno.last_name }}, {{ matricula.alumno.first_name }}</td>
+                                                <td>{{ matricula.alumno.last_name.upper }}, {{ matricula.alumno.first_name.capitalize }}</td>
                                                 <td>{{ matricula.alumno.dni}}</td>
                                             </tr>
                                             {% endfor %}
@@ -178,7 +190,7 @@
                             </div>
                         </div>
             
-                        <div class="col-lg-4 informacion-profesores">
+                        <div class="col-lg-4">
                             <div class="table-responsive">
                                 <table class="table table-hover" id="tablaProfes">
                                     <thead>
@@ -189,21 +201,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for horario in horarios %}
                                         <tr>
-                                            {% for horario in horarios %}
-                                                <td>{{ horario.dia }}</td>
-                                                <td>de {{ horario.horaInicio }} a {{ horario.horaFinal }} hs.</td>
-                                                <td>
-                                                    <a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/horario/{{horario.id}}" target="_blank">
-                                                        <i class="fa fa-pencil" title="Editar"></i>
-                                                    </a>
-                                                </td>
-                                            {% endfor %}
+                                            <td>{{ horario.dia }}</td>
+                                            <td>de {{ horario.horaInicio }} a {{ horario.horaFinal }} hs.</td>
+                                            <td>
+                                                <a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/horario/{{horario.id}}" target="_blank">
+                                                    <i class="fa fa-pencil" title="Editar"></i>
+                                                </a>
+                                            </td>
                                         </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
-                            <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/horario/add" target="_blank">Agregar</a>
+                            <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/horario/add" target="_blank"><i class="fa fa-plus-circle"></i> Agregar</a>
                         </div>
             
                     {% endif %}

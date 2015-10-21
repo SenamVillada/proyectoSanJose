@@ -62,13 +62,13 @@
             <ul class="nav" id="main-menu" >
                 <div style="background: #1F5B1F; color:#ffffff;margin-bottom:1%;" >
 						<center><br><br><br><br><div>Bienvenido/a, </div><label><span class="resaltado">{{user.username}}</span></center></label>
-						<br><a href="{% url 'matriculas:logout' %}">Salir</a>
+						<br>
 					</div>
           <li>
-    	      <a  class="active-menu" href="/"><i class="fa fa-home"></i>Inicio</a>
+    	      <a  href="/"><i class="fa fa-home"></i>Inicio</a>
           </li>
           <li>
-      	    <a href="/alumnos"><i class="fa fa-users"></i>Alumnos</a>
+      	    <a class="active-menu" href="/alumnos"><i class="fa fa-users"></i>Alumnos</a>
           </li>
 					<li>
             <a href="/profesores"><i class="fa fa-briefcase"></i>Profesores</a>
@@ -76,14 +76,20 @@
         <li>
     	      <a  href="/materias"><i class="fa fa-book"></i>Materias</a>
     	</li>
+             <li>
+    	      <a  href="/egresados"><i class="fa fa-graduation-cap"></i>Egresados</a>
+    	</li>
+                <li>
+    	      <a  href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
+    	</li>
 				</ul>
 			</div>
     </nav>
     <!-- Seccion bienvenida al sistema  -->
-    <div id="page-wrapper" >
-        <div id="page-inner">
+    <div id="page-wrapper" class="wrapper-bajado">
+        <!-- <div id="page-inner">
             <div class="row">
-                <!-- Tamaño del div es de 12 -->
+                <!-- Tamaño del div es de 12 
                 <div class="col-lg-12">
                     <center><h2>Administracion de alumnos</h2></center>
                 </div>
@@ -93,64 +99,62 @@
                 <strong>Error: </strong>No se ha encontrado el alumno.
             </div>
             {% endif %}
-        </div>
+        </div> -->
         <!-- Seccion alumnos -->
         <div id="page-inner">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="col-lg-6">
                     <div class="panel panel-default">
                         <!-- Cuadro de egresados -->
                         <div class="panel-heading">
                             Alumnos
                         </div>
                     <div class="panel-body">
-                        <form role="form" method="post">{% csrf_token %}
-                            <div class="col-lg-5">
-                                <!-- Buscardor de alumnos -->
-                                <div class="form-group">
-                                    <input class="form-control" type="text" name="buscarAlumnoDni" id="buscarAlumnoDni" placeholder="DNI del alumno" value="{{alumno.dni}}" style="margin-top:10px">
-                                </div>
-                            </div>
-                            <div class="col-lg-7">
-                                <button type="submit" name="buscar" class="btn btn-primary">Buscar</button>
-                                <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/add" target='_blank'>Crear Nuevo</a>
-                            </div>
-                        </form>
                         <div class="col-lg-12">
-                        <!-- Tabla de informacion de todos los alumnos registrados -->
-                        <table class="table table-hover">
-                            <thead>
-                                <!-- Datos de la tabla -->
-                                <tr>
-                                    <th>Materia</th>
-                                    <th>Condición</th>
-                                    <th>Asistencia</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Lo que contiene la tabla -->
-                                {% for matricula in materias %}
-                                <tr>
-                                    <td>{{ matricula.materia.nombre }}</td>
-                                    <td>{{ matricula.condicion }}</td>
-                                    <td>{% if matricula.siVinoAlgunaVez %} {{ matricula.porcentajeAsistencia }}% {% else %} ----- {% endif %}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                    </div>
-                    </div>
+                            <div class="col-lg-10">
+                                    <div class="input-group" style="margin-top:10px"> <span class="input-group-addon">Buscar</span>
+                                        <input id="filter" type="text" class="form-control" placeholder="Escriba aquí...">
+                                    </div>
+                                </div>
+                            <div class="col-lg-offset-10">
+                     <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/add" target="_blank"><i class="fa fa-plus-circle"></i> Crear Nuevo</a>
+                </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Apellido, Nombre</th>
+                                            <th>DNI</th>
+                                            <th>Ver</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="searcheable">
+                                        {% for alumno in alumnos %}
+                                        {% if not alumno.egreso %}
+                                        <tr>
+                                            <td>{{alumno.last_name.upper.upper}}, {{alumno.first_name.capitalize}}</td>
+                                            <td>{{alumno.dni}}</td>
+                                            <td><form method="post" role="form">{% csrf_token %}
+                                                    <input type="hidden" name="buscarAlumnoId" id="buscarAlumnoId" value="{{alumno.id}}">
+                                                    <button type="submit" name="btnAlumnoId" class="btn btn-default btn-xs"><i class="fa fa-eye" title="Ver" ></i></button></form></td>
+                                            <td><a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target="_blank"><i class="fa fa-pencil" title="Editar"></i></a></td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>                       
                     <!-- Informacion general del alumno buscado -->
-                    <div class="container col-lg-6 informacion informacion-alumno">
+                    <div class="container col-lg-4 informacion informacion-alumno">
                         {% if alumno %}
+                        <br>
                         <div class="form-group">
-                            <label for="nombre">Nombre/s: </label> {{alumno.first_name}}
+                            <label for="nombre">Nombre/s: </label> {{alumno.first_name.capitalize}}
                         </div>
                         <div class="form-group">
-                            <label for="nombre">Apellido: </label> {{alumno.last_name}}
+                            <label for="nombre">Apellido: </label> {{alumno.last_name.upper}}
                         </div>
                         <div class="form-group">
                             <label for="nombre">DNI: </label> {{alumno.dni}}
@@ -182,63 +186,36 @@
                         <div class="form-group">
                             <label for="nombre">Paternidad: </label> {% if alumno.paternidad %}Sí{% else %}No{% endif %}
                         </div>
-                        <div class="form-group">
-                            <label for="nombre">¿Egreso?: </label> {% if alumno.egreso %}Sí{% else %}No{% endif %}
+                        <div class="form-group col-lg-offset-9">
+                            <label for="nombre"><a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'><i class="fa fa-pencil" title="Editar"></i> Editar</a></label>
                         </div>
-                        <div class="form-group col-lg-offset-11">
-                            <label for="nombre"><a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'>Editar</a></label>
-                        </div>
-                        {% endif %}
+                       
                     </div>
-                </div>
-            </div>
-        </div>
-        <!--Seccion egresados -->
-        <div id="page-inner">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <!-- Cuadro de egresados -->
-                        <div class="panel-heading">
-                            Egresados
-                        </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="table-responsive">
-                                    <!-- Buscador de egresados -->
-                                    <div class="input-group"> <span class="input-group-addon">Buscar</span>
-                                        <input id="filter" type="text" class="form-control" placeholder="Escriba aquí...">
-                                    </div>
-                                    <br></br>
-                                    <br></br>
-                                    <!-- Tabla de los egresados del instituto -->
-                                    <table class="table table-hover">
-                                    <!-- Datos de la tabla -->
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align: center; ">Nombre</th>
-                                            <th style="text-align: center;" data-sortable="true">Año de egreso</th>
-                                            <th style="text-align: center;"><div class="th-inner sortable">Informacion</th>
-                                        </tr>
-                                    </thead>
-                                    <!-- Contenido de la tabla -->
-                                    <tbody class="searcheable">
-                                        {% for egresado in alumnos %}
-                                        {% if egresado.egreso %}
-                                        <tr>
-                                            <td style="text-align: center; ">{{ egresado.last_name }}, {{ egresado.first_name }}</td>
-                                            <td style="text-align: center; ">{{ egresado.anioEgreso }}</td>
-                                            <td style="text-align: center; "><form role="form" method="post">{% csrf_token %}<input type="hidden" name="buscarAlumnoDni" id="buscarAlumnoDni" value="{{egresado.dni}}"><button type="submit" name="buscar" class="btn btn-primary">Cargar</button></form></td>
-                                        </tr>
-                                        {% endif %}
-                                        {% endfor %}
-                                    </tbody>
-                                    </table>
-                                </div>
+                        <div class="col-lg-8">
+                            <table class="table table-hover">
+                            <thead>
+                                <!-- Datos de la tabla -->
+                                <tr>
+                                    <th>Materia</th>
+                                    <th>Condición</th>
+                                    <th>Asistencia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Lo que contiene la tabla -->
+                                {% for matricula in materias %}
+                                <tr>
+                                    <td>{{ matricula.materia.nombre }}</td>
+                                    <td>{{ matricula.condicion }}</td>
+                                    <td>{% if matricula.siVinoAlgunaVez %} {{ matricula.porcentajeAsistencia }}% {% else %} ----- {% endif %}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                             </div>
+                         {% endif %}
                         </div>
-                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
