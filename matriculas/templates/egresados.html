@@ -103,17 +103,16 @@
                                     <!-- Buscador de egresados -->
                                     <div class="input-group"> <span class="input-group-addon">Buscar</span>
                                         <input id="filter" type="text" class="form-control" placeholder="Escriba aquí...">
-                                    </div>
-                                    <br></br>
-                                    <br></br>
+                                    </div><br />
                                     <!-- Tabla de los egresados del instituto -->
                                     <table class="table table-hover">
                                     <!-- Datos de la tabla -->
                                     <thead>
                                         <tr>
-                                            <th style="text-align: center; ">Nombre</th>
-                                            <th style="text-align: center;" data-sortable="true">Año de egreso</th>
-                                            <th style="text-align: center;"><div class="th-inner sortable">Informacion</th>
+                                            <th>Nombre</th>
+                                            <th>Año de egreso</th>
+                                            <th>Ver</th>
+                                            <th>Editar</th>
                                         </tr>
                                     </thead>
                                     <!-- Contenido de la tabla -->
@@ -121,19 +120,63 @@
                                         {% for egresado in alumnos %}
                                         {% if egresado.egreso %}
                                         <tr>
-                                            <td style="text-align: center; ">{{ egresado.last_name.upper }}, {{ egresado.first_name.capitalize }}</td>
-                                            <td style="text-align: center; ">{{ egresado.anioEgreso }}</td>
-                                            <td style="text-align: center; "><form role="form" method="post">{% csrf_token %}<input type="hidden" name="buscarAlumnoDni" id="buscarAlumnoDni" value="{{egresado.dni}}"></form></td>
+                                            <td>{{ egresado.last_name.upper }}, {{ egresado.first_name.capitalize }}</td>
+                                            <td>{{ egresado.anioEgreso }}</td>
                                             <td><form method="post" role="form">{% csrf_token %}
-                                                    <input type="hidden" name="buscarAlumnoId" id="buscarAlumnoId" value="{{alumno.id}}">
+                                                    <input type="hidden" name="buscarAlumnoId" id="buscarAlumnoId" value="{{egresado.id}}">
                                                     <button type="submit" name="btnAlumnoId" class="btn btn-default btn-xs"><i class="fa fa-eye" title="Ver" ></i></button></form></td>
-                                            <td><a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target="_blank"><i class="fa fa-pencil" title="Editar"></i></a></td>
+                                            <td><a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/alumno/{{egresado.id}}" target="_blank"><i class="fa fa-pencil" title="Editar"></i></a></td>
                                         </tr>
                                         {% endif %}
                                         {% endfor %}
                                     </tbody>
                                     </table>
                                 </div>
+                        <!-- Informacion general del alumno buscado -->
+                    <div class="container col-lg-4 informacion informacion-alumno">
+                        {% if alumno %}
+                        <br>
+                        <div class="form-group">
+                            <label for="nombre">Nombre/s: </label> {{alumno.first_name.capitalize}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Apellido: </label> {{alumno.last_name.upper}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">DNI: </label> {{alumno.dni}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Sexo: </label> {{alumno.sexo}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Teléfono: </label> {{alumno.telefonoFijo}} / {{alumno.telefonoMovil}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Dirección: </label> {{alumno.domicilio}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Estado Civil: </label> {{alumno.estadoCivil}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">E-mail: </label> <a href="mailto:{{alumno.email}}">{{alumno.email}}</a>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Nacimiento: </label> {{alumno.lugarNacimiento}}, {{alumno.fechaNacimiento.day}}/{{alumno.fechaNacimiento.month}}/{{alumno.fechaNacimiento.year}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Lugar de Trabajo: </label> {{alumno.lugarDeTrabajo}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Hora de Trabajo: </label> {{alumno.horaDeTrabajo}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Paternidad: </label> {% if alumno.paternidad %}Sí{% else %}No{% endif %}
+                        </div>
+                        <div class="form-group col-lg-offset-9">
+                            <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'><i class="fa fa-pencil" title="Editar"></i> Editar</a>
+                        </div>
+                    </div>
+                         {% endif %}
                             </div>
                         </div>
                     </div>

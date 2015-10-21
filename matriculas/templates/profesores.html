@@ -85,14 +85,7 @@
     </nav>
     <!-- Pagina general  -->
     <div id="page-wrapper" class="wrapper-bajado">
-        <!--<div id="page-inner">
-            <div class="row">
-                 Tamaño del div es de 12 
-                <div class="col-lg-12">
-                    <center><h2>Administracion de profesores</h2></center>
-                </div>
-            </div>
-        </div>-->
+
         <!-- Sección buscar profesores -->
         <div id="page-inner">
             <div class="row">
@@ -137,10 +130,9 @@
                                 </table>
                                 </div>
                             </div>
-                            
                             {% if profesor %}
                             <div class="col-lg-12">  
-                                <div class="col-lg-7 informacion informacion-alumno" style="overflow-y: scroll;">
+                                <div class="col-lg-5 informacion informacion-alumno" style="overflow-y: scroll;">
                                     <div class="col-sm-12">
                                         <div class="form-group" style="margin-top:10px;">
                                             <label for="nombre">Nombre/s:</label><h> {{profesor.first_name.capitalize}}</h>
@@ -153,15 +145,15 @@
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label>Lugar y fecha de nacimiento:</label><h> {{profesor.lugarNacimiento}}, {{profesor.fechaNacimiento}}</h>
+                                            <label>Nacimiento:</label><h> {{profesor.lugarNacimiento}}, {{profesor.fechaNacimiento}}</h>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>Estado civil:</label><h> {{profesor.estadoCivil}}</h>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>Cuil:</label><h> {{profesor.cuil}}</h>
                                         </div>
@@ -171,12 +163,12 @@
                                             <label>Domicilio:</label><h> {{profesor.domicilio}}</h>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>Teléfono:</label><h> {{profesor.telefonoFijo}}</h>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>Celular:</label><h> {{profesor.telefonoMovil}}</h>
                                         </div>
@@ -206,13 +198,12 @@
                                             <label>Cargo (cantidad de horas - alta y baja):</label><h> {{profesor.cargo}}</h>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group" style="margin-bottom: 10px;">
-                                            <label>Licencias:</label><h> -</h>
-                                        </div>
-                                    </div>
+                                    <div class="form-group col-lg-offset-9">
+                            <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'><i class="fa fa-pencil" title="Editar"></i> Editar</a>
+                        </div>
                                 </div>
-                                <div class="col-sm-10 col-lg-5">
+                                <div class="col-sm-10 col-lg-7">
+                                    <label>Horarios <a href="{{ BASE_URL }}/admin/matriculas/horario/add" target="_blank"><i class="fa fa-plus-circle"></i></a></label>
                                     <div class="table-responsive">
                                     <table class="table table-hover" id="tablaProfes">
                                         <thead>
@@ -228,6 +219,40 @@
                                                 <td>{{ horario.materia.nombre }}</td>
                                                 <td>{{ horario.dia }}</td>
                                                 <td>de {{ horario.horaInicio }} a {{ horario.horaFinal }} hs.</td>
+                                                <td>
+                                                <a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/horario/{{horario.id}}" target="_blank">
+                                                    <i class="fa fa-pencil" title="Editar"></i>
+                                                </a>
+                                            </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                                
+                                 <div class="col-sm-10 col-lg-7">
+                                     <label>Licencias <a href="{{ BASE_URL }}/admin/matriculas/licencia/add" target="_blank"><i class="fa fa-plus-circle"></i></a></label>
+                                    <div class="table-responsive">
+                                    <table class="table table-hover" id="tablaProfes">
+                                        <thead>
+                                            <tr>
+                                              <th>Motivo</th>
+                                              <th>Inicio</th>
+                                              <th>Final</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for licencia in licencias %}
+                                            <tr>
+                                                <td>{{ licencia.motivo }}</td>
+                                                <td>{{ licencia.fechaInicio }}</td>
+                                                <td>{{ licencia.fechaFinal }}</td>
+                                                <td>
+                                                <a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/licencia/{{licencia.id}}" target="_blank">
+                                                    <i class="fa fa-pencil" title="Editar"></i>
+                                                </a>
+                                            </td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>

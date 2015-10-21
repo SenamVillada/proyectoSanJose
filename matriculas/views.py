@@ -8,8 +8,6 @@ from django.contrib.auth.decorators import login_required
 from matriculas.models import *
 import time
 
-
-
 # Create your views here.
 @login_required(login_url='/login')
 def index(request):
@@ -47,28 +45,19 @@ def error_login(request):
 def alumnos(request):
     alumnos = Alumno.objects.all()
     if request.method == 'POST':
-        try:
             idAlumno = request.POST['buscarAlumnoId']
             alumno = Alumno.objects.get(id = idAlumno)
             materias = alumno.matricula_set.all()
             return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
-        except:
-            return render_to_response("alumnos.html",{'errorAlumno':True, 'alumnos':alumnos}, RequestContext(request))
-
     return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
 
 @login_required(login_url='/login')
 def egresados(request):
     alumnos = Alumno.objects.all()
-    #if request.method == 'POST':
-     #   try:
-    #      idAlumno = request.POST['buscarAlumnoId']
-    #        alumno = Alumno.objects.get(id = idAlumno)
-    #        materias = alumno.matricula_set.all()
-    #        return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
-    #    except:
-    #        return render_to_response("alumnos.html",{'errorAlumno':True, 'alumnos':alumnos}, RequestContext(request))
-
+    if request.method == 'POST':
+        idAlumno = request.POST['buscarAlumnoId']
+        alumno = Alumno.objects.get(id = idAlumno)
+        return render_to_response("egresados.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
     return render_to_response("egresados.html",{'alumnos':alumnos}, RequestContext(request))
 
 
@@ -100,7 +89,8 @@ def profesores(request):
                 materiasEnI = materias[i].horario_set.all()
                 for j in range(materiasEnI.count()):
                     horarios.append(materiasEnI[j])
-            return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios}, RequestContext(request))
+            licencias = profesor.licencia_set.all()
+            return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias}, RequestContext(request))
         except:
             return render_to_response("profesores.html",{'errorProfesor':True}, RequestContext(request))
     return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))

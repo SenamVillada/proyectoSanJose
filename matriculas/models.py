@@ -139,7 +139,7 @@ class Nota(models.Model):
     matricula = models.ForeignKey(Matricula)
 
     def __unicode__(self):
-        return str(calificacion)
+        return str(self.calificacion) + " - " + str(self.matricula.alumno.dni)
     
 class Horario(models.Model):
     materia = models.ForeignKey(Materia)
