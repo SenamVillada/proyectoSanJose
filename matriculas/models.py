@@ -5,14 +5,14 @@ from django.contrib.auth.models import User
 class Cargo(models.Model):
     nombre = models.CharField("Nombre", max_length = 20)
     fechaAlta = models.DateField("Fecha de Alta")
-    fechaBaja = models.DateField("Fecha de Baja")
+    fechaBaja = models.DateField("Fecha de Baja", blank=True, null=True)
 
     def __str__(self):
         return self.nombre
 
 class Persona(User):
     dni = models.IntegerField("DNI")
-    domicilio = models.CharField("Domicilio", max_length=300)
+    domicilio = models.CharField("Domicilio", max_length=300, blank=True, null=True)
     estadoOpciones = (
             ('Casado', 'Casado/a'),
             ('Soltero', 'Soltero/a'),
@@ -20,18 +20,18 @@ class Persona(User):
             ('Divorciado', 'Divorciado/a'))
     estadoCivil = models.CharField("Estado Civil", max_length=16, choices=estadoOpciones, default='Soltero')
     fechaNacimiento = models.DateField("Fecha de Nacimiento")
-    lugarNacimiento = models.CharField("Lugar de Nacimiento", max_length=50)
-    telefonoFijo = models.IntegerField("Telefono Fijo")
-    telefonoMovil = models.IntegerField("Telefono Celular")
+    lugarNacimiento = models.CharField("Lugar de Nacimiento", max_length=50, blank=True, null=True)
+    telefonoFijo = models.IntegerField("Telefono Fijo", blank=True, null=True)
+    telefonoMovil = models.IntegerField("Telefono Celular", blank=True, null=True)
     sexoOpciones = (
             ('Masculino', 'Masculino'),
             ('Femenino', 'Femenino'))
     sexo = models.CharField("Sexo", max_length=16, choices=sexoOpciones, default='Masculino')
 
 class Alumno(Persona):
-    lugarDeTrabajo = models.CharField("Lugar de Trabajo", max_length=50)
-    horaDeTrabajo = models.CharField("Horario de Trabajo", max_length=200)
-    paternidad = models.BooleanField("Paternidad")
+    lugarDeTrabajo = models.CharField("Lugar de Trabajo", max_length=50, blank=True, null=True)
+    horaDeTrabajo = models.CharField("Horario de Trabajo", max_length=200, blank=True, null=True)
+    paternidad = models.BooleanField("Paternidad", blank=True, null=True)
     anioEgreso = models.IntegerField("Año de Egreso", blank=True, null=True)
     
     class Meta:
@@ -49,11 +49,11 @@ class Alumno(Persona):
 
 class Profesor(Persona):
     cuil = models.IntegerField("CUIL")
-    curriculum = models.FileField("Curriculum",upload_to='curriculums/%Y/%m',blank=True)
-    fechaEscalafon = models.DateField("Fecha de Escalafon")
-    fechaAptoPsicofisico = models.DateField("Fecha del Apto Psicofisico")
-    numeroRegistro = models.IntegerField("Numero de Registro")
-    titulo = models.CharField("Titulo",max_length=200)
+    curriculum = models.FileField("Curriculum",upload_to='curriculums/%Y/%m', blank=True)
+    fechaEscalafon = models.DateField("Fecha de Escalafon", blank=True, null=True)
+    fechaAptoPsicofisico = models.DateField("Fecha del Apto Psicofisico", blank=True, null=True)
+    numeroRegistro = models.IntegerField("Numero de Registro", blank=True, null=True)
+    titulo = models.CharField("Titulo",max_length=200, blank=True, null=True)
     cargo = models.ForeignKey(Cargo)
     
     class Meta:
@@ -71,8 +71,8 @@ class Licencia(models.Model):
 
 class Materia(models.Model):
     nombre = models.CharField("Nombre de la Materia", max_length=30)
-    correlativasCursado = models.ManyToManyField('self',blank=True)
-    correlativasRendir = models.ManyToManyField('self',blank=True)
+    correlativasCursado = models.ManyToManyField('self', blank=True)
+    correlativasRendir = models.ManyToManyField('self', blank=True)
     profesor = models.ForeignKey(Profesor)
     tipoOpciones = (
         	('Asignatura', 'Asignatura'),
@@ -85,15 +85,14 @@ class Materia(models.Model):
 	    return self.nombre
 
     def verMateria(self):
-        texto = "Nombre: "+self.nombre+"\nTipo de materia: "+self.tipo+"\nCorrelativas de cursado: "+self.correlativasCursado+"\nCorrelativas para rendir: "+self.correlativasRendir
-        return texto
+        return "Nombre: "+self.nombre+"\nTipo de materia: "+self.tipo+"\nCorrelativas de cursado: "+self.correlativasCursado+"\nCorrelativas para rendir: "+self.correlativasRendir
 
 class Matricula(models.Model):
     anio = models.IntegerField("Año")
-    aprobada = models.BooleanField("Aprobada?")
+    aprobada = models.BooleanField("Aprobada?", default=False)
     alumno = models.ForeignKey(Alumno)
     materia = models.ForeignKey(Materia)
-    finalizada = models.BooleanField("Finalizada?", default="False")
+    finalizada = models.BooleanField("Finalizada?", default=False)
 
     def __unicode__(self):
         return self.alumno.first_name + ", " + self.alumno.last_name + " - " + self.materia.nombre + " - " + str(self.anio)
@@ -129,11 +128,11 @@ class Matricula(models.Model):
 
 class Asistencia(models.Model):
     fecha = models.DateField("Fecha")
-    vino = models.BooleanField("Vino?")
+    vino = models.BooleanField("Vino?", default=True)
     matricula = models.ForeignKey(Matricula)
 
 class Nota(models.Model):
-    fecha = models.DateField("Fecha", auto_now=True)
+    fecha = models.DateField("Fecha")
     calificacion = models.IntegerField("Calificacion")
     observacion = models.CharField("Observacion", max_length=100)
     matricula = models.ForeignKey(Matricula)
