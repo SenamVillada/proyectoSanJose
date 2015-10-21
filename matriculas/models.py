@@ -31,7 +31,7 @@ class Persona(User):
 class Alumno(Persona):
     lugarDeTrabajo = models.CharField("Lugar de Trabajo", max_length=50, blank=True, null=True)
     horaDeTrabajo = models.CharField("Horario de Trabajo", max_length=200, blank=True, null=True)
-    paternidad = models.BooleanField("Paternidad", blank=True, null=True)
+    paternidad = models.BooleanField("Paternidad")
     anioEgreso = models.IntegerField("Año de Egreso", blank=True, null=True)
     
     class Meta:
