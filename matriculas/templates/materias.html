@@ -3,34 +3,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    
-    <link href="{% static 'img/admin/logo.png' %}" rel='shortcut icon' type='image/png'>
+    <link href="{% static '../static/img/admin/logo.png' %}" rel='shortcut icon' type='image/png'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Materias</title>
+    <title>Administracion de alumnos</title>
 	<!-- BOOTSTRAP STYLES-->
-    <link href="{% static 'css/admin/bootstrap.css' %}" rel="stylesheet" />
-     <!-- FONTAWESOME STYLES-->
-    <link href="{% static 'fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
+    <link href="{% static '../static/css/admin/bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static '../static/css/bootstrap.min.css' %}" rel="stylesheet" />
+     <!-- FONTAWESOME STYLES -->
+    <link href="{% static '../static/fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
      <!-- MORRIS CHART STYLES
     <link href=" js/ morris/morris-0.4.3.min.css" rel="stylesheet" />-->
         <!-- CUSTOM STYLES-->
-    <link href="{% static 'css/admin/custom.css' %}" rel="stylesheet" />
+    <link href="{% static '../static/css/admin/custom.css' %}" rel="stylesheet" />
      <!-- GOOGLE FONTS-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    
-    <script src="{% static 'js/jquery.js' %}"></script> 
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-	
-	    <!-- jQuery Version 1.11.0 -->
-    <script src="{% static 'js/jquery-1.11.0.js' %}"></script>
-    <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
-    
+		  <!-- jQuery Version 1.11.0 -->
+    <script src="{% static '../static/js/jquery-1.11.0.js' %}"></script>
     <!-- jQueryUi Version 1.8 -->
-    <script src="{% static 'js/jquery-ui.js' %}"></script>
-    
-    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static '../static/js/jquery-ui.js' %}"></script>
+    <script src="{% static '../static/js/jquery.dataTables.min.js' %}"></script>
     <script type="text/javascript">
 	// Tabla de alumnos
 	$(document).ready(function () {
@@ -55,51 +49,45 @@
 </head>
 <body>
     <!-- /. NAV TOP  -->
-    <nav class="navbar-default navbar-side" role="navigation">
-        <div class="centradodiv">
-            <div class="container-fluid">
-                <a href="/"><img src="{% static 'img/admin/logo.png' %}"></a>
-            </div>
-            <div class="container-fluid centrado" id="div-usuario" style="color:#fff;">
-                <span class="">Bienvenido/a, <span class="resaltado">{{user.username}}</span></span>
-                <br><a href="{% url 'matriculas:logout' %}">Salir</a>
-            </div>
-        </div>
-            <div class="sidebar-collapse">
-                <ul class="nav" id="main-menu" >
-                    <li>
-                        <a   href="/"><i class="fa fa-desktop fa-2x"></i>Inicio</a>
-                    </li>
-                    <li>
-                        <a   href="/alumnos"><i class="fa fa-user fa-2x"></i>Alumnos</a>
-                    </li>
-                    <li>
-                        <a  href="/profesores"><i class="fa fa-briefcase fa-2x"></i>Profesores</a>
-                    </li>
-                    <li>
-                        <a class="active-menu"  href="/materias"><i class="fa fa-book fa-2x"></i>Materias</a>
-                    </li>
-                </ul>
-            </div>
-            <div id="sub-footer" class="sub-footer">
-				Desarrollado por SENAM
-				<br><br>
-				Copyright © 2015 Instituto Parroquial San José.
-				<br><br>
-				Todos los Derechos Reservados.
-		</div>  
+    <header class="cd-main-header">
+			<a href="/" class="cd-logo"><img style="margin-top: 1%; margin-left: 1%;" src="{% static '../static/img/admin/logo2.png' %}" alt="Logo"></a>
+			<a href="/" class="cd-nav-trigger"><span></span></a>
+			<nav class="cd-nav">
+				<ul class="cd-top-nav">
+				</ul>
+			</nav>
+		</header>
+	  <nav class="navbar-default navbar-side" role="navigation">
+    	<div class="sidebar-collapse">
+            <ul class="nav" id="main-menu" >
+					<div style="background: #1F5B1F; color:#ffffff;margin-bottom:1%;" >
+						<center><br><br><br><br><div>Bienvenido/a, </div><label><span class="resaltado">{{user.username}}</span></center></label>
+						<br>
+					</div>
+          <li>
+    	      <a href="/"><i class="fa fa-home"></i>Inicio</a>
+          </li>
+          <li>
+      	    <a href="/alumnos"><i class="fa fa-users"></i>Alumnos</a>
+          </li>
+					<li>
+            <a href="/profesores"><i class="fa fa-briefcase"></i>Profesores</a>
+          </li>
+        <li>
+    	      <a  class="active-menu" href="/materias"><i class="fa fa-book"></i>Materias</a>
+    	</li>
+            <li>
+    	      <a  href="/egresados"><i class="fa fa-graduation-cap"></i>Egresados</a>
+    	</li>
+                <li>
+    	      <a  href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
+    	</li>
+				</ul>
+			</div>
     </nav>
         <!-- /. NAV SIDE  -->
         
-        <div id="page-wrapper" >
-                        <div id="page-inner">
-                <div class="row">
-                    <div class="col-lg-12">
-                     <center><h2>Administracion de Materias</h2></center>
-                    </div>
-                    </div>
-             <!-- /. PAGE INNER  -->
-                 </div>
+        <div id="page-wrapper" class="wrapper-bajado">
             <div id="page-inner">
                 <div class="row">
                 </div>
@@ -112,62 +100,128 @@
 		    <div class="row">
 			<div class="col-lg-12">
 			    <div class="table-responsive">
-				<div class="input-group"> <span class="input-group-addon">Buscar</span>
-
+                <div class="col-lg-10">
+				<div class="input-group" style="margin-top:10px">
+                    <span class="input-group-addon">Buscar</span>
                     <input id="filter" type="text" class="form-control" placeholder="Escriba Aqui...">
-                </div> <br>
-                <table id="tabla" class="display" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-					  <th>Materia</th>
-					  <th>Profesor</th>
-					  <th>Tipo</th>
-					  <th>Correlatividades</th>
-					</tr>
-				</thead>
-				<tbody class="searcheable">
-                    {% for matricula in matriculas %}
-					<tr>
-                        <td>{{ matricula.materia.nombre }}</td>
-                        <td>10:30 a 11:30</td>
-                        <td>-</td>
-                        <td>{{ materia.tipo }}</td>
-						<td>-</td>
-						<td><button type="submit" name="editar" class="btn btn-primary">Editar</button></td>
-                    </tr>
-                    {% endfor %}
-				</tbody>
+                </div>
+                    </div>
+                <div class="col-lg-offset-10">
+                    <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/materia/add" target="_blank"><i class="fa fa-plus-circle"></i> Crear Nueva</a>
+                </div>
+                <table id="tabla" class="display table table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                          <th>Materia</th>
+                          <th>Profesor</th>
+                          <th>Ver</th>
+                          <th>Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="searcheable">
+                        {% for materia in materias %}
+                        <tr>
+                            <td>{{ materia.nombre }}</td>
+                            <td>{{ materia.profesor.last_name.upper }}, {{ materia.profesor.first_name.capitalize }}</td>
+                            <td>
+                                <form method="post" role="form">{% csrf_token %}
+                                    <input type="hidden" name="buscarProfesorId" id="buscarMateriaId" value="{{materia.id}}">
+                                        <button type="submit" name="btnMateriaId" class="btn btn-default btn-xs">
+                                            <i class="fa fa-eye" title="Ver" ></i>
+                                    </button>
+                                </form>
+                            </td>
+                            <td>
+                                <a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/materia/{{materia.id}}" target="_blank">
+                                    <i class="fa fa-pencil" title="Editar"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
 				</table>
-                    <button type="submit" name="crear" class="btn btn-primary">Crear</button>
-				
-				    <form role="form" method="post">
-				      <br />
-				    </form>
-			    </div>
-			</div>
-		    </div>
-		</div>
-        </div>
-             <!-- /. PAGE INNER  -->
+			                 </div>
+			             </div>
+		              </div>
+                    {% if materiaBuscada %}
+                        <div class="col-lg-8 informacion informacion-alumno" style="overflow-y: scroll;">
+                            <br /><label>Nombre de la Materia: </label> {{ materiaBuscada.nombre }}<br /><br />
+                            <label>Profesor: </label> {{ materiaBuscada.profesor.last_name.upper }}, {{ materiaBuscada.profesor.first_name.capitalize }}<br /><br />
+                            <label>Correlativas de Cursado: </label> 
+                                {% for correlativa in materiaBuscada.correlativasCursado.all %}
+                                    {{ correlativa.nombre }},
+                                {% endfor %}
+                            <br /><br />
+                            <label>Tipo de Materia: </label> {{materiaBuscada.tipo}}
+                            <br /><br />
+                            <label>Correlativas de Rendir: </label>
+                                {% for correlativa in materiaBuscada.correlativasRendir.all %}
+                                    {{ correlativa.nombre }},
+                                {% endfor %}
+                            <br /><br /><br />
+                            <label>Lista de Alumnos</label>
+                            <div class="col-lg-12 informacion-profesores">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="tablaProfes">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>DNI</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for matricula in alumnosAsistentes %}
+                                            <tr>
+                                                <td>{{ matricula.alumno.last_name.upper }}, {{ matricula.alumno.first_name.capitalize }}</td>
+                                                <td>{{ matricula.alumno.dni}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="col-lg-4">
+                            <label>Horarios <a href="{{ BASE_URL }}/admin/matriculas/horario/add" target="_blank"><i class="fa fa-plus-circle"></i></a></label>
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="tablaProfes">
+                                    <thead>
+                                        <tr>
+                                            <th>Día</th>
+                                            <th>Horario</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for horario in horarios %}
+                                        <tr>
+                                            <td>{{ horario.dia }}</td>
+                                            <td>de {{ horario.horaInicio }} a {{ horario.horaFinal }} hs.</td>
+                                            <td>
+                                                <a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/horario/{{horario.id}}" target="_blank">
+                                                    <i class="fa fa-pencil" title="Editar"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+            
+                    {% endif %}
+		        </div>
             </div>
-         <!-- /. PAGE WRAPPER  -->
         </div>
-        
-     <!-- /. WRAPPER  -->
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS 
-    <script src="assets/js/jquery-1.10.2.js"></script>-->
-      <!-- BOOTSTRAP SCRIPTS 
-    <script src="assets/js/bootstrap.min.js"></script>-->
-    <!-- METISMENU SCRIPTS 
-    <script src="assets/js/jquery.metisMenu.js"></script>-->
-     <!-- MORRIS CHART SCRIPTS 
-     <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-    <script src="assets/js/morris/morris.js"></script>-->
-      <!-- CUSTOM SCRIPTS 
-    <script src="assets/js/custom.js"></script>-->
-    
-   
+				<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
+					Desarrollado por SENAM
+          <br><br>
+          Copyright © 2015 Instituto Parroquial San José.
+          <br><br>
+          Todos los Derechos Reservados.
+				</footer>
+    </div>   
 </body>
     
 </html>

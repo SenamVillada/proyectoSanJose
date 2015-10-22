@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from matriculas.models import *
+import time
 
 # Create your views here.
 @login_required(login_url='/login')
@@ -44,30 +45,52 @@ def error_login(request):
 def alumnos(request):
     alumnos = Alumno.objects.all()
     if request.method == 'POST':
-        try:
-            dni = request.POST['buscarAlumnoDni']
-            alumno = Alumno.objects.get(dni = dni)
+            idAlumno = request.POST['buscarAlumnoId']
+            alumno = Alumno.objects.get(id = idAlumno)
             materias = alumno.matricula_set.all()
             return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
-        except:
-            return render_to_response("alumnos.html",{'errorAlumno':True, 'alumnos':alumnos}, RequestContext(request))
-
     return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
 
 @login_required(login_url='/login')
+def egresados(request):
+    alumnos = Alumno.objects.all()
+    if request.method == 'POST':
+        idAlumno = request.POST['buscarAlumnoId']
+        alumno = Alumno.objects.get(id = idAlumno)
+        return render_to_response("egresados.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
+    return render_to_response("egresados.html",{'alumnos':alumnos}, RequestContext(request))
+
+
+@login_required(login_url='/login')
 def materias(request):
-    matriculas = Matricula.objects.all().values('materia', 'profesor').distinct()
-    return render_to_response('materias.html', {"matriculas":matriculas},RequestContext(request))
+    materiasTotal = Materia.objects.all()
+    if request.method == 'POST':
+        try:
+            idmateria = request.POST['buscarProfesorId']
+            materia = Materia.objects.get(id = idmateria)
+            horarios = materia.horario_set.all()
+            anio = int(time.strftime('%Y'))
+            matriculasAsistentes = materia.matricula_set.all().filter(anio=anio)
+            return render_to_response('materias.html', {"materias":materiasTotal, "materiaBuscada":materia, "horarios":horarios, "alumnosAsistentes":matriculasAsistentes},RequestContext(request))
+        except:
+            return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
+    return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
 
 @login_required(login_url='/login')
 def profesores(request):
     profesores = Profesor.objects.all()
-    print request.POST
     if request.method == 'POST':
         try:
             idProf = request.POST['buscarProfesorId']
             profesor = Profesor.objects.get(id = int(idProf))
-            return render_to_response("profesores.html",{'profesor':profesor,"profesores":profesores}, RequestContext(request))
+            materias = profesor.materia_set.all()
+            horarios = []
+            for i in range(materias.__len__()):
+                materiasEnI = materias[i].horario_set.all()
+                for j in range(materiasEnI.count()):
+                    horarios.append(materiasEnI[j])
+            licencias = profesor.licencia_set.all()
+            return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias}, RequestContext(request))
         except:
             return render_to_response("profesores.html",{'errorProfesor':True}, RequestContext(request))
     return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))

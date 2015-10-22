@@ -68,7 +68,7 @@
     	      <a  href="/"><i class="fa fa-home"></i>Inicio</a>
           </li>
           <li>
-      	    <a class="active-menu" href="/alumnos"><i class="fa fa-users"></i>Alumnos</a>
+      	    <a href="/alumnos"><i class="fa fa-users"></i>Alumnos</a>
           </li>
 					<li>
             <a href="/profesores"><i class="fa fa-briefcase"></i>Profesores</a>
@@ -76,65 +76,63 @@
         <li>
     	      <a  href="/materias"><i class="fa fa-book"></i>Materias</a>
     	</li>
-             <li>
-    	      <a  href="/egresados"><i class="fa fa-graduation-cap"></i>Egresados</a>
+            <li>
+    	      <a class="active-menu"  href="/egresados"><i class="fa fa-graduation-cap"></i>Egresados</a>
     	</li>
-                <li>
-    	      <a  href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
+        <li>
+    	      <a  class="alerta" href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
     	</li>
 				</ul>
 			</div>
     </nav>
     <!-- Seccion bienvenida al sistema  -->
     <div id="page-wrapper" class="wrapper-bajado">
-
-        <!-- Seccion alumnos -->
+<!--Seccion egresados -->
         <div id="page-inner">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <!-- Cuadro de egresados -->
                         <div class="panel-heading">
-                            Alumnos
+                            Egresados
                         </div>
                     <div class="panel-body">
-                        <div class="col-lg-12">
-                            <div class="col-lg-10">
-                                    <div class="input-group" style="margin-top:10px"> <span class="input-group-addon">Buscar</span>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <!-- Buscador de egresados -->
+                                    <div class="input-group"> <span class="input-group-addon">Buscar</span>
                                         <input id="filter" type="text" class="form-control" placeholder="Escriba aquí...">
-                                    </div>
-                                </div>
-                            <div class="col-lg-offset-10">
-                     <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/add" target="_blank"><i class="fa fa-plus-circle"></i> Crear Nuevo</a>
-                </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover">
+                                    </div><br />
+                                    <!-- Tabla de los egresados del instituto -->
+                                    <table class="table table-hover">
+                                    <!-- Datos de la tabla -->
                                     <thead>
                                         <tr>
-                                            <th>Apellido, Nombre</th>
-                                            <th>DNI</th>
+                                            <th>Nombre</th>
+                                            <th>Año de egreso</th>
                                             <th>Ver</th>
                                             <th>Editar</th>
                                         </tr>
                                     </thead>
+                                    <!-- Contenido de la tabla -->
                                     <tbody class="searcheable">
-                                        {% for alumno in alumnos %}
-                                        {% if not alumno.egreso %}
+                                        {% for egresado in alumnos %}
+                                        {% if egresado.egreso %}
                                         <tr>
-                                            <td>{{alumno.last_name.upper.upper}}, {{alumno.first_name.capitalize}}</td>
-                                            <td>{{alumno.dni}}</td>
+                                            <td>{{ egresado.last_name.upper }}, {{ egresado.first_name.capitalize }}</td>
+                                            <td>{{ egresado.anioEgreso }}</td>
                                             <td><form method="post" role="form">{% csrf_token %}
-                                                    <input type="hidden" name="buscarAlumnoId" id="buscarAlumnoId" value="{{alumno.id}}">
+                                                    <input type="hidden" name="buscarAlumnoId" id="buscarAlumnoId" value="{{egresado.id}}">
                                                     <button type="submit" name="btnAlumnoId" class="btn btn-default btn-xs"><i class="fa fa-eye" title="Ver" ></i></button></form></td>
-                                            <td><a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target="_blank"><i class="fa fa-pencil" title="Editar"></i></a></td>
+                                            <td><a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/alumno/{{egresado.id}}" target="_blank"><i class="fa fa-pencil" title="Editar"></i></a></td>
                                         </tr>
                                         {% endif %}
                                         {% endfor %}
                                     </tbody>
-                                </table>
+                                    </table>
                                 </div>
-                            </div>                       
-                    <!-- Informacion general del alumno buscado -->
+                        <!-- Informacion general del alumno buscado -->
                     <div class="container col-lg-4 informacion informacion-alumno">
                         {% if alumno %}
                         <br>
@@ -177,58 +175,12 @@
                         <div class="form-group col-lg-offset-9">
                             <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'><i class="fa fa-pencil" title="Editar"></i> Editar</a>
                         </div>
-                       
                     </div>
-                        <div class="col-lg-8">
-                            <label>Matrículas <a href="{{ BASE_URL }}/admin/matriculas/matricula/add" target="_blank"><i class="fa fa-plus-circle"></i></a></label>
-                            <table class="table table-hover">
-                            <thead>
-                                <!-- Datos de la tabla -->
-                                <tr>
-                                    <th>Materia</th>
-                                    <th>Condición</th>
-                                    <th>% Asistencia</th>
-                                    <th>Notas</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Lo que contiene la tabla -->
-                                {% for matricula in materias %}
-                                <tr>
-                                    <td>{{ matricula.materia.nombre }}</td>
-                                    <td>{{ matricula.condicion }}</td>
-                                    <td>
-                                        {% if matricula.siVinoAlgunaVez %}
-                                            {{ matricula.porcentajeAsistencia }}%
-                                        {% else %}
-                                            -----
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% for nota in matricula.nota_set.all %}
-                                            {{nota.calificacion}},
-                                        {% endfor %}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                            </div>
                          {% endif %}
+                            </div>
                         </div>
-                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
         </div>
-			<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
-					Desarrollado por SENAM
-          <br><br>
-          Copyright © 2015 Instituto Parroquial San José.
-          <br><br>
-          Todos los Derechos Reservados.
-				</footer>
-    </div>   
-</body>
-    
-</html>
