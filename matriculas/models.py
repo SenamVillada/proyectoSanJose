@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 class Cargo(models.Model):
     nombre = models.CharField("Nombre", max_length = 20)
@@ -62,6 +63,15 @@ class Profesor(Persona):
     
     def __str__(self):
 	    return self.last_name + ", " + self.first_name
+    
+    def cantHoras(self):
+        materias = self.materia_set.all()
+        cantidadHoras = 0
+        for i in range(materias.count()):
+            horarios = materias[i].horario_set.all()
+            for j in range(horarios.count()):
+                cantidadHoras = cantidadHoras + horarios[j].cantHoras()
+        return cantidadHoras
 
 class Licencia(models.Model):
     fechaInicio = models.DateField("Fecha de Alta")
@@ -132,7 +142,6 @@ class Matricula(models.Model):
 
     def cantFaltas(self):
         cantidad = self.asistencia_set.all().filter(vino=False).count()
-        print cantidad
         return cantidad
 
 class Asistencia(models.Model):
@@ -165,10 +174,19 @@ class Horario(models.Model):
 
     def __unicode__(self):
         return self.materia.nombre
+    
+    def cantHoras(self):
+        hora1 = self.horaInicio
+        hora2 = self.horaFinal
+        horaConvertida1 = datetime.strptime(hora1, '%H:%M')
+        horaConvertida2 = datetime.strptime(hora2, '%H:%M')
+        cantidad = horaConvertida2 - horaConvertida1
+        cantidad = (cantidad.total_seconds()/3600)
+        return cantidad
 
 class ExamenFinal(models.Model):
     nota = models.ForeignKey(Nota)
- 
+
 class TurnoDeExamen(models.Model):
     fecha = models.DateField("Fecha")
     materia = models.ForeignKey(Materia)

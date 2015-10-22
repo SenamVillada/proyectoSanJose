@@ -74,15 +74,12 @@ def materias(request):
     if request.user.is_staff:
         materiasTotal = Materia.objects.all()
         if request.method == 'POST':
-            try:
-                idmateria = request.POST['buscarProfesorId']
-                materia = Materia.objects.get(id = idmateria)
-                horarios = materia.horario_set.all()
-                anio = int(time.strftime('%Y'))
-                matriculasAsistentes = materia.matricula_set.all().filter(anio=anio)
-                return render_to_response('materias.html', {"materias":materiasTotal, "materiaBuscada":materia, "horarios":horarios, "alumnosAsistentes":matriculasAsistentes},RequestContext(request))
-            except:
-                return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
+            idmateria = request.POST['buscarProfesorId']
+            materia = Materia.objects.get(id = idmateria)
+            horarios = materia.horario_set.all()
+            anio = int(time.strftime('%Y'))
+            matriculasAsistentes = materia.matricula_set.all().filter(anio=anio)
+            return render_to_response('materias.html', {"materias":materiasTotal, "materiaBuscada":materia, "horarios":horarios, "alumnosAsistentes":matriculasAsistentes},RequestContext(request))
         return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
 
 @login_required(login_url='/login')
@@ -90,19 +87,16 @@ def profesores(request):
     if request.user.is_staff:
         profesores = Profesor.objects.all()
         if request.method == 'POST':
-            try:
-                idProf = request.POST['buscarProfesorId']
-                profesor = Profesor.objects.get(id = int(idProf))
-                materias = profesor.materia_set.all()
-                horarios = []
-                for i in range(materias.__len__()):
-                    materiasEnI = materias[i].horario_set.all()
-                    for j in range(materiasEnI.count()):
-                        horarios.append(materiasEnI[j])
-                licencias = profesor.licencia_set.all()
-                return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias}, RequestContext(request))
-            except:
-                return render_to_response("profesores.html",{'errorProfesor':True}, RequestContext(request))
+            idProf = request.POST['buscarProfesorId']
+            profesor = Profesor.objects.get(id = int(idProf))
+            materias = profesor.materia_set.all()
+            horarios = []
+            for i in range(materias.__len__()):
+                materiasEnI = materias[i].horario_set.all()
+                for j in range(materiasEnI.count()):
+                    horarios.append(materiasEnI[j])
+            licencias = profesor.licencia_set.all()
+            return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias}, RequestContext(request))
         return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
 
 @login_required(login_url='/login')
