@@ -99,24 +99,45 @@ class Materia(models.Model):
 
 class Matricula(models.Model):
     anio = models.IntegerField("Año")
-    aprobada = models.BooleanField("Aprobada?", default=False)
     alumno = models.ForeignKey(Alumno)
     materia = models.ForeignKey(Materia)
-    finalizada = models.BooleanField("Finalizada?", default=False)
 
     def __unicode__(self):
         return self.alumno.first_name + ", " + self.alumno.last_name + " - " + self.materia.nombre + " - " + str(self.anio)
-    
+
     def condicion(self):
-        if (self.aprobada == True):
+        if (self.estaAprobada() == True):
             return "Aprobada"
-        if (self.esRegular == True):
+        elif (self.esRegular() == True):
             return "Regular"
-        if (self.finalizada == True):
-            return "Desaprobada/Libre"
-        else:
+        elif (self.estaCursando == True):
             return "Cursando"
+        else:
+            return "Desaprobada/Libre"
+
+    def estaAprobada(self):
+        examenes = self.examenFinal_set.all()
+        aprobado = False
+        for i in range(examenes.count()):
+            if (examenes[i].nota.calificacion >= 4):
+                aprobado = True
+        return aprobado
+
+    def esRegular(self):
+        regular = True
+        asistencia = (self.porcentajeAsistencia()-1)
+        notas = self.nota_set.all()
+        if (asistencia >= 75):
+            for i in range(notas.count()):
+                if (notas[i].calificacion < 7):
+                    regular = False
+        else:
+            regular = False
+        return regular
     
+    def estaCursando(self):
+        return True
+
     def porcentajeAsistencia(self):
         asistencias = self.asistencia_set.all()
         vinoAClase = asistencias.filter(vino=True)
@@ -126,9 +147,6 @@ class Matricula(models.Model):
             return porcentaje
         else:
             return False
-
-    def esRegular(self):
-        return False
     
     def getPromedio(self):
         arrayNotas = self.nota_set.all()
@@ -184,12 +202,14 @@ class Horario(models.Model):
         cantidad = (cantidad.total_seconds()/3600)
         return cantidad
 
-class ExamenFinal(models.Model):
-    nota = models.ForeignKey(Nota)
-
 class TurnoDeExamen(models.Model):
     fecha = models.DateField("Fecha")
     materia = models.ForeignKey(Materia)
+
+class ExamenFinal(models.Model):
+    nota = models.ForeignKey(Nota)
+    matricula = models.ForeignKey(Matricula)
+    turno = models.ForeignKey(TurnoDeExamen)
 
 class Log(models.Model):
     fecha = models.DateField("Fecha")
