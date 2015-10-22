@@ -167,7 +167,11 @@ class Horario(models.Model):
         return self.materia.nombre
 
 class ExamenFinal(models.Model):
-    nota = models.ForeignKey(Nota)    
+    nota = models.ForeignKey(Nota)
+ 
+class TurnoDeExamen(models.Model):
+    fecha = models.DateField("Fecha")
+    materia = models.ForeignKey(Materia)
 
 class Log(models.Model):
     fecha = models.DateField("Fecha")
