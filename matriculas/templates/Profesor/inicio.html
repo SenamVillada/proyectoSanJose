@@ -1,70 +1,68 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    
-   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href='../img/admin/logo.png' rel='shortcut icon' type='image/png'>
+    <link href="{% static '../../static/img/admin/logo.png' %}" rel='shortcut icon' type='image/png'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Asistencia</title>
+    <title>Administracion de alumnos</title>
 	<!-- BOOTSTRAP STYLES-->
-    <link href="../css/admin/bootstrap.css" rel="stylesheet" />
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
-     <!-- FONTAWESOME STYLES-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
-   <!--<link href="../css/font-awesome.min.css" rel="stylesheet" />-->
+    <link href="{% static '../../static/css/admin/bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static '../../static/css/bootstrap.min.css' %}" rel="stylesheet" />
+     <!-- FONTAWESOME STYLES -->
+    <link href="{% static '../../static/fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
      <!-- MORRIS CHART STYLES
     <link href=" js/ morris/morris-0.4.3.min.css" rel="stylesheet" />-->
-    <!-- CUSTOM STYLES-->
-    <link href="../css/admin/custom.css" rel="stylesheet" />
+        <!-- CUSTOM STYLES-->
+    <link href="{% static '../../static/css/admin/custom.css' %}" rel="stylesheet" />
      <!-- GOOGLE FONTS-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Latest compiled and minified CSS -->
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/plugins/morris/raphael.min.js"></script>
-    <script src="../js/plugins/morris/morris.min.js"></script>
-    <script src="../js/plugins/morris/morris-data.js"></script>
-	    <!-- jQuery Version 1.11.0 -->
-    <script src="../js/jquery-1.11.0.js"></script>
-    
+		  <!-- jQuery Version 1.11.0 -->
+    <script src="{% static '../../static/js/jquery-1.11.0.js' %}"></script>
     <!-- jQueryUi Version 1.8 -->
-    <script src="../js/jquery-ui.js"></script>
-    
-    <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="{% static '../../static/js/jquery-ui.js' %}"></script>
+    <script src="{% static '../../static/js/jquery.dataTables.min.js' %}"></script>
 </head>
 <body>
     <!-- /. NAV TOP  -->
     <header class="cd-main-header">
-		<a href="#0" class="cd-logo"><img style="margin-top: 1%; margin-left: 1%;" src="../img/admin/logo2.png" alt="Logo"></a>
-		<a href="#0" class="cd-nav-trigger"><span></span></a>
-
-		<nav class="cd-nav">
-			<ul class="cd-top-nav">
-			</ul>
-		</nav>
-	</header>
+			<a href="/" class="cd-logo"><img style="margin-top: 1%; margin-left: 1%;" src="{% static '../../static/img/admin/logo2.png' %}" alt="Logo"></a>
+			<a href="/" class="cd-nav-trigger"><span></span></a>
+			<nav class="cd-nav">
+				<ul class="cd-top-nav">
+				</ul>
+			</nav>
+		</header>
 	  <nav class="navbar-default navbar-side" role="navigation">
-            <div class="sidebar-collapse">
-							<ul class="nav" id="main-menu" >
-							<div style="background: #1F5B1F; color:#ffffff;margin-bottom:1%;" >
-								<center><br><br><br><br><div>Bienvenido/a, </div><label><span class="resaltado">Judith</span></center></label>
-								<br><br><div href="">Salir</div></label>
-							</div>
-                    <li>
-                        <a class="active-menu" href="inicio.html"><i class="fa fa-home"></i>Inicio</a>
-                    </li>
-                    <li>
-                        <a  href="materias.html"><i class="fa fa-book"></i>Materias</a>
-                    </li>
-                    <li>
-                        <a  href="asistencia.html"><i class="fa fa-list"></i>Tomar asistencia</a>
-                    </li>
-                </ul>
-            </div>
+    	<div class="sidebar-collapse">
+				<ul class="nav" id="main-menu" >
+					<div style="background: #1F5B1F; color:#ffffff;margin-bottom:1%;" >
+						<center><br><br><br><br><div>Bienvenido/a, </div><label><span class="resaltado">{{user.username}}</span></center></label>
+						<br>
+					</div>
+          <li>
+    	      <a  class="active-menu" href="/"><i class="fa fa-home"></i>Inicio</a>
+          </li>
+          <li>
+      	    <a href="/alumnos"><i class="fa fa-users"></i>Alumnos</a>
+          </li>
+					<li>
+            <a href="/profesores"><i class="fa fa-briefcase"></i>Profesores</a>
+          </li>
+        <li>
+    	      <a  href="/materias"><i class="fa fa-book"></i>Materias</a>
+    	</li>
+        <li>
+    	      <a  href="/egresados"><i class="fa fa-graduation-cap"></i>Egresados</a>
+    	</li>
+        <li>
+    	      <a  href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
+    	</li>
+				</ul>
+			</div>
     </nav>
     <!-- Inicio de la pagina  -->
     <div id="page-wrapper" >
