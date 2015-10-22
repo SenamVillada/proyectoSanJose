@@ -166,6 +166,9 @@ class Horario(models.Model):
     def __unicode__(self):
         return self.materia.nombre
 
+class ExamenFinal(models.Model):
+    nota = models.ForeignKey(Nota)    
+
 class Log(models.Model):
     fecha = models.DateField("Fecha")
     log = models.CharField("Log", max_length=200)
