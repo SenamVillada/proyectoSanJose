@@ -98,3 +98,15 @@ def profesores(request):
         except:
             return render_to_response("profesores.html",{'errorProfesor':True}, RequestContext(request))
     return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
+
+@login_required(login_url='/login')
+def p_inicio(request):
+    return render_to_response("Profesor/inicio.html", RequestContext(request))
+
+@login_required(login_url='/login')
+def p_asistencia(request):
+    return render_to_response("Profesor/asistencia.html", RequestContext(request))
+
+@login_required(login_url='/login')
+def p_materias(request):
+    return render_to_response("Profesor/materias.html", RequestContext(request))

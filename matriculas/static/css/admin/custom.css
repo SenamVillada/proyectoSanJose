@@ -86,10 +86,10 @@ tbody #tablaProfes {
 wrapper-bajado{
     margin-top: 50px;
     }
-.sidebar-collapse .nav .alerta > li > a:hover,
-.sidebar-collapse .nav .alerta > li > a:focus {
+.alerta:hover,
+.alerta:focus {
 	
-	background:#db4437;!important
+	background:rgba(219, 68, 55, 0.56) !important;
 	outline:0;
 }
 /*==============================================
