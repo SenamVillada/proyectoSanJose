@@ -112,19 +112,28 @@ class Matricula(models.Model):
         vinoAClase = asistencias.filter(vino=True)
         if (asistencias.count() != 0):
             porcentaje = ((vinoAClase.count()/asistencias.count())*100)
-        else:
-            porcentaje = False
-        return porcentaje
-        
-    def siVinoAlgunaVez(self):
-        asistencias = self.asistencia_set.all()
-        if (asistencias.count() != 0):
-            return True
+            porcentaje = (porcentaje + 1)
+            return porcentaje
         else:
             return False
 
     def esRegular(self):
         return False
+    
+    def getPromedio(self):
+        arrayNotas = self.nota_set.all()
+        notas = 0.0
+        if (arrayNotas.count() != 0):
+            for i in range(arrayNotas.count()):
+                notas = notas + arrayNotas[i].calificacion
+            return (notas/arrayNotas.count())
+        else:
+            return False
+
+    def cantFaltas(self):
+        cantidad = self.asistencia_set.all().filter(vino=False).count()
+        print cantidad
+        return cantidad
 
 class Asistencia(models.Model):
     fecha = models.DateField("Fecha")
