@@ -115,7 +115,8 @@ body {
 		height:auto;
     background-color:#fff!important;
     padding:10px;
-		margin-top:3%;
+		margin-top:5%;
+		border-radius: 20px;
 }
 
 .text-center {
