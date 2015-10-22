@@ -46,7 +46,6 @@ def error_login(request):
 
 @login_required(login_url='/login')
 def alumnos(request):
-<<<<<<< HEAD
     if request.user.is_staff:
         alumnos = Alumno.objects.all()
         if request.method == 'POST':
@@ -55,19 +54,17 @@ def alumnos(request):
                 materias = alumno.matricula_set.all()
                 return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
         return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
-=======
-    alumnos = Alumno.objects.all()
-    if request.method == 'POST':
-        print request.POST
-        idAlumno = request.POST['buscarAlumnoId']
-        alumno = Alumno.objects.get(id = idAlumno)
-        materias = alumno.matricula_set.all()
-        matriculaSeleccionada = False
-        if 'buscarMatriculaId' in request.POST:
-            matriculaSeleccionada = Matricula.objects.get(id = request.POST['buscarMatriculaId'])
-        return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias, 'matriculaSeleccionada': matriculaSeleccionada}, RequestContext(request))
-    return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
->>>>>>> dabbadcde3860887252ad933a5499d912f9915e4
+        alumnos = Alumno.objects.all()
+        if request.method == 'POST':
+            print request.POST
+            idAlumno = request.POST['buscarAlumnoId']
+            alumno = Alumno.objects.get(id = idAlumno)
+            materias = alumno.matricula_set.all()
+            matriculaSeleccionada = False
+            if 'buscarMatriculaId' in request.POST:
+                matriculaSeleccionada = Matricula.objects.get(id = request.POST['buscarMatriculaId'])
+            return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias, 'matriculaSeleccionada': matriculaSeleccionada}, RequestContext(request))
+        return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
 
 @login_required(login_url='/login')
 def egresados(request):
@@ -120,7 +117,6 @@ def profesores(request):
 def p_inicio(request):
     if not request.user.is_staff:
         profesor = Profesor.objects.get(username = request.user)
-        print profesor
         return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
 
 @login_required(login_url='/login')
