@@ -45,10 +45,14 @@ def error_login(request):
 def alumnos(request):
     alumnos = Alumno.objects.all()
     if request.method == 'POST':
-            idAlumno = request.POST['buscarAlumnoId']
-            alumno = Alumno.objects.get(id = idAlumno)
-            materias = alumno.matricula_set.all()
-            return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
+        print request.POST
+        idAlumno = request.POST['buscarAlumnoId']
+        alumno = Alumno.objects.get(id = idAlumno)
+        materias = alumno.matricula_set.all()
+        matriculaSeleccionada = False
+        if 'buscarMatriculaId' in request.POST:
+            matriculaSeleccionada = Matricula.objects.get(id = request.POST['buscarMatriculaId'])
+        return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias, 'matriculaSeleccionada': matriculaSeleccionada}, RequestContext(request))
     return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
 
 @login_required(login_url='/login')

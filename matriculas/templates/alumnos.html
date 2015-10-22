@@ -209,11 +209,68 @@
                                             {{nota.calificacion}},
                                         {% endfor %}
                                     </td>
+                                    <td>
+                                        <form method="post" role="form">{% csrf_token %}
+                                            <input type="hidden" name="buscarMatriculaId" id="buscarMatriculaId" value="{{matricula.id}}">
+                                            <input type="hidden" name="buscarAlumnoId" id="buscarAlumnoId" value="{{alumno.id}}">
+                                            <button type="submit" name="btnMatriculaId" class="btn btn-default btn-xs">
+                                                <i class="fa fa-eye" title="Ver" ></i>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                             </div>
+                        {% if matriculaSeleccionada %}
+                        <div class="col-lg-12" style="margin-top:10px;"></div>
+                        <div class="col-lg-7">
+                            <label>Notas</label>
+                            <table class="table table-hover">
+                            <thead>
+                                <!-- Datos de la tabla -->
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Nota</th>
+                                    <th>Observación</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Lo que contiene la tabla -->
+                                {% for nota in matriculaSeleccionada.nota_set.all %}
+                                <tr>
+                                    <td>{{ nota.fecha }}</td>
+                                    <td>{{ nota.calificacion }}</td>
+                                    <td>{{ nota.observacion }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                            </div>
+                        
+                        <div class="col-lg-5">
+                            <label>Inasistencia <a href="{{ BASE_URL }}/admin/matriculas/asistencia/add" target="_blank"><i class="fa fa-plus-circle"></i></a></label>
+                            <table class="table table-hover">
+                            <thead>
+                                <!-- Datos de la tabla -->
+                                <tr>
+                                    <th>Fecha Inasistencia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Lo que contiene la tabla -->
+                                {% for falta in matriculaSeleccionada.asistencia_set.all %}
+                                <tr>
+                                    {% if not falta.vino %}
+                                    <td>{{ falta.fecha }}</td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                            </div>
+                         {% endif %}
                          {% endif %}
                         </div>
                         </div>
