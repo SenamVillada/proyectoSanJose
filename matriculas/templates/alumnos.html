@@ -188,7 +188,7 @@
                                     <th>Materia</th>
                                     <th>Condición</th>
                                     <th>% Asistencia</th>
-                                    <th>Notas</th>
+                                    <th>Promedio</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -198,16 +198,18 @@
                                     <td>{{ matricula.materia.nombre }}</td>
                                     <td>{{ matricula.condicion }}</td>
                                     <td>
-                                        {% if matricula.siVinoAlgunaVez %}
-                                            {{ matricula.porcentajeAsistencia }}%
-                                        {% else %}
+                                        {% if not matricula.porcentajeAsistencia %}
                                             -----
+                                        {% else %}
+                                            {{ matricula.porcentajeAsistencia|add:"-1" }}%
                                         {% endif %}
                                     </td>
                                     <td>
-                                        {% for nota in matricula.nota_set.all %}
-                                            {{nota.calificacion}},
-                                        {% endfor %}
+                                        {% if not matricula.getPromedio %}
+                                            -----
+                                        {% else %}
+                                            {{ matricula.getPromedio }}
+                                        {% endif %}
                                     </td>
                                     <td>
                                         <form method="post" role="form">{% csrf_token %}
@@ -224,8 +226,31 @@
                         </table>
                             </div>
                         {% if matriculaSeleccionada %}
-                        <div class="col-lg-12" style="margin-top:10px;"></div>
-                        <div class="col-lg-7">
+                        <div id="infoalumno" class="container col-lg-12 informacion informacion-alumno" style="margin-top:10px;">
+                            <div class="col-lg-6 form-group" style="margin-top:20px;">
+                                <label for="nombre">Nombre de la Materia: </label> {{matriculaSeleccionada.materia.nombre}}
+                            </div>
+                            <div class="col-lg-6 form-group" style="margin-top:20px;">
+                                <label for="nombre">Profesor: </label> {{matriculaSeleccionada.materia.profesor.last_name.upper}}, {{matriculaSeleccionada.materia.profesor.first_name.capitalize}}
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label for="nombre">Tipo de Materia: </label> {{matriculaSeleccionada.materia.tipo}}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Cant. de Faltas: </label> {{matriculaSeleccionada.cantFaltas}}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Porcentaje: </label> {{matriculaSeleccionada.porcentajeAsistencia|add:"-1"}} %
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label for="nombre">Promedio: </label> {{matriculaSeleccionada.getPromedio}}
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label for="nombre">Exámen Final: </label> {{alumno.lugarDeTrabajo}}
+                            </div>
+                        
+                        </div>
+                        <div class="col-lg-7" style="margin-top:20px;">
                             <label>Notas</label>
                             <table class="table table-hover">
                             <thead>
@@ -249,7 +274,7 @@
                         </table>
                             </div>
                         
-                        <div class="col-lg-5">
+                        <div class="col-lg-5" style="margin-top:20px;">
                             <label>Inasistencia <a href="{{ BASE_URL }}/admin/matriculas/asistencia/add" target="_blank"><i class="fa fa-plus-circle"></i></a></label>
                             <table class="table table-hover">
                             <thead>

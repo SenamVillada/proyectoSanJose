@@ -23,18 +23,16 @@ class AlumnoAdmin(admin.ModelAdmin):
         else:
             return super(AlumnoAdmin, self).get_form(request, obj, **kwargs)
 
-
-        
 class ProfesorForm(UserChangeForm):
     
     class Meta:
 	model = Profesor
-	fields = ('username', 'dni', 'first_name', 'last_name', 'email','cuil','curriculum','fechaEscalafon','fechaAptoPsicofisico','numeroRegistro','titulo','cargo')
+	fields = ('username', 'dni', 'first_name', 'last_name', 'domicilio', 'email','cuil','curriculum','fechaEscalafon','fechaAptoPsicofisico','numeroRegistro','titulo','cargo')
     
 class ProfesorAddForm(UserCreationForm):
     class Meta:
 	model = Profesor
-	fields = ('username', 'dni', 'first_name', 'last_name', 'email','cuil','curriculum','fechaEscalafon','fechaAptoPsicofisico','numeroRegistro','titulo','cargo')
+	fields = ('username', 'dni', 'first_name', 'last_name','domicilio', 'email','cuil','curriculum','fechaEscalafon','fechaAptoPsicofisico','numeroRegistro','titulo','cargo')
     
 class ProfesorAdmin(admin.ModelAdmin):
     form = ProfesorForm

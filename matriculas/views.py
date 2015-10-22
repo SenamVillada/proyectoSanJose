@@ -49,6 +49,7 @@ def alumnos(request):
     if request.user.is_staff:
         alumnos = Alumno.objects.all()
         if request.method == 'POST':
+<<<<<<< HEAD
                 idAlumno = request.POST['buscarAlumnoId']
                 alumno = Alumno.objects.get(id = idAlumno)
                 materias = alumno.matricula_set.all()
@@ -57,14 +58,21 @@ def alumnos(request):
         alumnos = Alumno.objects.all()
         if request.method == 'POST':
             print request.POST
+=======
+>>>>>>> c8f46c0f8f15dd2ae89067a5392b141365061028
             idAlumno = request.POST['buscarAlumnoId']
             alumno = Alumno.objects.get(id = idAlumno)
             materias = alumno.matricula_set.all()
             matriculaSeleccionada = False
             if 'buscarMatriculaId' in request.POST:
                 matriculaSeleccionada = Matricula.objects.get(id = request.POST['buscarMatriculaId'])
+<<<<<<< HEAD
             return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias, 'matriculaSeleccionada': matriculaSeleccionada}, RequestContext(request))
         return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
+=======
+            return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias, 'matriculaSeleccionada': matriculaSeleccionada}, RequestContext(request))        
+    return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
+>>>>>>> c8f46c0f8f15dd2ae89067a5392b141365061028
 
 @login_required(login_url='/login')
 def egresados(request):
