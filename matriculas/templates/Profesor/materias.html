@@ -65,19 +65,13 @@
 						<br>
 					</div>
           <li>
-    	      <a  class="active-menu" href="/"><i class="fa fa-home"></i>Inicio</a>
+    	      <a  href="/Profesor/inicio"><i class="fa fa-home"></i>Inicio</a>
           </li>
           <li>
-      	    <a href="/alumnos"><i class="fa fa-users"></i>Alumnos</a>
-          </li>
-					<li>
-            <a href="/profesores"><i class="fa fa-briefcase"></i>Profesores</a>
+      	    <a href="/Profesor/asistencia"><i class="fa fa-users"></i>Asistencia</a>
           </li>
         <li>
-    	      <a  href="/materias"><i class="fa fa-book"></i>Materias</a>
-    	</li>
-        <li>
-    	      <a  href="/egresados"><i class="fa fa-graduation-cap"></i>Egresados</a>
+    	      <a  href="/Profesor/materias" class="active-menu" ><i class="fa fa-book"></i>Materias</a>
     	</li>
         <li>
     	      <a  href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
