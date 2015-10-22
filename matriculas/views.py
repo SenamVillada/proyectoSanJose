@@ -25,7 +25,10 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/')
+                if user.is_staff:
+                    return HttpResponseRedirect('/')
+                else:
+                    return HttpResponseRedirect('/Profesor/inicio')
             else:
                 return HttpResponse("Tu cuenta no esta habilitada")
         else:
@@ -43,66 +46,76 @@ def error_login(request):
 
 @login_required(login_url='/login')
 def alumnos(request):
-    alumnos = Alumno.objects.all()
-    if request.method == 'POST':
-            idAlumno = request.POST['buscarAlumnoId']
-            alumno = Alumno.objects.get(id = idAlumno)
-            materias = alumno.matricula_set.all()
-            return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
-    return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
+    if request.user.is_staff:
+        alumnos = Alumno.objects.all()
+        if request.method == 'POST':
+                idAlumno = request.POST['buscarAlumnoId']
+                alumno = Alumno.objects.get(id = idAlumno)
+                materias = alumno.matricula_set.all()
+                return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
+        return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
 
 @login_required(login_url='/login')
 def egresados(request):
-    alumnos = Alumno.objects.all()
-    if request.method == 'POST':
-        idAlumno = request.POST['buscarAlumnoId']
-        alumno = Alumno.objects.get(id = idAlumno)
-        return render_to_response("egresados.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
-    return render_to_response("egresados.html",{'alumnos':alumnos}, RequestContext(request))
+    if request.user.is_staff:
+        alumnos = Alumno.objects.all()
+        if request.method == 'POST':
+            idAlumno = request.POST['buscarAlumnoId']
+            alumno = Alumno.objects.get(id = idAlumno)
+            return render_to_response("egresados.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
+        return render_to_response("egresados.html",{'alumnos':alumnos}, RequestContext(request))
 
 
 @login_required(login_url='/login')
 def materias(request):
-    materiasTotal = Materia.objects.all()
-    if request.method == 'POST':
-        try:
-            idmateria = request.POST['buscarProfesorId']
-            materia = Materia.objects.get(id = idmateria)
-            horarios = materia.horario_set.all()
-            anio = int(time.strftime('%Y'))
-            matriculasAsistentes = materia.matricula_set.all().filter(anio=anio)
-            return render_to_response('materias.html', {"materias":materiasTotal, "materiaBuscada":materia, "horarios":horarios, "alumnosAsistentes":matriculasAsistentes},RequestContext(request))
-        except:
-            return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
-    return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
+    if request.user.is_staff:
+        materiasTotal = Materia.objects.all()
+        if request.method == 'POST':
+            try:
+                idmateria = request.POST['buscarProfesorId']
+                materia = Materia.objects.get(id = idmateria)
+                horarios = materia.horario_set.all()
+                anio = int(time.strftime('%Y'))
+                matriculasAsistentes = materia.matricula_set.all().filter(anio=anio)
+                return render_to_response('materias.html', {"materias":materiasTotal, "materiaBuscada":materia, "horarios":horarios, "alumnosAsistentes":matriculasAsistentes},RequestContext(request))
+            except:
+                return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
+        return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
 
 @login_required(login_url='/login')
 def profesores(request):
-    profesores = Profesor.objects.all()
-    if request.method == 'POST':
-        try:
-            idProf = request.POST['buscarProfesorId']
-            profesor = Profesor.objects.get(id = int(idProf))
-            materias = profesor.materia_set.all()
-            horarios = []
-            for i in range(materias.__len__()):
-                materiasEnI = materias[i].horario_set.all()
-                for j in range(materiasEnI.count()):
-                    horarios.append(materiasEnI[j])
-            licencias = profesor.licencia_set.all()
-            return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias}, RequestContext(request))
-        except:
-            return render_to_response("profesores.html",{'errorProfesor':True}, RequestContext(request))
-    return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
+    if request.user.is_staff:
+        profesores = Profesor.objects.all()
+        if request.method == 'POST':
+            try:
+                idProf = request.POST['buscarProfesorId']
+                profesor = Profesor.objects.get(id = int(idProf))
+                materias = profesor.materia_set.all()
+                horarios = []
+                for i in range(materias.__len__()):
+                    materiasEnI = materias[i].horario_set.all()
+                    for j in range(materiasEnI.count()):
+                        horarios.append(materiasEnI[j])
+                licencias = profesor.licencia_set.all()
+                return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias}, RequestContext(request))
+            except:
+                return render_to_response("profesores.html",{'errorProfesor':True}, RequestContext(request))
+        return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
 
 @login_required(login_url='/login')
 def p_inicio(request):
-    return render_to_response("Profesor/inicio.html", RequestContext(request))
+    if not request.user.is_staff:
+        profesor = Profesor.objects.get(username = request.user)
+        print profesor
+        return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
 
 @login_required(login_url='/login')
 def p_asistencia(request):
-    return render_to_response("Profesor/asistencia.html", RequestContext(request))
+    if not request.user.is_staff:
+        return render_to_response("Profesor/asistencia.html", RequestContext(request))
 
 @login_required(login_url='/login')
 def p_materias(request):
-    return render_to_response("Profesor/materias.html", RequestContext(request))
+    if not request.user.is_staff:
+        return render_to_response("Profesor/materias.html", RequestContext(request))
+
