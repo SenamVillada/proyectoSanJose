@@ -20,6 +20,9 @@ class Persona(User):
             ('Masculino', 'Masculino'),
             ('Femenino', 'Femenino'))
     sexo = models.CharField("Sexo", max_length=16, choices=sexoOpciones, default='Masculino')
+    
+    def __unicode__(self):
+	    return "DNI: " + str(self.dni)+" - "+self.last_name.upper() + ", " + self.first_name.capitalize()
 
 class Alumno(Persona):
     lugarDeTrabajo = models.CharField("Lugar de Trabajo", max_length=50, blank=True, null=True)
@@ -31,9 +34,6 @@ class Alumno(Persona):
     class Meta:
         verbose_name = 'Alumno'
         verbose_name_plural = 'Alumnos'
-    
-    def __unicode__(self):
-	    return self.last_name + ", " + self.first_name
 
     def egreso(self):
         if (self.anioEgreso != None):
@@ -52,9 +52,6 @@ class Profesor(Persona):
     class Meta:
         verbose_name = 'Profesor'
         verbose_name_plural = 'Profesores'
-    
-    def __str__(self):
-	    return self.last_name + ", " + self.first_name
     
     def cantHoras(self):
         cursados = self.cursado_set.all()
@@ -94,33 +91,34 @@ class Materia(models.Model):
     def __unicode__(self):
 	    return self.nombre
 
-    def verMateria(self):
-        return "Nombre: "+self.nombre+"\nTipo de materia: "+self.tipo+"\nCorrelativas de cursado: "+self.correlativasCursado+"\nCorrelativas para rendir: "+self.correlativasRendir
-
 class Cursado(models.Model):
     anio = models.IntegerField("Año")
+    finalizada = models.BooleanField("Finalizado", default="False")
     materia = models.ForeignKey(Materia)
     profesor = models.ForeignKey(Profesor)
     
     def __unicode__(self):
-        return self.materia.nombre + " - " + self.profesor.last_name +", " + self.profesor.last_name +" - "+ str(self.anio)
+        return self.materia.nombre + " - " + self.profesor.last_name.upper() + ", " + self.profesor.last_name.capitalize() + " - " + str(self.anio)
 
 class Matricula(models.Model):
     alumno = models.ForeignKey(Alumno)
     cursado = models.ForeignKey(Cursado)
 
     def __unicode__(self):
-        return self.alumno.first_name + ", " + self.alumno.last_name + " - " + self.materia.nombre + " - " + str(self.anio)
+        return self.alumno.last_name.upper() + ", " + self.alumno.first_name.capitalize() + " - " + self.materia.nombre
 
     def condicion(self):
-        if (self.estaAprobada() == True):
-            return "Aprobada"
-        elif (self.esRegular() == True):
-            return "Regular"
-        elif (self.estaCursando == True):
-            return "Cursando"
+        if (self.cursado.finalizada == True):
+            if (self.estaAprobada() == True):
+                return "Aprobada"
+            if (self.estaPromocionado() == True):
+                return "Aprobada"
+            elif (self.esRegular() == True):
+                return "Regular"
+            else:
+                return "Desaprobada/Libre"
         else:
-            return "Desaprobada/Libre"
+            return "Cursando"
 
     def estaAprobada(self):
         examenes = self.examenfinal_set.all()
@@ -131,7 +129,20 @@ class Matricula(models.Model):
         return aprobado
 
     def esRegular(self):
-        regular = True
+        asistencia = (self.porcentajeAsistencia()-1)
+        notas = self.nota_set.all()
+        porcentaje = 75
+        if (self.alumno.situacionExepcional == True):
+            porcentaje = 60
+        if (asistencia >= porcentaje):
+            for i in range(notas.count()):
+                if (notas[i].calificacion < 4):
+                    return False
+        else:
+            return False
+        return True
+    
+    def estaPromocionado(self):
         asistencia = (self.porcentajeAsistencia()-1)
         notas = self.nota_set.all()
         porcentaje = 75
@@ -140,12 +151,9 @@ class Matricula(models.Model):
         if (asistencia >= porcentaje):
             for i in range(notas.count()):
                 if (notas[i].calificacion < 7):
-                    regular = False
+                    return False
         else:
-            regular = False
-        return regular
-    
-    def estaCursando(self):
+            return False
         return True
 
     def porcentajeAsistencia(self):
@@ -176,6 +184,9 @@ class Asistencia(models.Model):
     fecha = models.DateField("Fecha")
     vino = models.BooleanField("Vino?", default=True)
     matricula = models.ForeignKey(Matricula)
+    
+    def __unicode__(self):
+        return self.fecha + ". El alumno: " + str(self.matricula.alumno.dni) + ", vino: " + str(self.vino) + " a " + self.matricula.cursado.materia.nombre
 
 class Nota(models.Model):
     fecha = models.DateField("Fecha")
