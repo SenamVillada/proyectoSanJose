@@ -3,14 +3,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 
-class Cargo(models.Model):
-    nombre = models.CharField("Nombre", max_length = 20)
-    fechaAlta = models.DateField("Fecha de Alta")
-    fechaBaja = models.DateField("Fecha de Baja", blank=True, null=True)
-
-    def __str__(self):
-        return self.nombre
-
 class Persona(User):
     dni = models.IntegerField("DNI")
     domicilio = models.CharField("Domicilio", max_length=300, blank=True, null=True)
@@ -55,7 +47,6 @@ class Profesor(Persona):
     fechaAptoPsicofisico = models.DateField("Fecha del Apto Psicofisico", blank=True, null=True)
     numeroRegistro = models.IntegerField("Numero de Registro", blank=True, null=True)
     titulo = models.CharField("Titulo",max_length=200, blank=True, null=True)
-    cargo = models.ForeignKey(Cargo)
     
     class Meta:
         verbose_name = 'Profesor'
@@ -72,6 +63,15 @@ class Profesor(Persona):
             for j in range(horarios.count()):
                 cantidadHoras = cantidadHoras + horarios[j].cantHoras()
         return cantidadHoras
+
+class Cargo(models.Model):
+    nombre = models.CharField("Nombre", max_length = 20)
+    fechaAlta = models.DateField("Fecha de Alta")
+    fechaBaja = models.DateField("Fecha de Baja", blank=True, null=True)
+    profesor = models.ForeignKey(Profesor)
+
+    def __str__(self):
+        return self.nombre
 
 class Licencia(models.Model):
     fechaInicio = models.DateField("Fecha de Alta")

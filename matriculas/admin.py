@@ -3,7 +3,6 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from matriculas.models import *
 
 class AlumnoForm(UserChangeForm):
-    
     class Meta:
 	model = Alumno
 	fields = ('username', 'dni', 'first_name', 'last_name', 'email','lugarDeTrabajo','horaDeTrabajo','paternidad','anioEgreso')
@@ -24,15 +23,14 @@ class AlumnoAdmin(admin.ModelAdmin):
             return super(AlumnoAdmin, self).get_form(request, obj, **kwargs)
 
 class ProfesorForm(UserChangeForm):
-    
     class Meta:
 	model = Profesor
-	fields = ('username', 'dni', 'first_name', 'last_name', 'domicilio', 'email','cuil','curriculum','fechaEscalafon','fechaAptoPsicofisico','numeroRegistro','titulo','cargo')
+	fields = ('username', 'dni', 'first_name', 'last_name', 'domicilio', 'email','cuil','curriculum','fechaEscalafon','fechaAptoPsicofisico','numeroRegistro','titulo')
     
 class ProfesorAddForm(UserCreationForm):
     class Meta:
 	model = Profesor
-	fields = ('username', 'dni', 'first_name', 'last_name','domicilio', 'email','cuil','curriculum','fechaEscalafon','fechaAptoPsicofisico','numeroRegistro','titulo','cargo')
+	fields = ('username', 'dni', 'first_name', 'last_name','domicilio', 'email','cuil','curriculum','fechaEscalafon','fechaAptoPsicofisico','numeroRegistro','titulo')
     
 class ProfesorAdmin(admin.ModelAdmin):
     form = ProfesorForm
@@ -44,11 +42,6 @@ class ProfesorAdmin(admin.ModelAdmin):
         else:
             return super(ProfesorAdmin, self).get_form(request, obj, **kwargs)
 
-        
-
-        
-        
-        
 admin.site.register(Alumno, AlumnoAdmin)
 admin.site.register(Profesor, ProfesorAdmin)
 admin.site.register(Cargo)

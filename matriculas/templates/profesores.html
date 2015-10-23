@@ -195,11 +195,6 @@
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label>Cargo:</label><h> {{profesor.cargo}} (desde {{profesor.cargo.fechaAlta}})</h>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
                                             <label>Cantidad de Horas:</label><h> {{profesor.cantHoras}}</h>
                                         </div>
                                     </div>
@@ -255,6 +250,35 @@
                                                 <td>{{ licencia.fechaFinal }}</td>
                                                 <td>
                                                 <a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/licencia/{{licencia.id}}" target="_blank">
+                                                    <i class="fa fa-pencil" title="Editar"></i>
+                                                </a>
+                                            </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-10 col-lg-7">
+                                     <label>Cargos <a href="{{ BASE_URL }}/admin/matriculas/cargo/add" target="_blank"><i class="fa fa-plus-circle"></i></a></label>
+                                    <div class="table-responsive">
+                                    <table class="table table-hover" id="tablaProfes">
+                                        <thead>
+                                            <tr>
+                                              <th>Cargo</th>
+                                              <th>Alta</th>
+                                              <th>Baja</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for cargo in cargos %}
+                                            <tr>
+                                                <td>{{ cargo.nombre }}</td>
+                                                <td>{{ cargo.fechaAlta }}</td>
+                                                <td>{{ cargo.fechaBaja }}</td>
+                                                <td>
+                                                <a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/cargo/{{cargo.id}}" target="_blank">
                                                     <i class="fa fa-pencil" title="Editar"></i>
                                                 </a>
                                             </td>

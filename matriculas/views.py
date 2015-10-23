@@ -96,7 +96,8 @@ def profesores(request):
                 for j in range(materiasEnI.count()):
                     horarios.append(materiasEnI[j])
             licencias = profesor.licencia_set.all()
-            return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias}, RequestContext(request))
+            cargos = profesor.cargo_set.all()
+            return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias, 'cargos':cargos}, RequestContext(request))
         return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
 
 @login_required(login_url='/login')
