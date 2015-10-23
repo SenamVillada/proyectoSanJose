@@ -26,6 +26,7 @@ class Alumno(Persona):
     horaDeTrabajo = models.CharField("Horario de Trabajo", max_length=200, blank=True, null=True)
     paternidad = models.BooleanField("Paternidad")
     anioEgreso = models.IntegerField("Año de Egreso", blank=True, null=True)
+    situacionExepcional = models.BooleanField("Situacion Excepcional", default=False)
     
     class Meta:
         verbose_name = 'Alumno'
@@ -56,10 +57,10 @@ class Profesor(Persona):
 	    return self.last_name + ", " + self.first_name
     
     def cantHoras(self):
-        materias = self.materia_set.all()
+        cursados = self.cursado_set.all()
         cantidadHoras = 0
-        for i in range(materias.count()):
-            horarios = materias[i].horario_set.all()
+        for i in range(cursados.count()):
+            horarios = cursados[i].horario_set.all()
             for j in range(horarios.count()):
                 cantidadHoras = cantidadHoras + horarios[j].cantHoras()
         return cantidadHoras
@@ -83,7 +84,6 @@ class Materia(models.Model):
     nombre = models.CharField("Nombre de la Materia", max_length=30)
     correlativasCursado = models.ManyToManyField('self', blank=True)
     correlativasRendir = models.ManyToManyField('self', blank=True)
-    profesor = models.ForeignKey(Profesor)
     tipoOpciones = (
         	('Asignatura', 'Asignatura'),
         	('Seminario', 'Seminario'),
@@ -97,10 +97,17 @@ class Materia(models.Model):
     def verMateria(self):
         return "Nombre: "+self.nombre+"\nTipo de materia: "+self.tipo+"\nCorrelativas de cursado: "+self.correlativasCursado+"\nCorrelativas para rendir: "+self.correlativasRendir
 
-class Matricula(models.Model):
+class Cursado(models.Model):
     anio = models.IntegerField("Año")
-    alumno = models.ForeignKey(Alumno)
     materia = models.ForeignKey(Materia)
+    profesor = models.ForeignKey(Profesor)
+    
+    def __unicode__(self):
+        return self.materia.nombre + " - " + self.profesor.last_name +", " + self.profesor.last_name +" - "+ str(self.anio)
+
+class Matricula(models.Model):
+    alumno = models.ForeignKey(Alumno)
+    cursado = models.ForeignKey(Cursado)
 
     def __unicode__(self):
         return self.alumno.first_name + ", " + self.alumno.last_name + " - " + self.materia.nombre + " - " + str(self.anio)
@@ -116,7 +123,7 @@ class Matricula(models.Model):
             return "Desaprobada/Libre"
 
     def estaAprobada(self):
-        examenes = self.examenFinal_set.all()
+        examenes = self.examenfinal_set.all()
         aprobado = False
         for i in range(examenes.count()):
             if (examenes[i].nota.calificacion >= 4):
@@ -127,7 +134,10 @@ class Matricula(models.Model):
         regular = True
         asistencia = (self.porcentajeAsistencia()-1)
         notas = self.nota_set.all()
-        if (asistencia >= 75):
+        porcentaje = 75
+        if (self.alumno.situacionExepcional == True):
+            porcentaje = 60
+        if (asistencia >= porcentaje):
             for i in range(notas.count()):
                 if (notas[i].calificacion < 7):
                     regular = False
@@ -177,7 +187,7 @@ class Nota(models.Model):
         return str(self.calificacion) + " - " + str(self.matricula.alumno.dni)
     
 class Horario(models.Model):
-    materia = models.ForeignKey(Materia)
+    cursado = models.ForeignKey(Cursado)
     diaOpciones = (
         	('Lunes', 'Lunes'),
         	('Martes', 'Martes'),
@@ -191,7 +201,7 @@ class Horario(models.Model):
     horaFinal = models.CharField("Hora de Final", max_length=20, default="00:00")
 
     def __unicode__(self):
-        return self.materia.nombre
+        return self.cursado.materia.nombre
     
     def cantHoras(self):
         hora1 = self.horaInicio
@@ -204,7 +214,7 @@ class Horario(models.Model):
 
 class TurnoDeExamen(models.Model):
     fecha = models.DateField("Fecha")
-    materia = models.ForeignKey(Materia)
+    cursado = models.ForeignKey(Cursado)
 
 class ExamenFinal(models.Model):
     nota = models.ForeignKey(Nota)

@@ -121,7 +121,7 @@
                     <tbody class="searcheable">
                         {% for materia in materias %}
                         <tr>
-                            <td>{{ materia.nombre }}</td>
+                            <td>{{ materia.materia.nombre }}</td>
                             <td>{{ materia.profesor.last_name.upper }}, {{ materia.profesor.first_name.capitalize }}</td>
                             <td>
                                 <form method="post" role="form">{% csrf_token %}
@@ -145,17 +145,17 @@
 		              </div>
                     {% if materiaBuscada %}
                         <div class="col-lg-8 informacion informacion-alumno" style="overflow-y: scroll;">
-                            <br /><label>Nombre de la Materia: </label> {{ materiaBuscada.nombre }}<br /><br />
+                            <br /><label>Nombre de la Materia: </label> {{ materiaBuscada.materia.nombre }}<br /><br />
                             <label>Profesor: </label> {{ materiaBuscada.profesor.last_name.upper }}, {{ materiaBuscada.profesor.first_name.capitalize }}<br /><br />
                             <label>Correlativas de Cursado: </label> 
-                                {% for correlativa in materiaBuscada.correlativasCursado.all %}
+                                {% for correlativa in materiaBuscada.materia.correlativasCursado.all %}
                                     {{ correlativa.nombre }},
                                 {% endfor %}
                             <br /><br />
-                            <label>Tipo de Materia: </label> {{materiaBuscada.tipo}}
+                            <label>Tipo de Materia: </label> {{materiaBuscada.materia.tipo}}
                             <br /><br />
                             <label>Correlativas de Rendir: </label>
-                                {% for correlativa in materiaBuscada.correlativasRendir.all %}
+                                {% for correlativa in materiaBuscada.materia.correlativasRendir.all %}
                                     {{ correlativa.nombre }},
                                 {% endfor %}
                             <br /><br /><br />

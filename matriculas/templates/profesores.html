@@ -131,7 +131,7 @@
                                 </div>
                             </div>
                             {% if profesor %}
-                            <div class="col-lg-12">  
+                            <div class="col-lg-12" id="profeBuscado">  
                                 <div class="col-lg-5 informacion informacion-alumno" style="overflow-y: scroll;">
                                     <div class="col-sm-12">
                                         <div class="form-group" style="margin-top:10px;">
@@ -216,7 +216,7 @@
                                         <tbody>
                                             {% for horario in horarios %}
                                             <tr>
-                                                <td>{{ horario.materia.nombre }}</td>
+                                                <td>{{ horario.cursado.materia.nombre }}</td>
                                                 <td>{{ horario.dia }}</td>
                                                 <td>de {{ horario.horaInicio }} a {{ horario.horaFinal }} hs.</td>
                                                 <td>

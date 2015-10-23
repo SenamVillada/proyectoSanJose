@@ -174,6 +174,9 @@
                         <div class="form-group">
                             <label for="nombre">Paternidad: </label> {% if alumno.paternidad %}Sí{% else %}No{% endif %}
                         </div>
+                        <div class="form-group">
+                            <label for="nombre">Situación Excepcional: </label> {% if alumno.situacionExepcional %}Sí{% else %}No{% endif %}
+                        </div>
                         <div class="form-group col-lg-offset-9">
                             <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'><i class="fa fa-pencil" title="Editar"></i> Editar</a>
                         </div>
@@ -195,7 +198,7 @@
                                 <!-- Lo que contiene la tabla -->
                                 {% for matricula in materias %}
                                 <tr>
-                                    <td>{{ matricula.materia.nombre }}</td>
+                                    <td>{{ matricula.cursado.materia.nombre }}</td>
                                     <td>{{ matricula.condicion }}</td>
                                     <td>
                                         {% if not matricula.porcentajeAsistencia %}
@@ -228,13 +231,13 @@
                         {% if matriculaSeleccionada %}
                         <div id="infoalumno" class="container col-lg-12 informacion informacion-alumno" style="margin-top:10px;">
                             <div class="col-lg-6 form-group" style="margin-top:20px;">
-                                <label for="nombre">Nombre de la Materia: </label> {{matriculaSeleccionada.materia.nombre}}
+                                <label for="nombre">Nombre de la Materia: </label> {{matriculaSeleccionada.cursado.materia.nombre}}
                             </div>
                             <div class="col-lg-6 form-group" style="margin-top:20px;">
-                                <label for="nombre">Profesor: </label> {{matriculaSeleccionada.materia.profesor.last_name.upper}}, {{matriculaSeleccionada.materia.profesor.first_name.capitalize}}
+                                <label for="nombre">Profesor: </label> {{matriculaSeleccionada.cursado.profesor.last_name.upper}}, {{matriculaSeleccionada.cursado.profesor.first_name.capitalize}}
                             </div>
                             <div class="col-lg-6 form-group">
-                                <label for="nombre">Tipo de Materia: </label> {{matriculaSeleccionada.materia.tipo}}
+                                <label for="nombre">Tipo de Materia: </label> {{matriculaSeleccionada.cursado.materia.tipo}}
                             </div>
                             <div class="col-lg-3 form-group">
                                 <label for="nombre">Cant. de Faltas: </label> {{matriculaSeleccionada.cantFaltas}}
@@ -294,7 +297,6 @@
                                 {% endfor %}
                             </tbody>
                         </table>
-                            </div>
                          {% endif %}
                          {% endif %}
                         </div>

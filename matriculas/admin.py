@@ -5,12 +5,12 @@ from matriculas.models import *
 class AlumnoForm(UserChangeForm):
     class Meta:
 	model = Alumno
-	fields = ('username', 'dni', 'first_name', 'last_name', 'email','lugarDeTrabajo','horaDeTrabajo','paternidad','anioEgreso')
+	fields = ('username', 'dni', 'first_name', 'last_name', 'email','lugarDeTrabajo','horaDeTrabajo','paternidad','anioEgreso', 'situacionExepcional')
     
 class AlumnoAddForm(UserCreationForm):
     class Meta:
 	model = Alumno
-	fields = ('username', 'dni', 'first_name', 'last_name', 'email','lugarDeTrabajo','horaDeTrabajo','paternidad','anioEgreso')
+	fields = ('username', 'dni', 'first_name', 'last_name', 'email','lugarDeTrabajo','horaDeTrabajo','paternidad','anioEgreso', 'situacionExepcional')
     
 class AlumnoAdmin(admin.ModelAdmin):
     form = AlumnoForm
@@ -51,4 +51,5 @@ admin.site.register(Matricula)
 admin.site.register(Asistencia)
 admin.site.register(Nota)
 admin.site.register(Horario)
+admin.site.register(Cursado)
 admin.site.register(Log)
