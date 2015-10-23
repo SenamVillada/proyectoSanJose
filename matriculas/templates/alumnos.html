@@ -189,6 +189,7 @@
                                 <!-- Datos de la tabla -->
                                 <tr>
                                     <th>Materia</th>
+                                    <th>Año</th>
                                     <th>Condición</th>
                                     <th>% Asistencia</th>
                                     <th>Promedio</th>
@@ -199,6 +200,7 @@
                                 {% for matricula in materias %}
                                 <tr>
                                     <td>{{ matricula.cursado.materia.nombre }}</td>
+                                    <td>{{ matricula.cursado.anio }}</td>
                                     <td>{{ matricula.condicion }}</td>
                                     <td>
                                         {% if not matricula.porcentajeAsistencia %}

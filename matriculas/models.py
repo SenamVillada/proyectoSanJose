@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+import time
 
 class Persona(User):
     dni = models.IntegerField("DNI")
@@ -105,14 +106,14 @@ class Matricula(models.Model):
     cursado = models.ForeignKey(Cursado)
 
     def __unicode__(self):
-        return self.alumno.last_name.upper() + ", " + self.alumno.first_name.capitalize() + " - " + self.materia.nombre
+        return self.alumno.last_name.upper() + ", " + self.alumno.first_name.capitalize() + " - " + self.cursado.materia.nombre
 
     def condicion(self):
         if (self.cursado.finalizada == True):
             if (self.estaAprobada() == True):
                 return "Aprobada"
             if (self.estaPromocionado() == True):
-                return "Aprobada"
+                return "Promocionada"
             elif (self.esRegular() == True):
                 return "Regular"
             else:
@@ -122,25 +123,30 @@ class Matricula(models.Model):
 
     def estaAprobada(self):
         examenes = self.examenfinal_set.all()
-        aprobado = False
         for i in range(examenes.count()):
-            if (examenes[i].nota.calificacion >= 4):
-                aprobado = True
-        return aprobado
+            if (examenes[i].nota >= 4):
+                return True
+        return False
 
     def esRegular(self):
         asistencia = (self.porcentajeAsistencia()-1)
         notas = self.nota_set.all()
-        porcentaje = 75
+        
         if (self.alumno.situacionExepcional == True):
             porcentaje = 60
-        if (asistencia >= porcentaje):
-            for i in range(notas.count()):
-                if (notas[i].calificacion < 4):
-                    return False
         else:
+            porcentaje = 75
+        
+        if self.getRegularidadVencida() == True:
             return False
-        return True
+        else:
+            if (asistencia >= porcentaje):
+                for i in range(notas.count()):
+                    if (notas[i].calificacion < 4):
+                        return False
+            else:
+                return False
+            return True
     
     def estaPromocionado(self):
         asistencia = (self.porcentajeAsistencia()-1)
@@ -155,6 +161,20 @@ class Matricula(models.Model):
         else:
             return False
         return True
+    
+    def getRegularidadVencida(self):
+        turnos = self.cursado.turnodeexamen_set.all()
+        fechaHoy = time.strftime('%y-%m-%d')
+        fechaHoy = datetime.strptime(fechaHoy, '%y-%m-%d')
+        fechaHoy = datetime.date(fechaHoy)
+        cuenta = 0
+        for i in range(turnos.count()):
+            if (turnos[i].fecha < fechaHoy):
+                cuenta = cuenta + 1
+        if (cuenta >= 2):
+            return True
+        else:
+            return False
 
     def porcentajeAsistencia(self):
         asistencias = self.asistencia_set.all()
@@ -186,13 +206,25 @@ class Asistencia(models.Model):
     matricula = models.ForeignKey(Matricula)
     
     def __unicode__(self):
-        return self.fecha + ". El alumno: " + str(self.matricula.alumno.dni) + ", vino: " + str(self.vino) + " a " + self.matricula.cursado.materia.nombre
+        return str(self.fecha) + ". El alumno: " + str(self.matricula.alumno.dni) + ", vino: " + str(self.vino) + " a " + self.matricula.cursado.materia.nombre
 
 class Nota(models.Model):
     fecha = models.DateField("Fecha")
-    calificacion = models.IntegerField("Calificacion")
     observacion = models.CharField("Observacion", max_length=100)
     matricula = models.ForeignKey(Matricula)
+    notaOpciones = (
+        	(1, 1),
+        	(2, 2),
+            (2, 3),
+            (4, 4),
+            (5, 5),
+            (6, 6),
+            (7, 7),
+        	(8, 8),
+            (9, 9),
+            (10, 10),
+    	)
+    calificacion = models.IntegerField("Calificacion", choices=notaOpciones)
 
     def __unicode__(self):
         return str(self.calificacion) + " - " + str(self.matricula.alumno.dni)
@@ -226,11 +258,37 @@ class Horario(models.Model):
 class TurnoDeExamen(models.Model):
     fecha = models.DateField("Fecha")
     cursado = models.ForeignKey(Cursado)
+    
+    class Meta:
+        verbose_name = 'Turno de Exámen'
+        verbose_name_plural = 'Turnos de Exámenes' 
+
+    def __unicode__(self):
+        return "Turno de " + self.cursado.materia.nombre + " del dia: " + str(self.fecha)
 
 class ExamenFinal(models.Model):
-    nota = models.ForeignKey(Nota)
+    notaOpciones = (
+        	(1, 1),
+        	(2, 2),
+            (2, 3),
+            (4, 4),
+            (5, 5),
+            (6, 6),
+            (7, 7),
+        	(8, 8),
+            (9, 9),
+            (10, 10),
+    	)
+    nota = models.IntegerField("Nota", choices=notaOpciones)
     matricula = models.ForeignKey(Matricula)
     turno = models.ForeignKey(TurnoDeExamen)
+    
+    class Meta:
+        verbose_name = 'Exámen Final'
+        verbose_name_plural = 'Exámenes Finales'
+
+    def __unicode__(self):
+        return "Examen Final de " + self.turno.cursado.materia.nombre + " del alumno: " + str(self.matricula.alumno.dni) + " del dia: " + str(self.turno.fecha)
 
 class Log(models.Model):
     fecha = models.DateField("Fecha")
