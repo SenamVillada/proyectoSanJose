@@ -109,7 +109,7 @@ class Materia(models.Model):
 
 class Cursado(models.Model):
     anio = models.IntegerField("Año")
-    finalizada = models.BooleanField("Finalizado", default="False")
+    finalizada = models.BooleanField("Finalizado", default=False)
     materia = models.ForeignKey(Materia)
     profesor = models.ForeignKey(Profesor)
     
