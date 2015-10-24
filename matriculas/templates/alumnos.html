@@ -177,6 +177,14 @@
                         <div class="form-group">
                             <label for="nombre">Situación Excepcional: </label> {% if alumno.situacionExepcional %}Sí{% else %}No{% endif %}
                         </div>
+                        <div class="form-group">
+                            <label for="nombre">Promedio (FINALES RENDIDOS): </label>
+                            {% if alumno.getPromedio %}
+                                {{alumno.getPromedio}}
+                            {% else %}
+                                -----
+                            {% endif %}
+                        </div>
                         <div class="form-group col-lg-offset-9">
                             <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'><i class="fa fa-pencil" title="Editar"></i> Editar</a>
                         </div>
@@ -238,7 +246,7 @@
                             <div class="col-lg-6 form-group" style="margin-top:20px;">
                                 <label for="nombre">Profesor: </label> {{matriculaSeleccionada.cursado.profesor.last_name.upper}}, {{matriculaSeleccionada.cursado.profesor.first_name.capitalize}}
                             </div>
-                            <div class="col-lg-6 form-group">
+                            <div class="col-lg-3 form-group">
                                 <label for="nombre">Tipo de Materia: </label> {{matriculaSeleccionada.cursado.materia.tipo}}
                             </div>
                             <div class="col-lg-3 form-group">
@@ -247,12 +255,39 @@
                             <div class="col-lg-3 form-group">
                                 <label for="nombre">Porcentaje: </label> {{matriculaSeleccionada.porcentajeAsistencia|add:"-1"}} %
                             </div>
-                            <div class="col-lg-6 form-group">
+                            <div class="col-lg-3 form-group">
                                 <label for="nombre">Promedio: </label> {{matriculaSeleccionada.getPromedio}}
                             </div>
-                            <div class="col-lg-6 form-group">
-                                <label for="nombre">Exámen Final: </label> {{alumno.lugarDeTrabajo}}
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">¿Finalinó?: </label>
+                                {% if matriculaSeleccionada.cursado.finalizada %}
+                                    Sí
+                                {% else %}
+                                    No
+                                {% endif %}
                             </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">¿Aprobó?: </label>
+                                {% if matriculaSeleccionada.estaAprobada %}
+                                    Sí
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Año de Cursado: </label> {{matriculaSeleccionada.cursado.anio}}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Condición: </label> {{matriculaSeleccionada.condicion}}
+                            </div>
+                            {% if matriculaSeleccionada.estaAprobada %}
+                            <div class="col-lg-6 form-group">
+                                <label for="nombre">Nota Exámen Final: </label> {{matriculaSeleccionada.getExamenAprobado.0}}
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label for="nombre">Fecha Exámen Final: </label> {{matriculaSeleccionada.getExamenAprobado.1}}
+                            </div>
+                            {% endif %}
                         
                         </div>
                         <div class="col-lg-7" style="margin-top:20px;">

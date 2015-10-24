@@ -193,6 +193,14 @@
                                             <div class="form-group">
                                                 <label for="nombre">Paternidad: </label> {% if alumno.paternidad %}Sí{% else %}No{% endif %}
                                             </div>
+                                            <div class="form-group">
+                                                <label for="nombre">Promedio (FINALES RENDIDOS): </label>
+                                                {% if alumno.getPromedio %}
+                                                    {{alumno.getPromedio}}
+                                                {% else %}
+                                                    -----
+                                                {% endif %}
+                                            </div>
                                             <div class="form-group col-lg-offset-9">
                                                 <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'>
                                                     <i class="fa fa-pencil" title="Editar"></i> Editar

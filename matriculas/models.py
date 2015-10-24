@@ -41,6 +41,21 @@ class Alumno(Persona):
             return True
         else:
             return False
+        
+    def getPromedio(self):
+        matriculas = self.matricula_set.all()
+        total = 0.0
+        cantNotas = 0
+        for i in range(matriculas.count()):
+            examenes = matriculas[i].examenfinal_set.all()
+            for j in range(examenes.count()):
+                total = (total + examenes[j].nota)
+                cantNotas = (cantNotas + 1)
+        if (cantNotas == 0):
+            return False
+        else:
+            promedio = (total / cantNotas)
+            return promedio
 
 class Profesor(Persona):
     cuil = models.IntegerField("CUIL")
@@ -199,6 +214,14 @@ class Matricula(models.Model):
     def cantFaltas(self):
         cantidad = self.asistencia_set.all().filter(vino=False).count()
         return cantidad
+    
+    def getExamenAprobado(self):
+        examenes = self.examenfinal_set.all()
+        for i in range(examenes.count()):
+            if (examenes[i].nota >= 4):
+                examenAprobado = [examenes[i].nota, examenes[i].turno.fecha]
+                return examenAprobado
+        return False
 
 class Asistencia(models.Model):
     fecha = models.DateField("Fecha")
