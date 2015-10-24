@@ -53,9 +53,10 @@ def alumnos(request):
             alumno = Alumno.objects.get(id = idAlumno)
             materias = alumno.matricula_set.all()
             matriculaSeleccionada = False
+            cursadosPosibles = matriculasPosibles(alumno)
             if 'buscarMatriculaId' in request.POST:
                 matriculaSeleccionada = Matricula.objects.get(id = request.POST['buscarMatriculaId'])
-            return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias, 'matriculaSeleccionada': matriculaSeleccionada}, RequestContext(request))
+            return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias, 'matriculaSeleccionada': matriculaSeleccionada, 'cursadosPosibles': cursadosPosibles}, RequestContext(request))
         return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
 
 @login_required(login_url='/login')
@@ -117,3 +118,30 @@ def p_materias(request):
     if not request.user.is_staff:
         return render_to_response("Profesor/materias.html", RequestContext(request))
 
+def sePuedeMatricular(alumno, cursado):
+    correlativas = cursado.materia.correlativasCursado.all()
+    matriculas = alumno.matricula_set.all()
+    materiasAprobadas = []
+    materia = cursado.materia
+    anio = int(time.strftime('%Y'))
+    for i in range(matriculas.count()):
+        if (matriculas[i].cursado.materia == materia):
+            if matriculas[i].estaAprobada():
+                return False
+            elif (matriculas[i].cursado.anio < anio):
+                return False
+        for j in range(matriculas.count()):
+            if matriculas[j].estaAprobada():
+                materiasAprobadas.append(matriculas[j].cursado.materia)
+        for h in range(correlativas.count()):
+            if not correlativas[h] in materiasAprobadas:
+                return False
+        return True
+
+def matriculasPosibles(alumno):
+    cursados = Cursado.objects.filter(finalizada = False)
+    cursadosPosibles = []
+    for i in range(cursados.count()):
+        if (sePuedeMatricular(alumno, cursados[i])):
+            cursadosPosibles.append(cursados[i])
+    return cursadosPosibles

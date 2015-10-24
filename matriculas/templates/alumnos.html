@@ -191,7 +191,28 @@
                        
                     </div>
                         <div class="col-lg-8">
-                            <label>Matrículas <a href="{{ BASE_URL }}/admin/matriculas/matricula/add" target="_blank"><i class="fa fa-plus-circle"></i></a></label>
+                            <label>Matricular al Alumno</label>
+                            <form method="post" role="form">{% csrf_token %}
+                                <div class="col-lg-9">
+                                    <div class="input-group"> 
+                                        <select>
+                                             {% for curso in cursadosPosibles %}
+                                                <option value="{{curso.id}}">{{curso.materia.nombre}} - {{curso.profesor.last_name.upper}}, {{curso.profesor.first_name.capitalize}}</option>
+                                             {% endfor %}
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="input-group">
+                                        <button type="submit" name="btnMatricular" class="btn btn-primary">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <label>Matrículas 
+                                <a href="{{ BASE_URL }}/admin/matriculas/matricula/add" target="_blank">
+                                    <i class="fa fa-plus-circle"></i>
+                                </a>
+                            </label>
                             <table class="table table-hover">
                             <thead>
                                 <!-- Datos de la tabla -->
