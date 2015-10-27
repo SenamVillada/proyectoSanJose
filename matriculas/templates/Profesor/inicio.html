@@ -73,67 +73,67 @@
                     <form role="form" style="margin-top:10px"> 
                         <div class="col-sm-6">
                             <div class="form-group" style="margin-top:10px;">
-                                <label for="nombre">Nombre/s:  </label><h>Melisa</h>
+                                <label for="nombre">Nombre/s:  </label><h> {{profesor.first_name.capitalize}}</h>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group" style="margin-top:10px;">
-                                <label>Apellido:</label><h>  Saucedo</h>
+                                <label>Apellido:</label><h> {{profesor.last_name.capitalize}}</h>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Lugar y fecha de nacimiento:</label><h>  Córdoba, 14/02/84</h>
+                                <label>Lugar y fecha de nacimiento:</label><h> {{profesor.lugarNacimiento}}, {{profesor.fechaNacimiento}}</h>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Estado civil:</label><h>  Soltera</h>
+                                <label>Estado civil:</label><h> {{profesor.estadoCivil}}</h>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Cuil:</label><h>  23-32023021-9</h>
+                                <label>Cuil:</label><h> {{profesor.cuil}}</h>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Domicilio:</label><h>  Javier Lascano Colodrero 323</h>
+                                <label>Domicilio:</label><h> {{profesor.domicilio}}</h>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Teléfono:</label><h>  4234567</h>
+                                <label>Teléfono:</label><h> {{profesor.telefonoFijo}}</h>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Celular:</label><h>  158623956</h>
+                                <label>Celular:</label><h> {{profesor.telefonoMovil}}</h>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Mail:</label><h>  melisasaucedo@gmail.com</h>
+                                <label>Mail:</label><h><label>E-Mail:</label><h> <a href="mailto:{{profesor.email}}">{{profesor.email}}</a></h></h>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Titulo y Nº de registro:</label><h></h>
+                                <label>Titulo y Nº de registro:</label><h> {{profesor.titulo}}, {{profesor.numeroRegistro}}</h>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Fecha de escalafón:</label><h></h>
+                                <label>Fecha de escalafón:</label><h> {{profesor.fechaEscalafon}}</h>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Fecha de apto psicofisico::</label><h></h>
+                                <label>Fecha de apto psicofisico::</label><h> {{profesor.fechaAptoPsicofisico}}</h>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Cargo (cantidad de horas - alta y baja):</label><h></h>
+                                <label>Cargo (cantidad de horas - alta y baja):</label><h> {{profesor.cargo}}</h>
                             </div>
                         </div>
                         <div class="col-sm-6">

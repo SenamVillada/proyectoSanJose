@@ -174,46 +174,188 @@
                         <div class="form-group">
                             <label for="nombre">Paternidad: </label> {% if alumno.paternidad %}Sí{% else %}No{% endif %}
                         </div>
+                        <div class="form-group">
+                            <label for="nombre">Situación Excepcional: </label> {% if alumno.situacionExepcional %}Sí{% else %}No{% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Promedio (FINALES RENDIDOS): </label>
+                            {% if alumno.getPromedio %}
+                                {{alumno.getPromedio}}
+                            {% else %}
+                                -----
+                            {% endif %}
+                        </div>
                         <div class="form-group col-lg-offset-9">
                             <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'><i class="fa fa-pencil" title="Editar"></i> Editar</a>
                         </div>
                        
                     </div>
                         <div class="col-lg-8">
-                            <label>Matrículas <a href="{{ BASE_URL }}/admin/matriculas/matricula/add" target="_blank"><i class="fa fa-plus-circle"></i></a></label>
+                            <label>Matricular al Alumno</label>
+                            <form method="post" role="form">{% csrf_token %}
+                                <div class="col-lg-9">
+                                    <div class="input-group"> 
+                                        <select>
+                                             {% for curso in cursadosPosibles %}
+                                                <option value="{{curso.id}}">{{curso.materia.nombre}} - {{curso.profesor.last_name.upper}}, {{curso.profesor.first_name.capitalize}}</option>
+                                             {% endfor %}
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="input-group">
+                                        <button type="submit" name="btnMatricular" class="btn btn-primary">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <label>Matrículas 
+                                <a href="{{ BASE_URL }}/admin/matriculas/matricula/add" target="_blank">
+                                    <i class="fa fa-plus-circle"></i>
+                                </a>
+                            </label>
                             <table class="table table-hover">
                             <thead>
                                 <!-- Datos de la tabla -->
                                 <tr>
                                     <th>Materia</th>
+                                    <th>Año</th>
                                     <th>Condición</th>
                                     <th>% Asistencia</th>
-                                    <th>Notas</th>
+                                    <th>Promedio</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Lo que contiene la tabla -->
                                 {% for matricula in materias %}
                                 <tr>
-                                    <td>{{ matricula.materia.nombre }}</td>
+                                    <td>{{ matricula.cursado.materia.nombre }}</td>
+                                    <td>{{ matricula.cursado.anio }}</td>
                                     <td>{{ matricula.condicion }}</td>
                                     <td>
-                                        {% if matricula.siVinoAlgunaVez %}
-                                            {{ matricula.porcentajeAsistencia }}%
-                                        {% else %}
+                                        {% if not matricula.porcentajeAsistencia %}
                                             -----
+                                        {% else %}
+                                            {{ matricula.porcentajeAsistencia|add:"-1" }}%
                                         {% endif %}
                                     </td>
                                     <td>
-                                        {% for nota in matricula.nota_set.all %}
-                                            {{nota.calificacion}},
-                                        {% endfor %}
+                                        {% if not matricula.getPromedio %}
+                                            -----
+                                        {% else %}
+                                            {{ matricula.getPromedio }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <form method="post" role="form">{% csrf_token %}
+                                            <input type="hidden" name="buscarMatriculaId" id="buscarMatriculaId" value="{{matricula.id}}">
+                                            <input type="hidden" name="buscarAlumnoId" id="buscarAlumnoId" value="{{alumno.id}}">
+                                            <button type="submit" name="btnMatriculaId" class="btn btn-default btn-xs">
+                                                <i class="fa fa-eye" title="Ver" ></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                             </div>
+                        {% if matriculaSeleccionada %}
+                        <div id="infoalumno" class="container col-lg-12 informacion informacion-alumno" style="margin-top:10px;">
+                            <div class="col-lg-6 form-group" style="margin-top:20px;">
+                                <label for="nombre">Nombre de la Materia: </label> {{matriculaSeleccionada.cursado.materia.nombre}}
+                            </div>
+                            <div class="col-lg-6 form-group" style="margin-top:20px;">
+                                <label for="nombre">Profesor: </label> {{matriculaSeleccionada.cursado.profesor.last_name.upper}}, {{matriculaSeleccionada.cursado.profesor.first_name.capitalize}}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Tipo de Materia: </label> {{matriculaSeleccionada.cursado.materia.tipo}}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Cant. de Faltas: </label> {{matriculaSeleccionada.cantFaltas}}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Porcentaje: </label> {{matriculaSeleccionada.porcentajeAsistencia|add:"-1"}} %
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Promedio: </label> {{matriculaSeleccionada.getPromedio}}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">¿Finalinó?: </label>
+                                {% if matriculaSeleccionada.cursado.finalizada %}
+                                    Sí
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">¿Aprobó?: </label>
+                                {% if matriculaSeleccionada.estaAprobada %}
+                                    Sí
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Año de Cursado: </label> {{matriculaSeleccionada.cursado.anio}}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Condición: </label> {{matriculaSeleccionada.condicion}}
+                            </div>
+                            {% if matriculaSeleccionada.estaAprobada %}
+                            <div class="col-lg-6 form-group">
+                                <label for="nombre">Nota Exámen Final: </label> {{matriculaSeleccionada.getExamenAprobado.0}}
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label for="nombre">Fecha Exámen Final: </label> {{matriculaSeleccionada.getExamenAprobado.1}}
+                            </div>
+                            {% endif %}
+                        
+                        </div>
+                        <div class="col-lg-7" style="margin-top:20px;">
+                            <label>Notas</label>
+                            <table class="table table-hover">
+                            <thead>
+                                <!-- Datos de la tabla -->
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Nota</th>
+                                    <th>Observación</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Lo que contiene la tabla -->
+                                {% for nota in matriculaSeleccionada.nota_set.all %}
+                                <tr>
+                                    <td>{{ nota.fecha }}</td>
+                                    <td>{{ nota.calificacion }}</td>
+                                    <td>{{ nota.observacion }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                            </div>
+                        
+                        <div class="col-lg-5" style="margin-top:20px;">
+                            <label>Inasistencia <a href="{{ BASE_URL }}/admin/matriculas/asistencia/add" target="_blank"><i class="fa fa-plus-circle"></i></a></label>
+                            <table class="table table-hover">
+                            <thead>
+                                <!-- Datos de la tabla -->
+                                <tr>
+                                    <th>Fecha Inasistencia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Lo que contiene la tabla -->
+                                {% for falta in matriculaSeleccionada.asistencia_set.all %}
+                                <tr>
+                                    {% if not falta.vino %}
+                                    <td>{{ falta.fecha }}</td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                         {% endif %}
                          {% endif %}
                         </div>
                         </div>
