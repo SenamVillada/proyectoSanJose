@@ -6,13 +6,21 @@ class AlumnoForm(UserChangeForm):
     
     class Meta:
 	model = Alumno
+<<<<<<< HEAD
 	fields = ('first_name', 'last_name', 'username', 'dni', 'email', 'domicilio', 'estadoCivil', 'fechaNacimiento', 'lugarNacimiento', 'telefonoFijo', 'telefonoMovil', 'sexo', 'lugarDeTrabajo', 'horaDeTrabajo', 'paternidad', 'anioEgreso')
+=======
+	fields = ('first_name', 'last_name', 'username', 'dni', 'email', 'domicilio', 'estadoCivil', 'fechaNacimiento', 'lugarNacimiento', 'telefonoFijo', 'telefonoMovil', 'sexo', 'lugarDeTrabajo', 'horaDeTrabajo', 'paternidad', 'anioEgreso','situacionExepcional')
+>>>>>>> bf8ecd38aade7f51e3b1a08dc68aba5e811a98a5
 
     
 class AlumnoAddForm(UserCreationForm):
     class Meta:
 	model = Alumno
+<<<<<<< HEAD
 	fields = ('first_name', 'last_name', 'username', 'dni', 'email', 'domicilio', 'estadoCivil', 'fechaNacimiento', 'lugarNacimiento', 'telefonoFijo', 'telefonoMovil', 'sexo', 'lugarDeTrabajo', 'horaDeTrabajo', 'paternidad', 'anioEgreso')
+=======
+	fields = ('first_name', 'last_name', 'username', 'dni', 'email', 'domicilio', 'estadoCivil', 'fechaNacimiento', 'lugarNacimiento', 'telefonoFijo', 'telefonoMovil', 'sexo', 'lugarDeTrabajo', 'horaDeTrabajo', 'paternidad', 'anioEgreso','situacionExepcional')
+>>>>>>> bf8ecd38aade7f51e3b1a08dc68aba5e811a98a5
     
 class AlumnoAdmin(admin.ModelAdmin):
     form = AlumnoForm
@@ -61,5 +69,12 @@ admin.site.register(Matricula)
 admin.site.register(Asistencia)
 admin.site.register(Nota)
 admin.site.register(Horario)
+<<<<<<< HEAD
 admin.site.register(Log)
 admin.site.register(ExamenFinal)
+=======
+admin.site.register(Cursado)
+admin.site.register(TurnoDeExamen)
+admin.site.register(Log)
+admin.site.register(ExamenFinal)
+>>>>>>> bf8ecd38aade7f51e3b1a08dc68aba5e811a98a5

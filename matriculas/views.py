@@ -125,7 +125,7 @@ def turnos_de_examen(request):
 @login_required(login_url='/login')
 def p_inicio(request):
     if not request.user.is_staff:
-        profesor = Profesor.objects.all().filter(profesor = request.user)
+        profesor = Profesor.objects.all().filter(username = request.user)
         return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
 
 @login_required(login_url='/login')
