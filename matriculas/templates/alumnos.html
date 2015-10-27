@@ -94,7 +94,7 @@
         <!-- Seccion alumnos -->
         <div id="page-inner">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 col-sm-12">
                     <div class="panel panel-default">
                         <!-- Cuadro de egresados -->
                         <div class="panel-heading">
@@ -197,7 +197,7 @@
                             </form>
                         </div>
                         <div class="col-lg-6">
-                            <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'><i class="fa fa-pencil" title="Editar"></i> Editar</a>
+                            <a class="btn btn-primary centrarBtn" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'><i class="fa fa-pencil" title="Editar"></i> Editar</a>
                         </div>
                        
                     </div>
@@ -205,18 +205,18 @@
                             <label>Matricular al Alumno</label>
                             <form method="post" role="form">{% csrf_token %}
                                 <input type="hidden" name="buscarAlumnoId" id="buscarAlumnoId" value="{{alumno.id}}">
-                                <div class="col-lg-9">
+                                <div class="col-lg-6">
                                     <div class="input-group"> 
-                                        <select name="idMatricularId">
+                                        <select name="idMatricularId" class="form-control">
                                              {% for curso in cursadosPosibles %}
                                                 <option value="{{curso.id}}">{{curso.materia.nombre}} - {{curso.profesor.last_name.upper}}, {{curso.profesor.first_name.capitalize}}</option>
                                              {% endfor %}
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-6">
                                     <div class="input-group">
-                                        <button type="submit" name="btnMatricular" class="btn btn-primary">Matricular</button>
+                                        <button type="submit" name="btnMatricular" class="btn btn-primary centrarBtn">Matricular</button>
                                     </div>
                                 </div>
                             </form>
@@ -372,7 +372,7 @@
             </div>
         </div>
 			<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
-					Desarrollado por SENAM
+					Desarrollado por  <img src="{% static '../static/img/admin/logo_senam.png' %}" style="height:15px;">
           <br><br>
           Copyright © 2015 Instituto Parroquial San José.
           <br><br>
