@@ -36,6 +36,7 @@
     -moz-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
+    text-align: center;
     }
 
 .boton-inicio:hover{
@@ -125,7 +126,6 @@ body {
     vertical-align: middle;
     margin-top: 50%;
     position: absolute;
-    margin-left: 20%;
 }
 .no-boder {
     border:1px solid #f3f3f3;
