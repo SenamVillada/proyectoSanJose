@@ -103,6 +103,11 @@ def profesores(request):
         return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
 
 @login_required(login_url='/login')
+def turnos_de_examen(request):
+    if request.user.is_staff:
+        return render_to_response("turnos_examen.html", RequestContext(request))
+
+@login_required(login_url='/login')
 def p_inicio(request):
     if not request.user.is_staff:
         profesor = Profesor.objects.get(username = request.user)
