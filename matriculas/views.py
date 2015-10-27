@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from matriculas.models import *
+from datetime import datetime
 import time
 
 # Create your views here.
@@ -25,7 +26,10 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/')
+                if user.is_staff:
+                    return HttpResponseRedirect('/')
+                else:
+                    return HttpResponseRedirect('/Profesor/inicio')
             else:
                 return HttpResponse("Tu cuenta no esta habilitada")
         else:
@@ -43,54 +47,121 @@ def error_login(request):
 
 @login_required(login_url='/login')
 def alumnos(request):
-    alumnos = Alumno.objects.all()
-    if request.method == 'POST':
+    if request.user.is_staff:
+        alumnos = Alumno.objects.all()
+        if request.method == 'POST':
+            if 'EgresarAlumnoId' in request.POST:
+                idAlumno = request.POST['EgresarAlumnoId']
+                alumno = Alumno.objects.get(id = idAlumno)
+                alumno.egresado = True
+                alumno.save()
+                return render_to_response("alumnos.html",{'alumnos':alumnos, 'cambios':True}, RequestContext(request))
             idAlumno = request.POST['buscarAlumnoId']
             alumno = Alumno.objects.get(id = idAlumno)
             materias = alumno.matricula_set.all()
-            return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
-    return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
+            matriculaSeleccionada = False
+            cursadosPosibles = matriculasPosibles(alumno)                
+            if 'buscarMatriculaId' in request.POST:
+                matriculaSeleccionada = Matricula.objects.get(id = request.POST['buscarMatriculaId'])
+            return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias, 'matriculaSeleccionada': matriculaSeleccionada, 'cursadosPosibles': cursadosPosibles}, RequestContext(request))
+        return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
 
 @login_required(login_url='/login')
 def egresados(request):
-    alumnos = Alumno.objects.all()
-    if request.method == 'POST':
-        idAlumno = request.POST['buscarAlumnoId']
-        alumno = Alumno.objects.get(id = idAlumno)
-        return render_to_response("egresados.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
-    return render_to_response("egresados.html",{'alumnos':alumnos}, RequestContext(request))
+    if request.user.is_staff:
+        alumnos = Alumno.objects.all()
+        if request.method == 'POST':
+            idAlumno = request.POST['buscarAlumnoId']
+            alumno = Alumno.objects.get(id = idAlumno)
+            return render_to_response("egresados.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
+        return render_to_response("egresados.html",{'alumnos':alumnos}, RequestContext(request))
 
 
 @login_required(login_url='/login')
 def materias(request):
-    materiasTotal = Materia.objects.all()
-    if request.method == 'POST':
-        try:
+    if request.user.is_staff:
+        anio = int(time.strftime('%Y'))
+        materiasTotal = Cursado.objects.all().filter(anio=anio)
+        if request.method == 'POST':
             idmateria = request.POST['buscarProfesorId']
             materia = Materia.objects.get(id = idmateria)
-            horarios = materia.horario_set.all()
-            anio = int(time.strftime('%Y'))
-            matriculasAsistentes = materia.matricula_set.all().filter(anio=anio)
-            return render_to_response('materias.html', {"materias":materiasTotal, "materiaBuscada":materia, "horarios":horarios, "alumnosAsistentes":matriculasAsistentes},RequestContext(request))
-        except:
-            return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
-    return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
+            cursado = Cursado.objects.get(materia = materia)
+            horarios = cursado.horario_set.all()
+            matriculasAsistentes = cursado.matricula_set.all()
+            return render_to_response('materias.html', {"materias":materiasTotal, "materiaBuscada":cursado, "horarios":horarios, "alumnosAsistentes":matriculasAsistentes},RequestContext(request))
+        return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
 
 @login_required(login_url='/login')
 def profesores(request):
-    profesores = Profesor.objects.all()
-    if request.method == 'POST':
-        try:
+    if request.user.is_staff:
+        profesores = Profesor.objects.all()
+        if request.method == 'POST':
             idProf = request.POST['buscarProfesorId']
             profesor = Profesor.objects.get(id = int(idProf))
-            materias = profesor.materia_set.all()
+            cursados = profesor.cursado_set.all()
             horarios = []
-            for i in range(materias.__len__()):
-                materiasEnI = materias[i].horario_set.all()
+            for i in range(cursados.count()):
+                materiasEnI = cursados[i].horario_set.all()
                 for j in range(materiasEnI.count()):
                     horarios.append(materiasEnI[j])
             licencias = profesor.licencia_set.all()
-            return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias}, RequestContext(request))
-        except:
-            return render_to_response("profesores.html",{'errorProfesor':True}, RequestContext(request))
-    return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
+            cargos = profesor.cargo_set.all()
+            return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias, 'cargos':cargos}, RequestContext(request))
+        return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
+
+@login_required(login_url='/login')
+def turnos_de_examen(request):
+    if request.user.is_staff:
+        turnos = TurnoDeExamen.objects.all()
+        fechaHoy = time.strftime('%y-%m-%d')
+        fechaHoy = datetime.strptime(fechaHoy, '%y-%m-%d')
+        fechaHoy = datetime.date(fechaHoy)
+        turnosNoPasaron = []
+        for i in range(turnos.count()):
+            if (turnos[i].fecha > fechaHoy):
+                turnosNoPasaron.append(turnos[i])
+        return render_to_response("turnos_examen.html", {"turnos":turnosNoPasaron} , RequestContext(request))
+
+@login_required(login_url='/login')
+def p_inicio(request):
+    if not request.user.is_staff:
+        profesor = Profesor.objects.get(username = request.user)
+        return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
+
+@login_required(login_url='/login')
+def p_asistencia(request):
+    if not request.user.is_staff:
+        return render_to_response("Profesor/asistencia.html", RequestContext(request))
+
+@login_required(login_url='/login')
+def p_materias(request):
+    if not request.user.is_staff:
+        return render_to_response("Profesor/materias.html", RequestContext(request))
+
+def sePuedeMatricular(alumno, cursado):
+    correlativas = cursado.materia.correlativasCursado.all()
+    matriculas = alumno.matricula_set.all()
+    materiasAprobadas = []
+    materia = cursado.materia
+    anio = int(time.strftime('%Y'))
+    for i in range(matriculas.count()):
+        if (matriculas[i].cursado.materia == materia):
+            if matriculas[i].estaAprobada():
+                return False
+            elif (matriculas[i].cursado.anio < anio):
+                return False
+        for j in range(matriculas.count()):
+            if matriculas[j].estaAprobada():
+                materiasAprobadas.append(matriculas[j].cursado.materia)
+        for h in range(correlativas.count()):
+            if not correlativas[h] in materiasAprobadas:
+                return False
+        return True
+
+def matriculasPosibles(alumno):
+    cursados = Cursado.objects.filter(finalizada = False)
+    cursadosPosibles = []
+    for i in range(cursados.count()):
+        if (sePuedeMatricular(alumno, cursados[i])):
+            cursadosPosibles.append(cursados[i])
+    return cursadosPosibles

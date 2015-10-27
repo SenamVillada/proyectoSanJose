@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Administracion de alumnos</title>
+    <title>Inicio</title>
 	<!-- BOOTSTRAP STYLES-->
     <link href="{% static '../static/css/admin/bootstrap.css' %}" rel="stylesheet" />
     <link href="{% static '../static/css/bootstrap.min.css' %}" rel="stylesheet" />
@@ -59,8 +59,11 @@
         <li>
     	      <a  href="/egresados"><i class="fa fa-graduation-cap"></i>Egresados</a>
     	</li>
+         <li>
+    	      <a  href="/turnos_de_examen"><i class="fa fa-calendar-check-o"></i>Turnos de examen</a>
+    	</li>
         <li>
-    	      <a  href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
+    	      <a  class="alerta" href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
     	</li>
 				</ul>
 			</div>
@@ -117,23 +120,6 @@
           Todos los Derechos Reservados.
 				</footer>
         </div>
-         <!-- /. PAGE WRAPPER  -->
-        
-     <!-- /. WRAPPER  -->
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS 
-    <script src="assets/js/jquery-1.10.2.js"></script>-->
-      <!-- BOOTSTRAP SCRIPTS 
-    <script src="assets/js/bootstrap.min.js"></script>-->
-    <!-- METISMENU SCRIPTS 
-    <script src="assets/js/jquery.metisMenu.js"></script>-->
-     <!-- MORRIS CHART SCRIPTS 
-     <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-    <script src="assets/js/morris/morris.js"></script>-->
-      <!-- CUSTOM SCRIPTS 
-    <script src="assets/js/custom.js"></script>-->
-    
-   
 </body>
 
 </html>

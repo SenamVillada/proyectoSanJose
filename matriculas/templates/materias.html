@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Administracion de alumnos</title>
+    <title>Administracion de materias</title>
 	<!-- BOOTSTRAP STYLES-->
     <link href="{% static '../static/css/admin/bootstrap.css' %}" rel="stylesheet" />
     <link href="{% static '../static/css/bootstrap.min.css' %}" rel="stylesheet" />
@@ -79,8 +79,11 @@
             <li>
     	      <a  href="/egresados"><i class="fa fa-graduation-cap"></i>Egresados</a>
     	</li>
-                <li>
-    	      <a  href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
+         <li>
+    	      <a  href="/turnos_de_examen"><i class="fa fa-calendar-check-o"></i>Turnos de examen</a>
+    	</li>
+        <li>
+    	      <a  class="alerta" href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
     	</li>
 				</ul>
 			</div>
@@ -94,21 +97,31 @@
                 
 						<div class="panel panel-default">              
         <div class="panel-heading">
-		    Lista de materias
+		    Materias
 		</div>
 		<div class="panel-body">
 		    <div class="row">
 			<div class="col-lg-12">
 			    <div class="table-responsive">
-                <div class="col-lg-10">
-				<div class="input-group" style="margin-top:10px">
-                    <span class="input-group-addon">Buscar</span>
-                    <input id="filter" type="text" class="form-control" placeholder="Escriba Aqui...">
-                </div>
+                <div class="col-lg-7">
+				    <div class="input-group" style="margin-top:10px">
+                        <span class="input-group-addon">Buscar</span>
+                        <input id="filter" type="text" class="form-control" placeholder="Escriba Aqui...">
                     </div>
-                <div class="col-lg-offset-10">
-                    <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/materia/add" target="_blank"><i class="fa fa-plus-circle"></i> Crear Nueva</a>
                 </div>
+                <div class="col-lg-2">
+                    <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/cursado/add" target="_blank" style="margin-left:40px;">
+                        <i class="fa fa-plus-circle"></i>
+                        Crear Nuevo Curso
+                    </a>
+                </div>
+                <div class="col-lg-2">
+                    <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/materia/add" target="_blank" style="margin-left:50px;">
+                        <i class="fa fa-plus-circle"></i>
+                        Crear Nueva Materia
+                    </a>
+                </div>
+                <div class="col-lg-12">
                 <table id="tabla" class="display table table-hover" cellspacing="0" width="100%">
                     <thead>
                         <tr>
@@ -121,7 +134,7 @@
                     <tbody class="searcheable">
                         {% for materia in materias %}
                         <tr>
-                            <td>{{ materia.nombre }}</td>
+                            <td>{{ materia.materia.nombre }}</td>
                             <td>{{ materia.profesor.last_name.upper }}, {{ materia.profesor.first_name.capitalize }}</td>
                             <td>
                                 <form method="post" role="form">{% csrf_token %}
@@ -140,22 +153,23 @@
                         {% endfor %}
                     </tbody>
 				</table>
+                    </div>
 			                 </div>
 			             </div>
 		              </div>
                     {% if materiaBuscada %}
                         <div class="col-lg-8 informacion informacion-alumno" style="overflow-y: scroll;">
-                            <br /><label>Nombre de la Materia: </label> {{ materiaBuscada.nombre }}<br /><br />
+                            <br /><label>Nombre de la Materia: </label> {{ materiaBuscada.materia.nombre }}<br /><br />
                             <label>Profesor: </label> {{ materiaBuscada.profesor.last_name.upper }}, {{ materiaBuscada.profesor.first_name.capitalize }}<br /><br />
                             <label>Correlativas de Cursado: </label> 
-                                {% for correlativa in materiaBuscada.correlativasCursado.all %}
+                                {% for correlativa in materiaBuscada.materia.correlativasCursado.all %}
                                     {{ correlativa.nombre }},
                                 {% endfor %}
                             <br /><br />
-                            <label>Tipo de Materia: </label> {{materiaBuscada.tipo}}
+                            <label>Tipo de Materia: </label> {{materiaBuscada.materia.tipo}}
                             <br /><br />
                             <label>Correlativas de Rendir: </label>
-                                {% for correlativa in materiaBuscada.correlativasRendir.all %}
+                                {% for correlativa in materiaBuscada.materia.correlativasRendir.all %}
                                     {{ correlativa.nombre }},
                                 {% endfor %}
                             <br /><br /><br />
