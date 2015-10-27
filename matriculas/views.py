@@ -105,13 +105,14 @@ def profesores(request):
 @login_required(login_url='/login')
 def p_inicio(request):
     if not request.user.is_staff:
-        profesor = Profesor.objects.get(username = request.user)
+        profesor = Profesor.objects.all().filter(profesor = request.user)
         return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
 
 @login_required(login_url='/login')
 def p_asistencia(request):
     if not request.user.is_staff:
-        return render_to_response("Profesor/asistencia.html", RequestContext(request))
+        materias = Cursado.objects.get(profesor = request.user)
+        return render_to_response("Profesor/asistencia.html", {"materias":materias} , RequestContext(request))
 
 @login_required(login_url='/login')
 def p_materias(request):
