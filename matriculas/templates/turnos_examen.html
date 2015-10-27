@@ -117,15 +117,17 @@
                                             <th>Fecha</th>
                                             <th>Materia</th>
                                             <th>Profesor</th>
+                                            <th>Observaciones</th>
                                             <th>Ver</th>
                                         </tr>
                                     </thead>
                                     <tbody class="searcheable">
                                         {% for turno in turnos %}
                                         <tr>
-                                            <td>{{turno.fecha}}</td>
+                                            <td>{{turno.fecha}} - {{turno.hora}}</td>
                                             <td>{{turno.cursado.materia}}</td>
                                             <td>{{turno.cursado.profesor.last_name.upper}}, {{turno.cursado.profesor.first_name.capitalize}}</td>
+                                            <th>{{turno.observaciones}}</th>
                                             <td><a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/turnodeexamen/{{turno.id}}" target="_blank"><i class="fa fa-pencil" title="Editar"></i></a></td>
                                         </tr>
                                         {% endfor %}
