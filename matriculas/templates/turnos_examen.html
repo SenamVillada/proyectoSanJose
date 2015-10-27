@@ -106,7 +106,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-offset-10">
-                                    <a href="{{ BASE_URL }}/admin/matriculas/profesor/add" target="_blank" class="btn btn-primary" style="margin-top:10px"><i class="fa fa-plus-circle"></i> Crear Nuevo</a>
+                                    <a href="{{ BASE_URL }}/admin/matriculas/turnodeexamen/add" target="_blank" class="btn btn-primary" style="margin-top:10px"><i class="fa fa-plus-circle"></i> Crear Nuevo</a>
                                 </div>
                             </form>
                             <div class="col-lg-12">
@@ -118,17 +118,15 @@
                                             <th>Materia</th>
                                             <th>Profesor</th>
                                             <th>Ver</th>
-                                            <th>Editar</th>
                                         </tr>
                                     </thead>
                                     <tbody class="searcheable">
-                                        {% for profesor in profesores %}
+                                        {% for turno in turnos %}
                                         <tr>
-                                            <td>{{profesor.last_name.upper.upper}}, {{profesor.first_name.capitalize}}</td>
-                                            <td><form method="post" role="form">{% csrf_token %}
-                                                    <input type="hidden" name="buscarProfesorId" id="buscarProfesorId" value="{{profesor.id}}">
-                                                    <button type="submit" name="btnProfesorId" class="btn btn-default btn-xs"><i class="fa fa-eye" title="Ver" ></i></button></form></td>
-                                            <td><a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/profesor/{{profesor.id}}" target="_blank"><i class="fa fa-pencil" title="Editar"></i></a></td>
+                                            <td>{{turno.fecha}}</td>
+                                            <td>{{turno.cursado.materia}}</td>
+                                            <td>{{turno.cursado.profesor.last_name.upper}}, {{turno.cursado.profesor.first_name.capitalize}}</td>
+                                            <td><a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/turnodeexamen/{{turno.id}}" target="_blank"><i class="fa fa-pencil" title="Editar"></i></a></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
