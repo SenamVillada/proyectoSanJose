@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from matriculas.models import *
+from datetime import datetime
 import time
 
 # Create your views here.
@@ -49,11 +50,17 @@ def alumnos(request):
     if request.user.is_staff:
         alumnos = Alumno.objects.all()
         if request.method == 'POST':
+            if 'EgresarAlumnoId' in request.POST:
+                idAlumno = request.POST['EgresarAlumnoId']
+                alumno = Alumno.objects.get(id = idAlumno)
+                alumno.egresado = True
+                alumno.save()
+                return render_to_response("alumnos.html",{'alumnos':alumnos, 'cambios':True}, RequestContext(request))
             idAlumno = request.POST['buscarAlumnoId']
             alumno = Alumno.objects.get(id = idAlumno)
             materias = alumno.matricula_set.all()
             matriculaSeleccionada = False
-            cursadosPosibles = matriculasPosibles(alumno)
+            cursadosPosibles = matriculasPosibles(alumno)                
             if 'buscarMatriculaId' in request.POST:
                 matriculaSeleccionada = Matricula.objects.get(id = request.POST['buscarMatriculaId'])
             return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias, 'matriculaSeleccionada': matriculaSeleccionada, 'cursadosPosibles': cursadosPosibles}, RequestContext(request))
@@ -101,6 +108,19 @@ def profesores(request):
             cargos = profesor.cargo_set.all()
             return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias, 'cargos':cargos}, RequestContext(request))
         return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
+
+@login_required(login_url='/login')
+def turnos_de_examen(request):
+    if request.user.is_staff:
+        turnos = TurnoDeExamen.objects.all()
+        fechaHoy = time.strftime('%y-%m-%d')
+        fechaHoy = datetime.strptime(fechaHoy, '%y-%m-%d')
+        fechaHoy = datetime.date(fechaHoy)
+        turnosNoPasaron = []
+        for i in range(turnos.count()):
+            if (turnos[i].fecha > fechaHoy):
+                turnosNoPasaron.append(turnos[i])
+        return render_to_response("turnos_examen.html", {"turnos":turnosNoPasaron} , RequestContext(request))
 
 @login_required(login_url='/login')
 def p_inicio(request):
