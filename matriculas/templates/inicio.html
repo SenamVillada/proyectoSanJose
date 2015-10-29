@@ -91,46 +91,48 @@
 						<div id="page-inner-cuerpo">
                 <div class="row" >
                     <h5 style="margin-left: 2%;"><p>En esta página encontrarás las herramientas necesarias para cada tarea de gestión de la actividad escolar del Instituto Parroquial San José.</p><p>A su izquierda aparecerá un navegador en el cual se encuentran las diferentes categorías, cada una con sus utilidades, las cuales estan descriptas a continuación:</p><h5>
-								<div id="st-accordion" class="st-accordion">
+								<div id="st-accordionizq" class="st-accordion">
                     <ul>
                         <li>
                             <a href="#"><i>Alumnos</i><span class="st-arrow">Open or Close</span></a>
                             <div class="st-content">
-                                <p>En esta sección podremos:
-																<br>· 	Agregar alumnos<br>· 	Buscar y ver información personal<br>· 	Matricularlos en materias<br>· 	Ver sus matriculas y su condicion</p>
+                                <p>En esta sección podremos agregar alumnos, buscarlos y ver su información personal, matricularlos en materias, ver sus matriculas y su condicion de aprobación.</p>
                             </div>
                         </li>
 												<li>
-                            <a href="#"><i>Profesores</i><span class="st-arrow">Open or Close</span></a>
-                            <div class="st-content">
-                                <p>It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather.</p>
-                                <p>Drops of rain could be heard hitting the pane, which made him feel quite sad.</p>
-                            </div>
-                        </li>
-                        <li>
                             <a href="#"><i>Materias</i><span class="st-arrow">Open or Close</span></a>
                             <div class="st-content">
-                                <p>It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather.</p>
-                                <p>Drops of rain could be heard hitting the pane, which made him feel quite sad.</p>
+                                <p>En esta seccion se podrá agregar materias y cursos, y ver las materias que se dictan en el instituto con sus respectivas caracteristicas como se muestra a continuacion:<br>- Nombre de la Materia<br>- Profesor<br>- Correlativas de Cursado<br>- Tipo de Materia<br>- Correlativas de Rendir<br>- Lista de alumnos (nombre y DNI de cada alumno que la cursa)<br>- Horario</p>
                             </div>
                         </li>
+											</ul>
+										</div>
+										<div id="st-accordionder" class="st-accordion">
+                    <ul>
                         <li>
-                            <a href="#"><i>Egresados</i><span class="st-arrow">Open or Close</span></a>
+                            <a href="#"><i>Profesores</i><span class="st-arrow">Open or Close</span></a>
                             <div class="st-content">
-                                <p>No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful.</p>
-                                <p>Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure.</p>
+                                <p>En esta sección se podrán ver los profesores que hay en la institucion, sus datos personales con posibilidad de edición, sus horarios, licencias que se ha tomado, y los cargos que posee.</p>
                             </div>
                         </li>
 												<li>
-                            <a href="#"><i>Turnos de examen</i><span class="st-arrow">Open or Close</span></a>
+                            <a href="#"><i>Egresados</i><span class="st-arrow">Open or Close</span></a>
                             <div class="st-content">
-                                <p>It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather.</p>
-                                <p>Drops of rain could be heard hitting the pane, which made him feel quite sad.</p>
+                                <p>En esta sección se detallan los egresados del instituto con sus datos personales y año de egreso.</p>
                             </div>
                         </li>
-                    </ul>
-                </div>
-                </div><br>
+											</ul>
+										</div>
+										<div id="st-accordioncen" class="st-accordion" style="width: 100% !important;float: center !important;text-align:center;">
+                    <ul>
+                        <li>
+                            <a href="#"><i>Turnos de examen</i><span class="st-arrow">Open or Close</span></a>
+                            <div class="st-content">
+                                <p>Aquí encontraremos informacion sobre los exámenes a rendir en el instituto (nombre de la materia y profesor que la dicta). Además encontraremos un campo de observaciones en el que el profesor puede escribir lo que crea necesario</p>
+                            </div>
+                        </li>
+											</ul>
+										</div><br>
             </div>
              <!-- /. PAGE INNER  -->
 					<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
@@ -147,7 +149,21 @@
         <script type="text/javascript">
             $(function() {
 			
-							$('#st-accordion').accordion();
+							$('#st-accordionizq').accordion();
+				
+            });
+        </script>
+				<script type="text/javascript">
+            $(function() {
+			
+							$('#st-accordionder').accordion();
+				
+            });
+        </script>
+				<script type="text/javascript">
+            $(function() {
+			
+							$('#st-accordioncen').accordion();
 				
             });
         </script>
