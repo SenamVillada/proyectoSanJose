@@ -78,8 +78,8 @@
                             <h4 class="col-lg-3">Seleccionar una materia:</h4>
                             <select class="col-lg-3" style="margin-top:2%;">
                                 <option value="nombre" selected disabled>Seleccionar una materia</option>
-                                {% for materia in materias %}
-                                <option value="{materia.nombre}">{materia.nombre}</option>
+                                {% for cursado in cursados %}
+                                <option>{{cursado.materia.nombre.capitalize}}</option>
                                 {% endfor %}
                             </select>
                             <h4 class="col-lg-1 col-offset-1">Dia:</h4>

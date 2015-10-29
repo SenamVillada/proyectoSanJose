@@ -115,21 +115,17 @@
 					</tr>
 				</thead>
 				<tbody class="searcheable">
+                    {% for cursado in cursados %}
 					<tr>
-                        <td>Ciencias Naturales y su Didáctica II</td>
-                        <td>10:30 a 11:30</td>
-                        <td><a href="#"><i class="fa fa-eye" title="Más información"></i></a></td>
+                        <td>{{cursado.materia.nombre.capitalize}}</td>
+                        <td>{{cursado.horario_set.all}}</td>
+                        <form method="POST" role="form">{% csrf_token %}
+                            <input type="hidden" name="idCursado" id="idCursado" value="{{cursado.id}}">
+                            
+                            <td><button type="submit"><i class="fa fa-eye" title="Más información"></i></button></td>    
+                        </form>
                     </tr>
-                    <tr>
-                        <td>Práctica Docente II</td>
-                        <td>10:30 a 11:30</td>
-						<td><a href="#"><i class="fa fa-eye" title="Más información"></i></a></td> 
-                    </tr>
-                    <tr>
-                        <td>Seminario II: Trayecto Pastoral</td>
-                        <td>10:30 a 11:30</td>
-						<td><a href="#"><i class="fa fa-eye" title="Más información"></i></a></td>
-                    </tr>
+                    {% endfor %}
 				</tbody>
 				</table>
                     <button type="submit" name="crear" class="btn btn-primary">Crear</button>
@@ -145,6 +141,7 @@
              <!-- /. PAGE INNER  -->
             </div>
 <!-- /. SECCION AGREGAR NOTAS  -->
+        {% if matriculas %}
         <div id="page-inner">
             <div class="row">
                 <div class="col-lg-12">
@@ -167,75 +164,31 @@
                                 </thead>
                                 <tbody>
                                     <!-- Lo que contiene la tabla -->
+                                    
+                                    {% for matricula in matriculas %}
                                     <tr>
-                                        <td>Nicolas Ordoñez</td>
-                                        <td>6</td>
-                                        <td>6</td>
+                                        <td>{{matricula.alumno.first_name}} {{matricula.alumno.last_name.upper}}</td>
                                         <td>
                                             <select>
                                                 <option selected disabled>+</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                                <option>6</option>
-                                                <option>7</option>
-                                                <option>8</option>
-                                                <option>9</option>
-                                                <option>10</option>
-                                            </select>
-                                            <!-- Boton agregar nota -->
-                                            <a href="#" style="margin-left:3%"><i class="fa fa-plus" title="Más información"></i></a>
-                                        </td>
-                                        <td><input id="observacion" type="text" placeholder="Observacion..."></td> <!-- Ingresar observacion -->
-                                        <td><select><option selected disabled>Seleccionar</option><option>Aprobado</option><option>Desaprobado</option></select></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Marcos Gonzalez</td>
-                                        <td>8</td>
-                                        <td>8</td>
-                                        <td>
-                                            <select>
-                                                <option selected disabled>+</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                                <option>6</option>
-                                                <option>7</option>
-                                                <option>8</option>
-                                                <option>9</option>
-                                                <option>10</option>
-                                            </select>
-                                            <a href="#" style="margin-left:3%"><i class="fa fa-plus" title="Más información"></i></a>
-                                        </td>
-                                        <td><input id="observacion" type="text" placeholder="Observacion..."></td>
-                                        <td><select><option selected disabled>Seleccionar</option><option>Aprobado</option><option>Desaprobado</option></select></td>
-                                    </tr><tr>
-                                        <td>Emiliano Monaco</td>
-                                        <td>8</td>
-                                        <td>8</td>
-                                        <td>
-                                            <select>
-                                                <option selected disabled>+</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                                <option>6</option>
-                                                <option>7</option>
-                                                <option>8</option>
-                                                <option>9</option>
-                                                <option>10</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
                                             </select>
                                             <a href="#" style="margin-left:3%"><i class="fa fa-plus" title="Más información"></i></a>
                                         </td>
                                         <td><input id="observacion" type="text" placeholder="Observacion..."></td>
                                         <td><select><option selected disabled>Seleccionar</option><option>Aprobado</option><option>Desaprobado</option></select></td>
                                     </tr>
+                                    {% endfor %}
+                                    
                                 </tbody>
                             </table>
                         </div> <!-- /. TABLE RESPONSIVE  -->
@@ -244,6 +197,7 @@
                 </div> <!-- /. COL-LG-12  -->
             </div> <!-- /. ROW  -->
         </div> <!-- /. PAGE INNER  -->
+        {% endif %}
          <!-- /. PAGE WRAPPER  -->
 				<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
 				    Desarrollado por SENAM
