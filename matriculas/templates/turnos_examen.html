@@ -128,7 +128,7 @@
                                             <td>{{turno.cursado.materia}}</td>
                                             <td>{{turno.cursado.profesor.last_name.upper}}, {{turno.cursado.profesor.first_name.capitalize}}</td>
                                             <th>{{turno.observaciones}}</th>
-                                            <td><a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/turnodeexamen/{{turno.id}}" target="_blank"><i class="fa fa-pencil" title="Editar"></i></a></td>
+                                            <td><a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/turnodeexamen/{{turno.id}}" target="_blank"><i class="fa fa-eye" title="Editar"></i></a></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -301,7 +301,7 @@
             </div>
         </div>
         <footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
-            Desarrollado por  <img src="{% static '../static/img/admin/logo_senam.png' %}" style="height:15px;"><br><br>
+            Desarrollado por  <img src="{% static '../static/img/admin/logo_senam.png' %}" class="logo-senam"><br><br>
             Copyright © 2015 Instituto Parroquial San José.<br><br>
             Todos los Derechos Reservados.
         </footer>

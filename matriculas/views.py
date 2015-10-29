@@ -50,7 +50,9 @@ def alumnos(request):
     if request.user.is_staff:
         alumnos = Alumno.objects.all()
         cambios = False
+        error = False
         if request.method == 'POST':
+            print request.POST
             if 'EgresarAlumnoId' in request.POST:
                 idAlumno = request.POST['EgresarAlumnoId']
                 alumno = Alumno.objects.get(id = idAlumno)
@@ -59,15 +61,19 @@ def alumnos(request):
             idAlumno = request.POST['buscarAlumnoId']
             alumno = Alumno.objects.get(id = idAlumno)
             if 'btnMatricular' in request.POST:
-                idMatricularId = request.POST['idMatricularId']
-                cursadoId = Cursado.objects.get(id = idMatricularId)                
-                cambios = matricular(alumno, cursadoId)
+                #try:
+                    idMatricularId = request.POST['idMatricularId']
+                    cursadoId = Cursado.objects.get(id = idMatricularId)
+                    print "aca si"
+                    cambios = matricular(alumno, cursadoId)
+                #except:
+                #    error = True
             materias = alumno.matricula_set.all()
             matriculaSeleccionada = False
             cursadosPosibles = matriculasPosibles(alumno)                
             if 'buscarMatriculaId' in request.POST:
                 matriculaSeleccionada = Matricula.objects.get(id = request.POST['buscarMatriculaId'])
-            return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias, 'matriculaSeleccionada': matriculaSeleccionada, 'cursadosPosibles': cursadosPosibles, 'cambios':cambios}, RequestContext(request))
+            return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias, 'matriculaSeleccionada': matriculaSeleccionada, 'cursadosPosibles': cursadosPosibles, 'cambios':cambios, 'error':error}, RequestContext(request))
         return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
 
 @login_required(login_url='/login')
@@ -130,17 +136,30 @@ def turnos_de_examen(request):
 def p_inicio(request):
     if not request.user.is_staff:
         profesor = Profesor.objects.get(username = request.user)
+        print profesor
         return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
 
 @login_required(login_url='/login')
 def p_asistencia(request):
     if not request.user.is_staff:
-        return render_to_response("Profesor/asistencia.html", RequestContext(request))
+        cursados = Cursado.objects.all().filter(profesor = request.user)
+        if request.method == 'POST':
+            idCursado = request.POST['idCursado']
+            cursado = Cursado.objects.get(id = idCursado)
+            matriculas = cursado.matricula_set.all()
+            return render_to_response("Profesor/asistencia.html", {"cursados":cursados, "matriculas":matriculas} , RequestContext(request))
+        return render_to_response("Profesor/asistencia.html", {"cursados":cursados} , RequestContext(request))
 
 @login_required(login_url='/login')
 def p_materias(request):
     if not request.user.is_staff:
-        return render_to_response("Profesor/materias.html", RequestContext(request))
+        cursados = Cursado.objects.all().filter(profesor = request.user)
+        if request.method == 'POST':
+            idCursado = request.POST['idCursado']
+            cursado = Cursado.objects.get(id = idCursado)
+            matriculas = cursado.matricula_set.all()
+            return render_to_response("Profesor/materias.html", {"cursados":cursados, "matriculas":matriculas} , RequestContext(request))
+        return render_to_response("Profesor/materias.html", {"cursados":cursados} , RequestContext(request))
 
 def sePuedeMatricular(alumno, cursado):
     correlativas = cursado.materia.correlativasCursado.all()
@@ -150,10 +169,9 @@ def sePuedeMatricular(alumno, cursado):
     anio = int(time.strftime('%Y'))
     cursadosDelAlumno = []
     for k in range(matriculas.count()):
-        cursadosDelAlumno.append(matriculas[k].cursado)
-    for m in range(cursadosDelAlumno.count()):
-        if (cursado.id == cursadosDelAlumno[m].id):
+        if (matriculas[k].cursado.id == cursado.id):
             return False
+        cursadosDelAlumno.append(matriculas[k].cursado)
     for i in range(matriculas.count()):
         if (matriculas[i].cursado.materia == materia):
             if matriculas[i].estaAprobada():
@@ -177,11 +195,19 @@ def matriculasPosibles(alumno):
     return cursadosPosibles
 
 def matricular(alumno, cursado):
-    try:
-        crearCursado = Matricula.objects.create(alumno = alumno, cursado = cursadoId)
+#    try:
+        print "llego"
+        matriculas = alumno.matricula_set.all()
+        cursadosDelAlumno = []
+        for i in range(matriculas.count()):
+            if (matriculas[i].cursado.id == cursado.id):
+                print matriculas[i].cursado.id
+                print cursado.id
+                return False
+        crearCursado = Matricula.objects.create(alumno = alumno, cursado = cursado)
         return True
-    except:
-        return False
+#    except:
+#        return False
 
 def egresar(alumno):
     try:
