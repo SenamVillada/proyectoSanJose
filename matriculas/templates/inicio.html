@@ -9,31 +9,35 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inicio</title>
-	<!-- BOOTSTRAP STYLES-->
+		<!-- BOOTSTRAP STYLES-->
     <link href="{% static '../static/css/admin/bootstrap.css' %}" rel="stylesheet" />
     <link href="{% static '../static/css/bootstrap.min.css' %}" rel="stylesheet" />
-     <!-- FONTAWESOME STYLES -->
+    <!-- FONTAWESOME STYLES -->
     <link href="{% static '../static/fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
-     <!-- MORRIS CHART STYLES
+    <!-- MORRIS CHART STYLES
     <link href=" js/ morris/morris-0.4.3.min.css" rel="stylesheet" />-->
-        <!-- CUSTOM STYLES-->
+    <!-- CUSTOM STYLES-->
     <link href="{% static '../static/css/admin/custom.css' %}" rel="stylesheet" />
-     <!-- GOOGLE FONTS-->
-   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-		<link href="{% static '../static/css/jquery-ui.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{% static '../static/css/style.css' %}" />
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:400,700' rel='stylesheet' type='text/css' />
+    <!-- GOOGLE FONTS-->
+  	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		  <!-- jQuery Version 1.11.0 -->
+		<!-- jQuery Version 1.11.0 -->
     <script src="{% static '../static/js/jquery-1.11.0.js' %}"></script>
     <!-- jQueryUi Version 1.8 -->
     <script src="{% static '../static/js/jquery-ui.js' %}"></script>
     <script src="{% static '../static/js/jquery.dataTables.min.js' %}"></script>
-		<script>
-  		$(function() {
-    		$( "#accordion" ).accordion({
-      		collapsible: true
-    		});
-  		});
-  	</script>
+		<noscript>
+			<style>
+				.st-accordion ul li{
+					height:auto;
+				}
+				.st-accordion ul li > a span{
+					visibility:hidden;
+				}
+			</style>
+		</noscript>
 </head>
 <body>
     <!-- /. NAV TOP  -->
@@ -86,30 +90,46 @@
             </div>
 						<div id="page-inner-cuerpo">
                 <div class="row" >
-                    <h5 style="margin-left: 2%;">En esta página encontrarás las herramientas necesarias para cada tarea de gestión de la actividad escolar del Instituto Parroquial San José.<br><br>A su izquierda aparecerá un navegador en el cual se encuentran las diferentes categorías, cada una con sus utilidades, las cuales estan descriptas a continuación:<h5>
-								<div id="accordion" style="width: 90%;margin-left: 5%;margin-top: 2%;">
-  <h3>Section 1</h3>
-  <div>
-    <p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
-  </div>
-  <h3>Section 2</h3>
-  <div>
-    <p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
-  </div>
-  <h3>Section 3</h3>
-  <div>
-    <p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>
-    <ul>
-      <li>List item one</li>
-      <li>List item two</li>
-      <li>List item three</li>
-    </ul>
-  </div>
-  <h3>Section 4</h3>
-  <div>
-    <p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
-  </div>
-</div>
+                    <h5 style="margin-left: 2%;"><p>En esta página encontrarás las herramientas necesarias para cada tarea de gestión de la actividad escolar del Instituto Parroquial San José.</p><p>A su izquierda aparecerá un navegador en el cual se encuentran las diferentes categorías, cada una con sus utilidades, las cuales estan descriptas a continuación:</p><h5>
+								<div id="st-accordion" class="st-accordion">
+                    <ul>
+                        <li>
+                            <a href="#"><i>Alumnos</i><span class="st-arrow">Open or Close</span></a>
+                            <div class="st-content">
+                                <p>En esta sección podremos:
+																<br>· 	Agregar alumnos<br>· 	Buscar y ver información personal<br>· 	Matricularlos en materias<br>· 	Ver sus matriculas y su condicion</p>
+                            </div>
+                        </li>
+												<li>
+                            <a href="#"><i>Profesores</i><span class="st-arrow">Open or Close</span></a>
+                            <div class="st-content">
+                                <p>It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather.</p>
+                                <p>Drops of rain could be heard hitting the pane, which made him feel quite sad.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#"><i>Materias</i><span class="st-arrow">Open or Close</span></a>
+                            <div class="st-content">
+                                <p>It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather.</p>
+                                <p>Drops of rain could be heard hitting the pane, which made him feel quite sad.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#"><i>Egresados</i><span class="st-arrow">Open or Close</span></a>
+                            <div class="st-content">
+                                <p>No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful.</p>
+                                <p>Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure.</p>
+                            </div>
+                        </li>
+												<li>
+                            <a href="#"><i>Turnos de examen</i><span class="st-arrow">Open or Close</span></a>
+                            <div class="st-content">
+                                <p>It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather.</p>
+                                <p>Drops of rain could be heard hitting the pane, which made him feel quite sad.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
                 </div><br>
             </div>
              <!-- /. PAGE INNER  -->
@@ -121,6 +141,16 @@
           Todos los Derechos Reservados.
 				</footer>
         </div>
+				<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+				<script type="text/javascript" src="{% static '../static/js/jquery.accordion.js' %}"></script>
+				<script type="text/javascript" src="{% static '../static/js/jquery.easing.1.3.js' %}"></script>
+        <script type="text/javascript">
+            $(function() {
+			
+							$('#st-accordion').accordion();
+				
+            });
+        </script>
 </body>
 
 </html>
