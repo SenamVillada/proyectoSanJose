@@ -52,7 +52,6 @@ def alumnos(request):
         cambios = False
         error = False
         if request.method == 'POST':
-            print request.POST
             if 'EgresarAlumnoId' in request.POST:
                 idAlumno = request.POST['EgresarAlumnoId']
                 alumno = Alumno.objects.get(id = idAlumno)
@@ -61,13 +60,13 @@ def alumnos(request):
             idAlumno = request.POST['buscarAlumnoId']
             alumno = Alumno.objects.get(id = idAlumno)
             if 'btnMatricular' in request.POST:
-                #try:
+                try:
                     idMatricularId = request.POST['idMatricularId']
                     cursadoId = Cursado.objects.get(id = idMatricularId)
                     print "aca si"
                     cambios = matricular(alumno, cursadoId)
-                #except:
-                #    error = True
+                except:
+                    error = True
             materias = alumno.matricula_set.all()
             matriculaSeleccionada = False
             cursadosPosibles = matriculasPosibles(alumno)                
@@ -195,8 +194,7 @@ def matriculasPosibles(alumno):
     return cursadosPosibles
 
 def matricular(alumno, cursado):
-#    try:
-        print "llego"
+    try:
         matriculas = alumno.matricula_set.all()
         cursadosDelAlumno = []
         for i in range(matriculas.count()):
@@ -206,8 +204,8 @@ def matricular(alumno, cursado):
                 return False
         crearCursado = Matricula.objects.create(alumno = alumno, cursado = cursado)
         return True
-#    except:
-#        return False
+    except:
+        return False
 
 def egresar(alumno):
     try:
