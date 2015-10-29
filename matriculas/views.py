@@ -150,10 +150,9 @@ def sePuedeMatricular(alumno, cursado):
     anio = int(time.strftime('%Y'))
     cursadosDelAlumno = []
     for k in range(matriculas.count()):
-        cursadosDelAlumno.append(matriculas[k].cursado)
-    for m in range(cursadosDelAlumno.count()):
-        if (cursado.id == cursadosDelAlumno[m].id):
+        if (matriculas[k].cursado.id == cursado.id):
             return False
+        cursadosDelAlumno.append(matriculas[k].cursado)
     for i in range(matriculas.count()):
         if (matriculas[i].cursado.materia == materia):
             if matriculas[i].estaAprobada():
@@ -178,6 +177,11 @@ def matriculasPosibles(alumno):
 
 def matricular(alumno, cursado):
     try:
+        matriculas = alumno.matricula_set.all()
+        cursadosDelAlumno = []
+        for i in range(matriculas.count()):
+            if (matriculas[k].cursado.id == cursado.id):
+                return False
         crearCursado = Matricula.objects.create(alumno = alumno, cursado = cursadoId)
         return True
     except:
