@@ -1,0 +1,274 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link href="{% static '../../static/img/admin/logo.png' %}" rel='shortcut icon' type='image/png'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Administracion de alumnos</title>
+	<!-- BOOTSTRAP STYLES-->
+    <link href="{% static '../../static/css/admin/bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static '../../static/css/bootstrap.min.css' %}" rel="stylesheet" />
+     <!-- FONTAWESOME STYLES -->
+    <link href="{% static '../../static/fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
+     <!-- MORRIS CHART STYLES
+    <link href=" js/ morris/morris-0.4.3.min.css" rel="stylesheet" />-->
+        <!-- CUSTOM STYLES-->
+    <link href="{% static '../../static/css/admin/custom.css' %}" rel="stylesheet" />
+     <!-- GOOGLE FONTS-->
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		  <!-- jQuery Version 1.11.0 -->
+    <script src="{% static '../../static/js/jquery-1.11.0.js' %}"></script>
+    <!-- jQueryUi Version 1.8 -->
+    <script src="{% static '../../static/js/jquery-ui.js' %}"></script>
+    <script src="{% static '../../static/js/jquery.dataTables.min.js' %}"></script>
+    <script type="text/javascript">
+	// Tabla de alumnos
+	$(document).ready(function () {
+
+    (function ($) {
+
+        $('#filter').keyup(function () {
+
+            var rex = new RegExp($(this).val(), 'i');
+            $('.searcheable tr').hide();
+            $('.searcheable tr').filter(function () {
+                return rex.test($(this).text());
+            }).show();
+
+        })
+
+    }(jQuery));
+
+});
+	</script>
+
+</head>
+<body>
+    <!-- /. NAV TOP  -->
+	<header class="cd-main-header">
+			<a href="/Profesor/inicio" class="cd-logo"><img style="margin-top: 1%; margin-left: 1%;" src="{% static '../../static/img/admin/logo2.png' %}" alt="Logo"></a>
+			<a href="/Profesor/inicio" class="cd-nav-trigger"><span></span></a>
+			<nav class="cd-nav">
+				<ul class="cd-top-nav">
+				</ul>
+			</nav>
+		</header>
+	  <nav class="navbar-default navbar-side" role="navigation">
+    	<div class="sidebar-collapse">
+				<ul class="nav" id="main-menu" >
+					<div style="background: #1F5B1F; color:#ffffff;margin-bottom:1%;" >
+						<center><br><br><br><br><div>Bienvenido/a, </div><label><span class="resaltado">{{user.username}}</span></center></label>
+						<br>
+					</div>
+          <li>
+    	      <a  href="/Profesor/inicio"><i class="fa fa-home"></i>Inicio</a>
+          </li>
+          <li>
+      	    <a href="/Profesor/asistencia"><i class="fa fa-users"></i>Asistencia</a>
+          </li>
+        <li>
+    	      <a  href="/Profesor/materias" class="active-menu" ><i class="fa fa-book"></i>Materias</a>
+    	</li>
+        <li>
+    	      <a  href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
+    	</li>
+				</ul>
+			</div>
+    </nav>
+        <!-- /. NAV SIDE  -->
+        
+        <div id="page-wrapper" >
+                <div id="page-inner">
+                <div class="row">
+                    <div class="col-lg-12">
+                     <center><h2>Administracion de Materias</h2></center>
+                    </div>
+                    </div>
+             <!-- /. PAGE INNER  -->
+                 </div>
+            <div id="page-inner">
+                <div class="row">
+                </div>
+                
+						<div class="panel panel-default">              
+        <div class="panel-heading">
+		    Lista de materias
+		</div>
+		<div class="panel-body">
+		    <div class="row">
+			<div class="col-lg-12">
+			    <div class="table-responsive">
+				<div class="input-group"> <span class="input-group-addon">Buscar</span>
+
+                    <input id="filter" type="text" class="form-control" placeholder="Escriba Aqui...">
+                </div> <br>
+                <table id="tabla" class="table table-hover" cellspacing="0" width="100%">   
+				<thead>
+					<tr>
+					  <th>Materia</th>
+					  <th>Horario</th>
+                      <th>Ver</th>
+					</tr>
+				</thead>
+				<tbody class="searcheable">
+					<tr>
+                        <td>Ciencias Naturales y su Didáctica II</td>
+                        <td>10:30 a 11:30</td>
+                        <td><a href="#"><i class="fa fa-eye" title="Más información"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>Práctica Docente II</td>
+                        <td>10:30 a 11:30</td>
+						<td><a href="#"><i class="fa fa-eye" title="Más información"></i></a></td> 
+                    </tr>
+                    <tr>
+                        <td>Seminario II: Trayecto Pastoral</td>
+                        <td>10:30 a 11:30</td>
+						<td><a href="#"><i class="fa fa-eye" title="Más información"></i></a></td>
+                    </tr>
+				</tbody>
+				</table>
+                    <button type="submit" name="crear" class="btn btn-primary">Crear</button>
+				
+				    <form role="form" method="post">
+				      <br />
+				    </form>
+			    </div>
+			</div>
+		    </div>
+		</div>
+        </div>
+             <!-- /. PAGE INNER  -->
+            </div>
+<!-- /. SECCION AGREGAR NOTAS  -->
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- panel (borde) -->
+                    <div class="panel panel-default">
+                        <!-- tabla responsive -->
+                        <div class="table-responsive">
+                            <!-- Tabla para calificar a los alumnos -->
+                            <table class="table table-hover">
+                                <thead>
+                                    <!-- Datos de la tabla -->
+                                    <tr>
+                                        <th>Nombre y apellido</th>
+                                        <th>Notas</th>
+                                        <th>Promedio</th>
+                                        <th>Agregar nota</th>
+                                        <th>Observacion</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Lo que contiene la tabla -->
+                                    <tr>
+                                        <td>Nicolas Ordoñez</td>
+                                        <td>6</td>
+                                        <td>6</td>
+                                        <td>
+                                            <select>
+                                                <option selected disabled>+</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                            </select>
+                                            <!-- Boton agregar nota -->
+                                            <a href="#" style="margin-left:3%"><i class="fa fa-plus" title="Más información"></i></a>
+                                        </td>
+                                        <td><input id="observacion" type="text" placeholder="Observacion..."></td> <!-- Ingresar observacion -->
+                                        <td><select><option selected disabled>Seleccionar</option><option>Aprobado</option><option>Desaprobado</option></select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Marcos Gonzalez</td>
+                                        <td>8</td>
+                                        <td>8</td>
+                                        <td>
+                                            <select>
+                                                <option selected disabled>+</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                            </select>
+                                            <a href="#" style="margin-left:3%"><i class="fa fa-plus" title="Más información"></i></a>
+                                        </td>
+                                        <td><input id="observacion" type="text" placeholder="Observacion..."></td>
+                                        <td><select><option selected disabled>Seleccionar</option><option>Aprobado</option><option>Desaprobado</option></select></td>
+                                    </tr><tr>
+                                        <td>Emiliano Monaco</td>
+                                        <td>8</td>
+                                        <td>8</td>
+                                        <td>
+                                            <select>
+                                                <option selected disabled>+</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                            </select>
+                                            <a href="#" style="margin-left:3%"><i class="fa fa-plus" title="Más información"></i></a>
+                                        </td>
+                                        <td><input id="observacion" type="text" placeholder="Observacion..."></td>
+                                        <td><select><option selected disabled>Seleccionar</option><option>Aprobado</option><option>Desaprobado</option></select></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> <!-- /. TABLE RESPONSIVE  -->
+                    </div> <!-- /. PANEL -->
+                    <center><button type="submit" name="guardar" class="btn btn-primary">Guardar</button></center>
+                </div> <!-- /. COL-LG-12  -->
+            </div> <!-- /. ROW  -->
+        </div> <!-- /. PAGE INNER  -->
+         <!-- /. PAGE WRAPPER  -->
+				<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
+				    Desarrollado por SENAM
+            <br><br>
+            Copyright © 2015 Instituto Parroquial San José.
+            <br><br>
+            Todos los Derechos Reservados.
+				</footer>
+        </div>
+        
+     <!-- /. WRAPPER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS 
+    <script src="assets/js/jquery-1.10.2.js"></script>-->
+      <!-- BOOTSTRAP SCRIPTS 
+    <script src="assets/js/bootstrap.min.js"></script>-->
+    <!-- METISMENU SCRIPTS 
+    <script src="assets/js/jquery.metisMenu.js"></script>-->
+     <!-- MORRIS CHART SCRIPTS 
+     <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
+    <script src="assets/js/morris/morris.js"></script>-->
+      <!-- CUSTOM SCRIPTS 
+    <script src="assets/js/custom.js"></script>-->
+    
+   
+</body>
+    
+</html>

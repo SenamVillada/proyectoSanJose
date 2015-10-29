@@ -1,24 +1,31 @@
-    
+{% load staticfiles %}    
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     
-    <link href='img/admin/logo.png' rel='shortcut icon' type='image/png'>
+    <link href="{% static '../static/img/admin/logo.png' %}" rel='shortcut icon' type='image/png'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Administracion de alumnos</title>
 	<!-- BOOTSTRAP STYLES-->
-    <link href="css/admin/bootstrap.css" rel="stylesheet" />
+    <link href="{% static '../static/css/admin/bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static '../static/css/bootstrap.min.css' %}" rel="stylesheet" />
      <!-- FONTAWESOME STYLES -->
-    <link href="fonts/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="{% static '../static/fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
      <!-- MORRIS CHART STYLES
     <link href=" js/ morris/morris-0.4.3.min.css" rel="stylesheet" />-->
         <!-- CUSTOM STYLES-->
-    <link href="css/admin/custom.css" rel="stylesheet" />
+    <link href="{% static '../static/css/admin/custom.css' %}" rel="stylesheet" />
      <!-- GOOGLE FONTS-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		  <!-- jQuery Version 1.11.0 -->
+    <script src="{% static '../static/js/jquery-1.11.0.js' %}"></script>
+    <!-- jQueryUi Version 1.8 -->
+    <script src="{% static '../static/js/jquery-ui.js' %}"></script>
+    <script src="{% static '../static/js/jquery.dataTables.min.js' %}"></script>
     <script type="text/javascript">
 	// Tabla de alumnos
 	$(document).ready(function () {
@@ -42,231 +49,340 @@
 </head>
 <body>
     <!-- /. NAV TOP  -->
-    <nav class="navbar-default navbar-side" role="navigation">
-        <div class="centradodiv">
-            <div class="container-fluid">
-                <!-- Logo del instituto -->
-                <a href="inicio.html"><img src="img/admin/logo.png"></a>
-            </div>
-            <div class="container-fluid centrado" id="div-usuario" style="color:#fff;">
-                Bienvenido/a, <span class="resaltado">Agustín</span>
-                <br><a>Salir</a>
-            </div>
-        </div>
-        <!-- Menu con opciones -->
-        <div class="sidebar-collapse">
+    <header class="cd-main-header">
+			<a href="/" class="cd-logo"><img style="margin-top: 1%; margin-left: 1%;" src="{% static '../static/img/admin/logo2.png' %}" alt="Logo"></a>
+			<a href="/" class="cd-nav-trigger"><span></span></a>
+			<nav class="cd-nav">
+				<ul class="cd-top-nav">
+				</ul>
+			</nav>
+		</header>
+	  <nav class="navbar-default navbar-side" role="navigation">
+    	<div class="sidebar-collapse">
             <ul class="nav" id="main-menu" >
-                <li>
-                    <a   href="inicio.html"><i class="fa fa-desktop fa-2x"></i>Inicio</a>
-                </li>
-                <li>
-                    <a class="active-menu" href="alumnos.html"><i class="fa fa-user fa-2x"></i>Alumnos</a>
-                </li>
-                <li>
-                    <a  href="profesores.html"><i class="fa fa-briefcase fa-2x"></i>Profesores</a>
-                </li>
-                <li>
-                    <a  href="materias.html"><i class="fa fa-book fa-2x"></i>Materias</a>
-                </li>
-            </ul>
-        </div>
-        <div id="sub-footer" class="sub-footer">
-				Desarrollado por SENAM
-				<br><br>
-				Copyright © 2015 Instituto Parroquial San José.
-				<br><br>
-				Todos los Derechos Reservados.
-		</div>
+                <div style="background: #1F5B1F; color:#ffffff;margin-bottom:1%;" >
+						<center><br><br><br><br><div>Bienvenido/a, </div><label><span class="resaltado">{{user.username}}</span></center></label>
+						<br>
+					</div>
+          <li>
+    	      <a  href="/"><i class="fa fa-home"></i>Inicio</a>
+          </li>
+          <li>
+      	    <a class="active-menu" href="/alumnos"><i class="fa fa-users"></i>Alumnos</a>
+          </li>
+					<li>
+            <a href="/profesores"><i class="fa fa-briefcase"></i>Profesores</a>
+          </li>
+        <li>
+    	      <a  href="/materias"><i class="fa fa-book"></i>Materias</a>
+    	</li>
+             <li>
+    	      <a  href="/egresados"><i class="fa fa-graduation-cap"></i>Egresados</a>
+    	</li>
+        <li>
+    	      <a  href="/turnos_de_examen"><i class="fa fa-calendar-check-o"></i>Turnos de examen</a>
+    	</li>
+        <li>
+    	      <a  class="alerta" href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
+    	</li>
+				</ul>
+			</div>
     </nav>
     <!-- Seccion bienvenida al sistema  -->
-    <div id="page-wrapper" >
-        <div id="page-inner">
-            <div class="row">
-                <!-- Tamaño del div es de 12 -->
-                <div class="col-lg-12">
-                    <center><h2>Administracion de alumnos</h2></center>
-                    <center><h5>Bienvenido al sistema <b>seba</b> !</h5></center> 
-                </div>
-            </div>
-        </div>
+    <div id="page-wrapper" class="wrapper-bajado">
+
         <!-- Seccion alumnos -->
         <div id="page-inner">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-lg-6">
+                <div class="col-lg-12 col-sm-12">
                     <div class="panel panel-default">
                         <!-- Cuadro de egresados -->
                         <div class="panel-heading">
                             Alumnos
                         </div>
+                        {% if cambios %}
+                        <div class="alert alert-success">
+                            <strong>Éxito!</strong> Los cambios han sido guardados.
+                        </div>
+                        {% endif %}
                     <div class="panel-body">
-                        <form role="form">
-                            <div class="col-lg-5">
-                                <!-- Buscardor de alumnos -->
-                                <div class="form-group">
-                                    <input class="form-control" type="text" id="buscar" placeholder="DNI del alumno" style="margin-top:10px">
-                                </div>
-                            </div>
-                            <div class="col-lg-7">
-                                <button type="submit" name="buscar" class="btn btn-primary">Buscar</button>
-                                <button type="submit" name="nuevoAlumno" class="btn btn-primary">Crear Alumno</button>
-                            </div>
-                        </form>
                         <div class="col-lg-12">
-                        <!-- Tabla de informacion de todos los alumnos registrados -->
-                        <table class="table table-hover">
+                            <div class="col-lg-10">
+                                    <div class="input-group" style="margin-top:10px"> <span class="input-group-addon">Buscar</span>
+                                        <input id="filter" type="text" class="form-control" placeholder="Escriba aquí...">
+                                    </div>
+                                </div>
+                            <div class="col-lg-offset-10">
+                     <a class="btn btn-primary" href="{{ BASE_URL }}/admin/matriculas/alumno/add" target="_blank"><i class="fa fa-plus-circle"></i> Crear Nuevo</a>
+                </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Apellido, Nombre</th>
+                                            <th>DNI</th>
+                                            <th>Ver</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="searcheable">
+                                        {% for alumno in alumnos %}
+                                        {% if not alumno.egreso %}
+                                        <tr>
+                                            <td>{{alumno.last_name.upper.upper}}, {{alumno.first_name.capitalize}}</td>
+                                            <td>{{alumno.dni}}</td>
+                                            <td><form method="post" role="form">{% csrf_token %}
+                                                    <input type="hidden" name="buscarAlumnoId" id="buscarAlumnoId" value="{{alumno.id}}">
+                                                    <button type="submit" name="btnAlumnoId" class="btn btn-default btn-xs"><i class="fa fa-eye" title="Ver" ></i></button></form></td>
+                                            <td><a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target="_blank"><i class="fa fa-pencil" title="Editar"></i></a></td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>                       
+                    <!-- Informacion general del alumno buscado -->
+                    <div class="container col-lg-4 informacion informacion-alumno">
+                        {% if alumno %}
+                        <br>
+                        <div class="form-group">
+                            <label for="nombre">Nombre/s: </label> {{alumno.first_name.capitalize}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Apellido: </label> {{alumno.last_name.upper}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">DNI: </label> {{alumno.dni}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Sexo: </label> {{alumno.sexo}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Teléfono: </label> {{alumno.telefonoFijo}} / {{alumno.telefonoMovil}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Dirección: </label> {{alumno.domicilio}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Estado Civil: </label> {{alumno.estadoCivil}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">E-mail: </label> <a href="mailto:{{alumno.email}}">{{alumno.email}}</a>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Nacimiento: </label> {{alumno.lugarNacimiento}}, {{alumno.fechaNacimiento.day}}/{{alumno.fechaNacimiento.month}}/{{alumno.fechaNacimiento.year}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Lugar de Trabajo: </label> {{alumno.lugarDeTrabajo}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Hora de Trabajo: </label> {{alumno.horaDeTrabajo}}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Paternidad: </label> {% if alumno.paternidad %}Sí{% else %}No{% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Situación Excepcional: </label> {% if alumno.situacionExepcional %}Sí{% else %}No{% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Promedio (FINALES RENDIDOS): </label>
+                            {% if alumno.getPromedio %}
+                                {{alumno.getPromedio}}
+                            {% else %}
+                                -----
+                            {% endif %}
+                        </div>
+                        <div class="col-lg-6">
+                            <form method="post" role="form">{% csrf_token %}
+                                <input type="hidden" name="EgresarAlumnoId" id="EgresarAlumnoId" value="{{alumno.id}}">
+                                    <button type="submit" name="EgresarAlumno" class="btn btn-success">
+                                        <i class="fa fa-graduation-cap" title="Ver" ></i> Egresar
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-lg-6">
+                            <a class="btn btn-primary centrarBtn" href="{{ BASE_URL }}/admin/matriculas/alumno/{{alumno.id}}" target='_blank'><i class="fa fa-pencil" title="Editar"></i> Editar</a>
+                        </div>
+                       
+                    </div>
+                        <div class="col-lg-8">
+                            <label>Matricular al Alumno</label>
+                            <form method="post" role="form">{% csrf_token %}
+                                <input type="hidden" name="buscarAlumnoId" id="buscarAlumnoId" value="{{alumno.id}}">
+                                <div class="col-lg-6">
+                                    <div class="input-group"> 
+                                        <select name="idMatricularId" class="form-control">
+                                             {% for curso in cursadosPosibles %}
+                                                <option value="{{curso.id}}">{{curso.materia.nombre}} - {{curso.profesor.last_name.upper}}, {{curso.profesor.first_name.capitalize}}</option>
+                                             {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                        <button type="submit" name="btnMatricular" class="btn btn-primary centrarBtn">Matricular</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <label>Matrículas</label>
+                            <table class="table table-hover">
                             <thead>
                                 <!-- Datos de la tabla -->
                                 <tr>
                                     <th>Materia</th>
+                                    <th>Año</th>
                                     <th>Condición</th>
-                                    <th>Asistencia</th>
-                                    <th>Matricula</th>
+                                    <th>% Asistencia</th>
+                                    <th>Promedio</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Lo que contiene la tabla -->
+                                {% for matricula in materias %}
                                 <tr>
-                                    <td>Lengua</td>
-                                    <td>Regular</td>
-                                    <td>80%</td>
-                                    <td>Si</td>
+                                    <td>{{ matricula.cursado.materia.nombre }}</td>
+                                    <td>{{ matricula.cursado.anio }}</td>
+                                    <td>{{ matricula.condicion }}</td>
+                                    <td>
+                                        {% if not matricula.porcentajeAsistencia %}
+                                            -----
+                                        {% else %}
+                                            {{ matricula.porcentajeAsistencia|add:"-1" }}%
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if not matricula.getPromedio %}
+                                            -----
+                                        {% else %}
+                                            {{ matricula.getPromedio }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <form method="post" role="form">{% csrf_token %}
+                                            <input type="hidden" name="buscarMatriculaId" id="buscarMatriculaId" value="{{matricula.id}}">
+                                            <input type="hidden" name="buscarAlumnoId" id="buscarAlumnoId" value="{{alumno.id}}">
+                                            <button type="submit" name="btnMatriculaId" class="btn btn-default btn-xs">
+                                                <i class="fa fa-eye" title="Ver" ></i>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td>Matematicas</td>
-                                    <td>Regular</td>
-                                    <td>95%</td>
-                                    <td>Si</td>
-                                  </tr>
-                                <tr>
-                                    <td>Historia</td>
-                                    <td>Libre</td>
-                                    <td>0%</td>
-                                    <td>Si</td>
-                                </tr>
-                                <tr>
-                                    <td>Fisica</td>
-                                    <td>Libre</td>
-                                    <td>0%</td>
-                                    <td>Si</td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
+                            </div>
+                        {% if matriculaSeleccionada %}
+                        <div id="infoalumno" class="container col-lg-12 informacion informacion-alumno" style="margin-top:10px;">
+                            <div class="col-lg-6 form-group" style="margin-top:20px;">
+                                <label for="nombre">Nombre de la Materia: </label> {{matriculaSeleccionada.cursado.materia.nombre}}
+                            </div>
+                            <div class="col-lg-6 form-group" style="margin-top:20px;">
+                                <label for="nombre">Profesor: </label> {{matriculaSeleccionada.cursado.profesor.last_name.upper}}, {{matriculaSeleccionada.cursado.profesor.first_name.capitalize}}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Tipo de Materia: </label> {{matriculaSeleccionada.cursado.materia.tipo}}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Cant. de Faltas: </label> {{matriculaSeleccionada.cantFaltas}}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Porcentaje: </label> {{matriculaSeleccionada.porcentajeAsistencia|add:"-1"}} %
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Promedio: </label> {{matriculaSeleccionada.getPromedio}}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">¿Finalinó?: </label>
+                                {% if matriculaSeleccionada.cursado.finalizada %}
+                                    Sí
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">¿Aprobó?: </label>
+                                {% if matriculaSeleccionada.estaAprobada %}
+                                    Sí
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Año de Cursado: </label> {{matriculaSeleccionada.cursado.anio}}
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="nombre">Condición: </label> {{matriculaSeleccionada.condicion}}
+                            </div>
+                            {% if matriculaSeleccionada.estaAprobada %}
+                            <div class="col-lg-6 form-group">
+                                <label for="nombre">Nota Exámen Final: </label> {{matriculaSeleccionada.getExamenAprobado.0}}
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label for="nombre">Fecha Exámen Final: </label> {{matriculaSeleccionada.getExamenAprobado.1}}
+                            </div>
+                            {% endif %}
+                        
                         </div>
-                    </div>
-                    </div>
-                    </div>
-                    <!-- Informacion general del alumno buscado -->
-                    <div class="col-lg-6 informacion-alumno">
-                        <form role="form">
-                            <div class="form-group">
-                                <label for="nombre">Nombre/s:</label>
+                        <div class="col-lg-7" style="margin-top:20px;">
+                            <label>Notas</label>
+                            <table class="table table-hover">
+                            <thead>
+                                <!-- Datos de la tabla -->
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Nota</th>
+                                    <th>Observación</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Lo que contiene la tabla -->
+                                {% for nota in matriculaSeleccionada.nota_set.all %}
+                                <tr>
+                                    <td>{{ nota.fecha }}</td>
+                                    <td>{{ nota.calificacion }}</td>
+                                    <td>{{ nota.observacion }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                             </div>
-                            <div class="form-group">
-                                <label for="nombre">Apellido:</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="nombre">DNI:</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="nombre">Teléfono:</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="nombre">Dirección:</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="nombre">Legajo:</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="nombre">Paternidad:</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="nombre">Fecha de nacimiento:</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="nombre">Ocupación:</label>
-                            </div>
-                        </form>
+                        
+                        <div class="col-lg-5" style="margin-top:20px;">
+                            <label>Inasistencia <a href="{{ BASE_URL }}/admin/matriculas/asistencia/add" target="_blank"><i class="fa fa-plus-circle"></i></a></label>
+                            <table class="table table-hover">
+                            <thead>
+                                <!-- Datos de la tabla -->
+                                <tr>
+                                    <th>Fecha Inasistencia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Lo que contiene la tabla -->
+                                {% for falta in matriculaSeleccionada.asistencia_set.all %}
+                                <tr>
+                                    {% if not falta.vino %}
+                                    <td>{{ falta.fecha }}</td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                         {% endif %}
+                         {% endif %}
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--Seccion egresados -->
-        <div id="page-inner">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <!-- Cuadro de egresados -->
-                        <div class="panel-heading">
-                            Egresados
-                        </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="table-responsive">
-                                    <!-- Buscador de egresados -->
-                                    <div class="input-group"> <span class="input-group-addon">Buscar</span>
-                                        <input id="filter" type="text" class="form-control" placeholder="Escriba aquí...">
-                                    </div>
-                                    <br></br>
-                                    <br></br>
-                                    <!-- Tabla de los egresados del instituto -->
-                                    <table class="table table-hover">
-                                    <!-- Datos de la tabla -->
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align: center; ">Nombre</th>
-                                            <th style="text-align: center;" data-sortable="true">Año de egreso</th>
-                                            <th style="text-align: center;"><div class="th-inner sortable">Informacion</th>
-                                        </tr>
-                                    </thead>
-                                    <!-- Contenido de la tabla -->
-                                    <tbody class="searcheable">
-                                        <tr data-index="0">
-                                            <td style="text-align: center; ">Juan</td>
-                                            <td style="text-align: center; ">2006</td>
-                                            <td style="text-align: center;"><a href="#"><i class="fa fa-eye" title="Mas información"></i></a></td>
-                                        </tr>
-                                        <tr data-index="1">
-                                            <td style="text-align: center; ">Pepito</td>
-                                            <td style="text-align: center; ">2009</td>
-                                            <td style="text-align: center;"><a href="#"><i class="fa fa-eye" title="Mas información"></i></a></td>
-                                        </tr>
-                                        <tr data-index="2">
-                                            <td style="text-align: center; ">Pedrito</td>
-                                            <td style="text-align: center; ">1998</td>
-                                            <td style="text-align: center;"><a href="#"><i class="fa fa-eye" title="Mas información"></i></a></td>
-                                        </tr>
-                                    </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-         <!-- /. PAGE WRAPPER  -->
-    
-   
-        </div>
-        
-     <!-- /. WRAPPER  -->
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS 
-    <script src="assets/js/jquery-1.10.2.js"></script>-->
-      <!-- BOOTSTRAP SCRIPTS 
-    <script src="assets/js/bootstrap.min.js"></script>-->
-    <!-- METISMENU SCRIPTS 
-    <script src="assets/js/jquery.metisMenu.js"></script>-->
-     <!-- MORRIS CHART SCRIPTS 
-     <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-    <script src="assets/js/morris/morris.js"></script>-->
-      <!-- CUSTOM SCRIPTS 
-    <script src="assets/js/custom.js"></script>-->
-    
-   
+			<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
+					Desarrollado por  <img src="{% static '../static/img/admin/logo_senam.png' %}" style="height:15px;">
+          <br><br>
+          Copyright © 2015 Instituto Parroquial San José.
+          <br><br>
+          Todos los Derechos Reservados.
+				</footer>  
 </body>
     
 </html>

@@ -19,13 +19,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'django_admin_bootstrapped',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_admin_bootstrapped',
     'matriculas',
 )
 
@@ -42,23 +42,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'config.urls'
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-
-WSGI_APPLICATION = 'projectSanJose.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
@@ -66,12 +50,14 @@ WSGI_APPLICATION = 'projectSanJose.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'senam123',
-        'USER': 'senam123',
-        'PASSWORD': 'senam123',
-        'HOST': 'db4free.net',
-        'PORT': '3306',
+	'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join('../proyectoSanJose', 'sanjose.db'),
+        #'ENGINE': 'django.db.backends.mysql',
+        #'NAME': 'senam123',
+        #'USER': 'senam123',
+        #'PASSWORD': 'senam123',
+        #'HOST': 'db4free.net',
+        #'PORT': '3306',
     }
 }
 
