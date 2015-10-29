@@ -281,6 +281,8 @@ class Horario(models.Model):
 class TurnoDeExamen(models.Model):
     fecha = models.DateField("Fecha")
     cursado = models.ForeignKey(Cursado)
+    hora = models.CharField("Hora", max_length=20, default="00:00")
+    observaciones = models.CharField("Observaciones", max_length=300, blank=True, null=True)
     
     class Meta:
         verbose_name = 'Turno de Exámen'
