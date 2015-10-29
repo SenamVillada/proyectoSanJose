@@ -113,6 +113,11 @@
                             <strong>Éxito!</strong> Los cambios han sido guardados.
                         </div>
                         {% endif %}
+                        {% if error %}
+                        <div class="alert alert-danger">
+                            <strong>Error!</strong> Ha ocurrido un error.
+                        </div>
+                        {% endif %}
                     <div class="panel-body">
                         <div class="col-lg-12">
                             <div class="col-lg-10">
