@@ -139,6 +139,11 @@ def p_inicio(request):
 def p_asistencia(request):
     if not request.user.is_staff:
         cursados = Cursado.objects.all().filter(profesor = request.user)
+        if request.method == 'POST':
+            idCursado = request.POST['idCursado']
+            cursado = Cursado.objects.get(id = idCursado)
+            matriculas = cursado.matricula_set.all()
+            return render_to_response("Profesor/asistencia.html", {"cursados":cursados, "matriculas":matriculas} , RequestContext(request))
         return render_to_response("Profesor/asistencia.html", {"cursados":cursados} , RequestContext(request))
 
 @login_required(login_url='/login')

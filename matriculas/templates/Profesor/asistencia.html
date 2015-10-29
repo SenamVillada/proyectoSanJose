@@ -72,14 +72,14 @@
         <div id="page-inner">
             <div class="row">
                 <!-- Formulario para tomar asistencia (seleccionar materia y dia)-->
-                <form class="form-horizontal" role="form">
+                <form method="post" class="form-horizontal" role="form">{% csrf_token %}
                     <div class="col-lg-12">
                         <div class="form-group">
                             <h4 class="col-lg-3">Seleccionar una materia:</h4>
-                            <select class="col-lg-3" style="margin-top:2%;">
-                                <option value="nombre" selected disabled>Seleccionar una materia</option>
+                            <select id="idCursado" name="idCursado"
+                             class="col-lg-3" style="margin-top:2%;">                            
                                 {% for cursado in cursados %}
-                                <option>{{cursado.materia.nombre.capitalize}}</option>
+                                <option value="{{cursado.id}}">{{cursado.materia.nombre}}</option>
                                 {% endfor %}
                             </select>
                             <h4 class="col-lg-1 col-offset-1">Dia:</h4>
@@ -92,9 +92,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-offset-5">
+                    <button type="submit" name="guardar" class="btn btn-primary">Cargar</button>
+                    </div>
                 </form>
             </div> <!-- /. ROW  -->
         </div> <!-- /. PAGE INNER  -->
+        {% if matriculas %}
         <!-- Incia otra seccion  -->
         <div id="page-inner">
             <div class="row">
@@ -109,31 +113,16 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            {% for matricula in matriculas %}
                                 <tr>
-                                    <td>Augusto jair</td>
-                                    <td>
-                                        <!-- name (tienen que tener el mismo nombre para que lo reconozca dentro del mismo lugar)  -->
-                                        P<input checked type="radio" name="asistencia" id="pres" style="margin-left:2%; margin-top:2%;">
-                                        A<input type="radio" name="asistencia" id="aus" style="margin-left:2%; margin-top:2%;">
-                                    </td>
-                                    <td><a href="#"><i class="fa fa-eye" title="Más información" ></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td>Nicolas Ordoñez</td>
-                                    <td>
-                                        P<input checked type="radio" name="asistencia1" id="pres" style="margin-left:2%; margin-top:2%;">
-                                        A<input type="radio" name="asistencia1" id="aus" style="margin-left:2%; margin-top:2%;">
-                                    </td>
-                                    <td><a href="#"><i class="fa fa-eye" title="Más información" ></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td>Marcos Gonzalez</td>
+                                    <td>{{matricula.alumno.first_name}} {{matricula.alumno.last_name.upper}}</td>
                                     <td>
                                         P<input checked type="radio" name="asistencia2" id="pres" style="margin-left:2%; margin-top:2%;">
                                         A<input type="radio" name="asistencia2" id="aus" style="margin-left:2%; margin-top:2%;">
                                     </td>
                                     <td><a href="#"><i class="fa fa-eye" title="Más información" ></i></a></td>
                                 </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -141,6 +130,7 @@
                 </div> <!-- /. COL-LG-12  -->
             </div> <!-- /. ROW  -->
         </div> <!-- /. PAGE INNER  -->
+        {% endif %}
 				<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
 					Desarrollado por SENAM
           <br><br>
