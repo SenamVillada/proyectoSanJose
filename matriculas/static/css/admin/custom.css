@@ -93,6 +93,8 @@ wrapper-bajado{
 	background:rgba(219, 68, 55, 0.56) !important;
 	outline:0;
 }
+.centrarBtn{
+    margin-top:0px !important;} 
 /*==============================================
     GENERAL  STYLES    
     =============================================*/

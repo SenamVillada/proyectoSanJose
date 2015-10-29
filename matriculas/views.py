@@ -53,11 +53,17 @@ def alumnos(request):
             if 'EgresarAlumnoId' in request.POST:
                 idAlumno = request.POST['EgresarAlumnoId']
                 alumno = Alumno.objects.get(id = idAlumno)
-                alumno.egresado = True
+                anio = int(time.strftime('%Y'))
+                alumno.anioEgreso = anio
                 alumno.save()
                 return render_to_response("alumnos.html",{'alumnos':alumnos, 'cambios':True}, RequestContext(request))
             idAlumno = request.POST['buscarAlumnoId']
             alumno = Alumno.objects.get(id = idAlumno)
+            if 'btnMatricular' in request.POST:
+                print request.POST
+                idMatricularId = request.POST['idMatricularId']
+                cursadoId = Cursado.objects.get(id = idMatricularId)
+                crearCursado = Matricula.objects.create(alumno = alumno, cursado = cursadoId)
             materias = alumno.matricula_set.all()
             matriculaSeleccionada = False
             cursadosPosibles = matriculasPosibles(alumno)                
@@ -144,6 +150,11 @@ def sePuedeMatricular(alumno, cursado):
     materiasAprobadas = []
     materia = cursado.materia
     anio = int(time.strftime('%Y'))
+    cursadosDelAlumno = []
+    for k in range(matriculas.count()):
+        cursadosDelAlumno.append(matriculas[k].cursado)
+    if cursado in cursadosDelAlumno:
+        return False
     for i in range(matriculas.count()):
         if (matriculas[i].cursado.materia == materia):
             if matriculas[i].estaAprobada():

@@ -95,8 +95,8 @@ class Licencia(models.Model):
 
 class Materia(models.Model):
     nombre = models.CharField("Nombre de la Materia", max_length=30)
-    correlativasCursado = models.ManyToManyField('self', blank=True)
-    correlativasRendir = models.ManyToManyField('self', blank=True)
+    correlativasCursado = models.ManyToManyField('Materia', blank=True, related_name="correlativas_cursado")
+    correlativasRendir = models.ManyToManyField('Materia', blank=True, related_name="correlativas_rendir")
     tipoOpciones = (
         	('Asignatura', 'Asignatura'),
         	('Seminario', 'Seminario'),
@@ -281,6 +281,8 @@ class Horario(models.Model):
 class TurnoDeExamen(models.Model):
     fecha = models.DateField("Fecha")
     cursado = models.ForeignKey(Cursado)
+    hora = models.CharField("Hora", max_length=20, default="00:00")
+    observaciones = models.CharField("Observaciones", max_length=300, blank=True, null=True)
     
     class Meta:
         verbose_name = 'Turno de Exámen'
