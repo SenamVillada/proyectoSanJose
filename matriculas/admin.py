@@ -6,14 +6,16 @@ class AlumnoForm(UserChangeForm):
     
     class Meta:
 	model = Alumno
+	fields = ('first_name', 'last_name', 'username', 'dni', 'email', 'domicilio', 'estadoCivil', 'fechaNacimiento', 'lugarNacimiento', 'telefonoFijo', 'telefonoMovil', 'sexo', 'lugarDeTrabajo', 'horaDeTrabajo', 'paternidad', 'anioEgreso')
 	fields = ('first_name', 'last_name', 'username', 'dni', 'email', 'domicilio', 'estadoCivil', 'fechaNacimiento', 'lugarNacimiento', 'telefonoFijo', 'telefonoMovil', 'sexo', 'lugarDeTrabajo', 'horaDeTrabajo', 'paternidad', 'anioEgreso','situacionExepcional')
 
     
 class AlumnoAddForm(UserCreationForm):
     class Meta:
 	model = Alumno
+	fields = ('first_name', 'last_name', 'username', 'dni', 'email', 'domicilio', 'estadoCivil', 'fechaNacimiento', 'lugarNacimiento', 'telefonoFijo', 'telefonoMovil', 'sexo', 'lugarDeTrabajo', 'horaDeTrabajo', 'paternidad', 'anioEgreso')
 	fields = ('first_name', 'last_name', 'username', 'dni', 'email', 'domicilio', 'estadoCivil', 'fechaNacimiento', 'lugarNacimiento', 'telefonoFijo', 'telefonoMovil', 'sexo', 'lugarDeTrabajo', 'horaDeTrabajo', 'paternidad', 'anioEgreso','situacionExepcional')
-    
+
 class AlumnoAdmin(admin.ModelAdmin):
     form = AlumnoForm
     add_form = AlumnoAddForm
@@ -61,7 +63,7 @@ admin.site.register(Matricula)
 admin.site.register(Asistencia)
 admin.site.register(Nota)
 admin.site.register(Horario)
-admin.site.register(Cursado)
-admin.site.register(TurnoDeExamen)
 admin.site.register(Log)
 admin.site.register(ExamenFinal)
+admin.site.register(Cursado)
+admin.site.register(TurnoDeExamen)

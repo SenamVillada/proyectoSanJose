@@ -53,6 +53,7 @@
 .informacion-alumno{
     background-color: #F2F2F2;
     border-radius: 15px;
+    line-height: 1;
     }
 
 .informacion-profesores{
@@ -93,7 +94,10 @@ wrapper-bajado{
 	outline:0;
 }
 .centrarBtn{
-    margin-top:0px !important;} 
+    margin-top:0px !important;}
+.logo-senam{
+    height:15px;
+    margin-bottom: 5px;}
 /*==============================================
     GENERAL  STYLES    
     =============================================*/

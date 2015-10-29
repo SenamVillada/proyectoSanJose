@@ -267,7 +267,7 @@ class Horario(models.Model):
     horaFinal = models.CharField("Hora de Final", max_length=20, default="00:00")
 
     def __unicode__(self):
-        return self.cursado.materia.nombre
+        return self.dia +" desde "+self.horaInicio+" a "+self.horaFinal
     
     def cantHoras(self):
         hora1 = self.horaInicio

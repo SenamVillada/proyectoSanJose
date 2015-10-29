@@ -136,17 +136,30 @@ def turnos_de_examen(request):
 def p_inicio(request):
     if not request.user.is_staff:
         profesor = Profesor.objects.get(username = request.user)
+        print profesor
         return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
 
 @login_required(login_url='/login')
 def p_asistencia(request):
     if not request.user.is_staff:
-        return render_to_response("Profesor/asistencia.html", RequestContext(request))
+        cursados = Cursado.objects.all().filter(profesor = request.user)
+        if request.method == 'POST':
+            idCursado = request.POST['idCursado']
+            cursado = Cursado.objects.get(id = idCursado)
+            matriculas = cursado.matricula_set.all()
+            return render_to_response("Profesor/asistencia.html", {"cursados":cursados, "matriculas":matriculas} , RequestContext(request))
+        return render_to_response("Profesor/asistencia.html", {"cursados":cursados} , RequestContext(request))
 
 @login_required(login_url='/login')
 def p_materias(request):
     if not request.user.is_staff:
-        return render_to_response("Profesor/materias.html", RequestContext(request))
+        cursados = Cursado.objects.all().filter(profesor = request.user)
+        if request.method == 'POST':
+            idCursado = request.POST['idCursado']
+            cursado = Cursado.objects.get(id = idCursado)
+            matriculas = cursado.matricula_set.all()
+            return render_to_response("Profesor/materias.html", {"cursados":cursados, "matriculas":matriculas} , RequestContext(request))
+        return render_to_response("Profesor/materias.html", {"cursados":cursados} , RequestContext(request))
 
 def sePuedeMatricular(alumno, cursado):
     correlativas = cursado.materia.correlativasCursado.all()
