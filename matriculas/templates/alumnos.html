@@ -160,9 +160,11 @@
                         <div class="container col-lg-4 informacion informacion-alumno">
                         {% if alumno %}
                         <br>
+                        <div class="col-lg-6">
                         <div class="form-group">
                             <label for="nombre">Nombre/s: </label> {{alumno.first_name.capitalize}}
                         </div>
+                            
                         <div class="form-group">
                             <label for="nombre">Apellido: </label> {{alumno.last_name.upper}}
                         </div>
@@ -171,6 +173,8 @@
                         </div>
                         <div class="form-group">
                             <label for="nombre">Sexo: </label> {{alumno.sexo}}
+                        </div></div><div class="form-group col-lg-6">
+                            <img src="../../media/{{ alumno.foto }}" width="110" height="150">
                         </div>
                         <div class="form-group">
                             <label for="nombre">Teléfono: </label> {{alumno.telefonoFijo}} / {{alumno.telefonoMovil}}
@@ -226,7 +230,7 @@
                                 <input type="hidden" name="buscarAlumnoId" id="buscarAlumnoId" value="{{alumno.id}}">
                                 <div class="col-lg-6">
                                     <div class="input-group"> 
-                                        <select name="idMatricularId" class="form-control">
+                                        <select style="min-width:150px;" name="idMatricularId" class="form-control">
                                              {% for curso in cursadosPosibles %}
                                                 <option value="{{curso.id}}">{{curso.materia.nombre}} - {{curso.profesor.last_name.upper}}, {{curso.profesor.first_name.capitalize}}</option>
                                              {% endfor %}
