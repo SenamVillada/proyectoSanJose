@@ -22,6 +22,7 @@ class Persona(User):
             ('Femenino', 'Femenino'))
     sexo = models.CharField("Sexo", max_length=16, choices=sexoOpciones, default='Masculino')
     
+    
     def __unicode__(self):
 	    return "DNI: " + str(self.dni)+" - "+self.last_name.upper() + ", " + self.first_name.capitalize()
 
@@ -31,6 +32,7 @@ class Alumno(Persona):
     paternidad = models.BooleanField("Paternidad")
     anioEgreso = models.IntegerField("Año de Egreso", blank=True, null=True)
     situacionExepcional = models.BooleanField("Situacion Excepcional", default=False)
+    foto = models.ImageField("Perfil", upload_to='perfilPersonas/', blank=True, null=True)
     
     class Meta:
         verbose_name = 'Alumno'

@@ -226,7 +226,7 @@
                                 <input type="hidden" name="buscarAlumnoId" id="buscarAlumnoId" value="{{alumno.id}}">
                                 <div class="col-lg-6">
                                     <div class="input-group"> 
-                                        <select name="idMatricularId" class="form-control">
+                                        <select style="min-width:150px;" name="idMatricularId" class="form-control">
                                              {% for curso in cursadosPosibles %}
                                                 <option value="{{curso.id}}">{{curso.materia.nombre}} - {{curso.profesor.last_name.upper}}, {{curso.profesor.first_name.capitalize}}</option>
                                              {% endfor %}
