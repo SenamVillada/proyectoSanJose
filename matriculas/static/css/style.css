@@ -20,7 +20,7 @@
     border-top:none;
 }
 .st-accordion ul li > a{
-		font-family: Arial, Helvetica, sans-serif;
+	/*	font-family: Arial, Helvetica, sans-serif; */
     text-shadow: 1px 1px 1px #fff;
 		color: #006700;
 		text-align: center;
@@ -89,8 +89,8 @@
 }
 .st-content p{
     font-size:  16px;
-    font-family:  Georgia, serif;
-    font-style: italic;
+    /*font-family:  Georgia, serif;*/
+    /*font-style: italic;*/
     line-height:  28px;
     padding: 0px 4px 15px 4px; 
 }
