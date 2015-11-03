@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 import time
+import dateutil.relativedelta
 
 class Persona(User):
     dni = models.IntegerField("DNI")
@@ -222,6 +223,23 @@ class Matricula(models.Model):
                 examenAprobado = [examenes[i].nota, examenes[i].turno.fecha]
                 return examenAprobado
         return False
+    
+    def puedeRendir(self):
+        try:
+            correlativas = self.cursado.materia.correlativasRendir.all()
+            matriculas = self.alumno.matricula_set.all()
+            materiasAprobadas = []
+            for i in range(matriculas.count()):
+                if (matriculas[i].estaAprobada() == True):
+                    materiasAprobadas.append(matriculas[i].cursado.materia.nombre)
+            for j in range(correlativas.count()):
+                if (correlativas[j].nombre in materiasAprobadas):
+                    pass
+                else:
+                    return False
+            return True
+        except:
+            return False
 
 class Asistencia(models.Model):
     fecha = models.DateField("Fecha")
@@ -290,6 +308,15 @@ class TurnoDeExamen(models.Model):
 
     def __unicode__(self):
         return "Turno de " + self.cursado.materia.nombre + " del dia: " + str(self.fecha)
+    
+    def esMenorAUnMes(self):
+        fechaHoy = time.strftime('%y-%m-%d')
+        fechaHoy = datetime.strptime(fechaHoy, '%y-%m-%d')
+        fechaHoy = datetime.date(fechaHoy)
+        haceUnMes = fechaHoy - dateutil.relativedelta.relativedelta(months=1)
+        if haceUnMes < self.fecha <= fechaHoy:
+            return True
+        return False
 
 class ExamenFinal(models.Model):
     notaOpciones = (
