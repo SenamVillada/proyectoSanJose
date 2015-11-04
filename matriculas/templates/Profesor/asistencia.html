@@ -53,6 +53,9 @@
     	      <a  href="/Profesor/materias"><i class="fa fa-book"></i>Materias</a>
     	</li>
         <li>
+    	      <a  href="/Profesor/examen"><i class="fa fa-calendar-check-o"></i>Tomar Exámen</a>
+    	</li>
+        <li>
     	      <a  href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
     	</li>
 				</ul>
@@ -75,25 +78,18 @@
                 <form method="post" class="form-horizontal" role="form">{% csrf_token %}
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <h4 class="col-lg-3">Seleccionar una materia:</h4>
-                            <select id="idCursado" name="idCursado"
-                             class="col-lg-3" style="margin-top:2%;">                            
+                            <h4 class="col-lg-2">Seleccionar una materia:</h4>
+                            <div class="col-lg-4">
+                            <select id="idCursado" name="idCursado" class="form-control" style="margin-top:10px;">
                                 {% for cursado in cursados %}
-                                <option value="{{cursado.id}}">{{cursado.materia.nombre}}</option>
+                                <option value="{{cursado.id}}">{{cursado.materia.nombre}} - {{cursado.anio}}</option>
                                 {% endfor %}
                             </select>
-                            <h4 class="col-lg-1 col-offset-1">Dia:</h4>
-                            <!-- Datepicker (nota: solo funciona en chrome)  -->
-                            <div class="col-xs-5 date">
-                                <div class="input-group input-append date" id="dateRangePicker" style="margin-top:3.5%">
-                                    <input type="date" class="form-control" name="date" />
-                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
                             </div>
-                        </div>
+                            <div class="col-lg-1">
+                    <button type="submit" name="guardar" class="btn btn-primary">Cargar</button>
                     </div>
-                    <div class="col-lg-offset-5">
-                    <button type="submit" name="cargar" class="btn btn-primary">Cargar</button>
+                        </div>
                     </div>
                 </form>
             </div> <!-- /. ROW  -->

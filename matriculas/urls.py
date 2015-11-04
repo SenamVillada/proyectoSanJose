@@ -15,4 +15,5 @@ urlpatterns = patterns('',
 	url(r'^Profesor/inicio/', views.p_inicio, name='p_inicio'),
 	url(r'^Profesor/asistencia/', views.p_asistencia, name='p_asistencia'),
 	url(r'^Profesor/materias/', views.p_materias, name='p_materias'),
+    url(r'^Profesor/examen/', views.p_examen, name='p_examen'),
 )
