@@ -138,9 +138,17 @@ def p_asistencia(request):
     if not request.user.is_staff:
         cursados = Cursado.objects.all().filter(profesor = request.user)
         if request.method == 'POST':
-            idCursado = request.POST['idCursado']
+            print request.POST
+            idCursado = request.POST.get('idCursado', False)
+            fecha = request.POST.get('date', False)
             cursado = Cursado.objects.get(id = idCursado)
             matriculas = cursado.matricula_set.all()
+            if not matriculas.count() == 0:
+                if 'guardar' in request.POST:
+                    for matricula in matriculas:
+                        idMatricula = matricula.id
+                        if idMatricula in request.POST:
+                            print request.POST["idMatricula"]
             return render_to_response("Profesor/asistencia.html", {"cursados":cursados, "matriculas":matriculas} , RequestContext(request))
         return render_to_response("Profesor/asistencia.html", {"cursados":cursados} , RequestContext(request))
 
@@ -149,6 +157,7 @@ def p_materias(request):
     if not request.user.is_staff:
         cursados = Cursado.objects.all().filter(profesor = request.user)
         if request.method == 'POST':
+            print request.POST
             idCursado = request.POST['idCursado']
             cursado = Cursado.objects.get(id = idCursado)
             matriculas = cursado.matricula_set.all()
@@ -192,6 +201,7 @@ def matriculasPosibles(alumno):
 def matricular(alumno, cursado):
     try:
         crearCursado = Matricula.objects.create(alumno = alumno, cursado = cursadoId)
+        crearCursado.save()
         return True
     except:
         return False
@@ -201,6 +211,14 @@ def egresar(alumno):
         anio = int(time.strftime('%Y'))
         alumno.anioEgreso = anio
         alumno.save()
+        return True
+    except:
+        return False
+
+def tomarAsistencia(matricula, fecha, boolean):
+    try:
+        asistencia = Asistencia.objects.create(fecha = fecha, vino = boolean, matricula = matricula)
+        asistencia.save()
         return True
     except:
         return False
