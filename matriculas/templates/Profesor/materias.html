@@ -125,7 +125,7 @@
                         <form method="POST" role="form">{% csrf_token %}
                             <input type="hidden" name="idCursado" id="idCursado" value="{{cursado.id}}">
                             
-                            <td><button class="form-control" type="submit"><i class="fa fa-eye" title="Más información"></i></button></td>    
+                            <td><button type="submit"><i class="fa fa-eye" title="Más información"></i></button></td>    
                         </form>
                     </tr>
                     {% endfor %}
