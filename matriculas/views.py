@@ -144,17 +144,19 @@ def p_asistencia(request):
         cursados = Cursado.objects.all().filter(profesor = request.user).filter(finalizada = False)
         if request.method == 'POST':
             print request.POST
-            idCursado = request.POST.get('idCursado', False)
-            fecha = request.POST.get('date', False)
+            idCursado = request.POST['idCursado']
             cursado = Cursado.objects.get(id = idCursado)
             matriculas = cursado.matricula_set.all()
+            
             if not matriculas.count() == 0:
                 if 'guardar' in request.POST:
                     for matricula in matriculas:
                         idMatricula = matricula.id
-                        if idMatricula in request.POST:
-                            print request.POST["idMatricula"]
-            return render_to_response("Profesor/asistencia.html", {"cursados":cursados, "matriculas":matriculas} , RequestContext(request))
+                        if str(idMatricula) in request.POST:
+                            
+                        else:
+                            print "no vino"
+            return render_to_response("Profesor/asistencia.html", {"cursados":cursados, "cursado":cursado, "matriculas":matriculas} , RequestContext(request))
         return render_to_response("Profesor/asistencia.html", {"cursados":cursados} , RequestContext(request))
 
 @login_required(login_url='/login')
@@ -229,10 +231,8 @@ def matriculasPosibles(alumno):
 
 def matricular(alumno, cursado):
     try:
-<<<<<<< HEAD
         crearCursado = Matricula.objects.create(alumno = alumno, cursado = cursadoId)
         crearCursado.save()
-=======
         matriculas = alumno.matricula_set.all()
         cursadosDelAlumno = []
         for i in range(matriculas.count()):
@@ -241,7 +241,6 @@ def matricular(alumno, cursado):
                 print cursado.id
                 return False
         crearCursado = Matricula.objects.create(alumno = alumno, cursado = cursado)
->>>>>>> 33321697d062d179feeb6d89ccd0c7f5446b5c65
         return True
     except:
         return False
@@ -255,7 +254,6 @@ def egresar(alumno):
     except:
         return False
 
-<<<<<<< HEAD
 def tomarAsistencia(matricula, fecha, boolean):
     try:
         asistencia = Asistencia.objects.create(fecha = fecha, vino = boolean, matricula = matricula)
@@ -263,9 +261,7 @@ def tomarAsistencia(matricula, fecha, boolean):
         return True
     except:
         return False
-=======
+
 def crearExamen(nota, matricula, turno):
     examen = ExamenFinal.objects.create(nota = nota, matricula = matricula, turno = turno)
     examen.save()
-    
->>>>>>> 33321697d062d179feeb6d89ccd0c7f5446b5c65

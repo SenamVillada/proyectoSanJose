@@ -112,9 +112,10 @@
                             <tbody>
                             {% for matricula in matriculas %}
                                 <tr>
+
                                     <td>{{matricula.alumno.first_name}} {{matricula.alumno.last_name.upper}}</td>
                                     <td>
-                                        <input checked type="checkbox" name="{{matricula.id}}" value="{{matricula.id}}">
+                                        <input checked type="checkbox" name="{{matricula.id}}">
                                     </td>
                                     <td><a href="#"><i class="fa fa-eye" title="Más información" ></i></a></td>
                                 </tr>
@@ -122,6 +123,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <input type="hidden" name="idCursado" id="idCursado" value="{{cursado.id}}">
                     <button type="submit" name="guardar" class="btn btn-primary">Guardar</button>
                 </div> <!-- /. COL-LG-12  -->
             </div> <!-- /. ROW  -->
