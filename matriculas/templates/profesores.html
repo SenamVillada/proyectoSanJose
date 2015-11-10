@@ -130,7 +130,7 @@
                                             <td>{{profesor.last_name.upper.upper}}, {{profesor.first_name.capitalize}}</td>
                                             <td><form method="post" role="form">{% csrf_token %}
                                                     <input type="hidden" name="buscarProfesorId" id="buscarProfesorId" value="{{profesor.id}}">
-                                                    <button type="submit" name="btnProfesorId" class="btn btn-default btn-xs"><i class="fa fa-eye" title="Ver" ></i></button></form></td>
+                                                    <button class="form-control" type="submit" name="btnProfesorId" class="btn btn-default btn-xs"><i class="fa fa-eye" title="Ver" ></i></button></form></td>
                                             <td><a class="btn btn-default btn-xs" href="{{ BASE_URL }}/admin/matriculas/profesor/{{profesor.id}}" target="_blank"><i class="fa fa-pencil" title="Editar"></i></a></td>
                                         </tr>
                                         {% endfor %}
