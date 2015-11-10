@@ -166,7 +166,7 @@ def p_materias(request):
             idCursado = request.POST['idCursado']
             cursado = Cursado.objects.get(id = idCursado)
             matriculas = cursado.matricula_set.all()
-            return render_to_response("Profesor/materias.html", {"cursados":cursados, "matriculas":matriculas} , RequestContext(request))
+            return render_to_response("Profesor/materias.html", {"cursados":cursados, "matriculas":matriculas, "CursadoBuscado":cursado} , RequestContext(request))
         return render_to_response("Profesor/materias.html", {"cursados":cursados} , RequestContext(request))
 
 @login_required(login_url='/login')
@@ -229,19 +229,13 @@ def matriculasPosibles(alumno):
 
 def matricular(alumno, cursado):
     try:
-<<<<<<< HEAD
-        crearCursado = Matricula.objects.create(alumno = alumno, cursado = cursadoId)
-        crearCursado.save()
-=======
         matriculas = alumno.matricula_set.all()
         cursadosDelAlumno = []
         for i in range(matriculas.count()):
             if (matriculas[i].cursado.id == cursado.id):
-                print matriculas[i].cursado.id
-                print cursado.id
                 return False
         crearCursado = Matricula.objects.create(alumno = alumno, cursado = cursado)
->>>>>>> 33321697d062d179feeb6d89ccd0c7f5446b5c65
+        crearCursado.save()
         return True
     except:
         return False
@@ -255,7 +249,6 @@ def egresar(alumno):
     except:
         return False
 
-<<<<<<< HEAD
 def tomarAsistencia(matricula, fecha, boolean):
     try:
         asistencia = Asistencia.objects.create(fecha = fecha, vino = boolean, matricula = matricula)
@@ -263,9 +256,7 @@ def tomarAsistencia(matricula, fecha, boolean):
         return True
     except:
         return False
-=======
+
 def crearExamen(nota, matricula, turno):
     examen = ExamenFinal.objects.create(nota = nota, matricula = matricula, turno = turno)
     examen.save()
-    
->>>>>>> 33321697d062d179feeb6d89ccd0c7f5446b5c65
