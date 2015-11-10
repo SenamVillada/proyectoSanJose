@@ -68,7 +68,6 @@ def alumnos(request):
                 try:
                     idMatricularId = request.POST['idMatricularId']
                     cursadoId = Cursado.objects.get(id = idMatricularId)
-                    print "aca si"
                     cambios = matricular(alumno, cursadoId)
                 except:
                     error = True
@@ -176,6 +175,7 @@ def p_asistencia(request):
                             crear = tomarAsistencia(matricula, True)
                         else:
                             crear = tomarAsistencia(matricula, False)
+                    return render_to_response("Profesor/asistencia.html", {"cursados":cursados} , RequestContext(request))
             return render_to_response("Profesor/asistencia.html", {"cursados":cursados, "cursado":cursado, "matriculas":matriculas, "noTomoAsistencia": tomoAsistencia} , RequestContext(request))
         return render_to_response("Profesor/asistencia.html", {"cursados":cursados} , RequestContext(request))
     else:
@@ -311,8 +311,13 @@ def crearNota(calificacion, matricula, observacion):
 def hoyTomoAsistencia(cursado):
     fecha = time.strftime('%Y-%m-%d')
     matriculas = cursado.matricula_set.all()
-    faltas = matriculas[0].nota_set.all()
-    for i in range(faltas.count()):
-        if faltas[i].fecha == fecha:
-            return False
+    if matriculas.count() != 0:
+        faltas = matriculas[0].asistencia_set.all()
+        print faltas.count()
+        for i in range(faltas.count()):
+            print faltas[i].fecha
+            print fecha
+            if str(faltas[i].fecha) == str(fecha):
+                print "lalalal"
+                return False
     return True

@@ -75,7 +75,7 @@
         <!-- Otra seccion  -->
         <div id="page-inner">
             <div class="row">
-                {% if noTomoAsistencia %}
+                
                 <!-- Formulario para tomar asistencia (seleccionar materia y dia)-->
                 <form method="post" class="form-horizontal" role="form">{% csrf_token %}
                     <div class="col-lg-12">
@@ -89,19 +89,17 @@
                             </select>
                             </div>
                             <div class="col-lg-1">
-                    <button type="submit" name="guardar" class="btn btn-primary">Cargar</button>
+                    <button type="submit" name="cargar" class="btn btn-primary">Cargar</button>
                     </div>
                         </div>
                     </div>
                 </form>
-                {% else %}
-                Usted Ya tomó asistencia hoy.
-                {% endif %}
             </div> <!-- /. ROW  -->
         </div> <!-- /. PAGE INNER  -->
         {% if matriculas %}
         <!-- Incia otra seccion  -->
         <div id="page-inner">
+            {% if noTomoAsistencia %}
         <form method="POST" role="form">{% csrf_token %}
             <div class="row">
                 <div class="col-lg-12">
@@ -110,7 +108,8 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                  <th>Alumnos</th>
+                                  <th>APELLIDO, Nombre</th>
+                                  <td>DNI</td>
                                   <th>Vino?</th>
                                 </tr>
                             </thead>
@@ -118,11 +117,11 @@
                             {% for matricula in matriculas %}
                                 <tr>
 
-                                    <td>{{matricula.alumno.first_name}} {{matricula.alumno.last_name.upper}}</td>
+                                    <td>{{matricula.alumno.last_name.upper}}, {{matricula.alumno.first_name.capitalize}}</td>
+                                    <td>{{matricula.alumno.dni}}</td>
                                     <td>
                                         <input checked type="checkbox" name="{{matricula.id}}">
                                     </td>
-                                    <td><a href="#"><i class="fa fa-eye" title="Más información" ></i></a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -133,6 +132,9 @@
                 </div> <!-- /. COL-LG-12  -->
             </div> <!-- /. ROW  -->
             </form>
+            {% else %}
+                Usted Ya tomó asistencia hoy.
+                {% endif %}
         </div> <!-- /. PAGE INNER  -->
         {% endif %}
 				<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
