@@ -210,7 +210,8 @@ class Matricula(models.Model):
         if (arrayNotas.count() != 0):
             for i in range(arrayNotas.count()):
                 notas = notas + arrayNotas[i].calificacion
-            return (notas/arrayNotas.count())
+            promedio = (notas/arrayNotas.count())
+            return "%.2f" % promedio
         else:
             return False
 

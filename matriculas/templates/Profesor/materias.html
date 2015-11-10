@@ -139,7 +139,9 @@
         </div>
              <!-- /. PAGE INNER  -->
             </div>
-<!-- /. SECCION AGREGAR NOTAS  -->
+<div id="page-inner">
+            <div class="row">
+                <div class="col-lg-12">
             {% if CursadoBuscado %}
                         <div id="infoMateria" class="col-lg-8 informacion informacion-alumno" style="overflow-y: scroll;">
                             <br /><label>Nombre de la Materia: </label> {{ CursadoBuscado.materia.nombre }}<br /><br />
@@ -155,6 +157,12 @@
                                 {% for correlativa in CursadoBuscado.materia.correlativasRendir.all %}
                                     {{ correlativa.nombre }},
                                 {% endfor %}
+                            <div class="col-lg-offset-9" style="margin-top:20px;">
+                                <form method="POST" role="form">{% csrf_token %}
+                                    <input type="hidden" name="idCursado" id="idCursado" value="{{CursadoBuscado.id}}">
+                                    <button class="btn btn-danger" type="submit" name="finalizarCursado">Finalizar Cursado</button>
+                                </form>
+                            </div>
                         </div>
             
                         <div class="col-lg-4">
@@ -235,9 +243,10 @@
                                             {% endfor %}
                                         </tbody>
                                     </table>
-                </div>
+               </div>
             </div>
-                    {% endif %}
+                </div>
+                {% endif %}
 				<footer class="col-lg-12" style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
 				    Desarrollado por SENAM
             <br><br>
@@ -245,6 +254,7 @@
             <br><br>
             Todos los Derechos Reservados.
 				</footer>
+            </div>
             </div>
 </body>
     
