@@ -12,7 +12,12 @@ import time
 # Create your views here.
 @login_required(login_url='/login')
 def index(request):
-    return render_to_response("inicio.html", RequestContext(request))
+    if request.user.is_staff:
+        return render_to_response("inicio.html", RequestContext(request))
+    else:
+        profesor = Profesor.objects.get(username = request.user)
+        return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
+        
 
 def user_login(request):
     context = RequestContext(request)
@@ -74,6 +79,9 @@ def alumnos(request):
                 matriculaSeleccionada = Matricula.objects.get(id = request.POST['buscarMatriculaId'])
             return render_to_response("alumnos.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias, 'matriculaSeleccionada': matriculaSeleccionada, 'cursadosPosibles': cursadosPosibles, 'cambios':cambios, 'error':error}, RequestContext(request))
         return render_to_response("alumnos.html",{'alumnos':alumnos}, RequestContext(request))
+    else:
+        profesor = Profesor.objects.get(username = request.user)
+        return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
 
 @login_required(login_url='/login')
 def egresados(request):
@@ -84,6 +92,9 @@ def egresados(request):
             alumno = Alumno.objects.get(id = idAlumno)
             return render_to_response("egresados.html",{'alumno':alumno, 'alumnos':alumnos, 'materias':materias}, RequestContext(request))
         return render_to_response("egresados.html",{'alumnos':alumnos}, RequestContext(request))
+    else:
+        profesor = Profesor.objects.get(username = request.user)
+        return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
 
 
 @login_required(login_url='/login')
@@ -99,6 +110,9 @@ def materias(request):
             matriculasAsistentes = cursado.matricula_set.all()
             return render_to_response('materias.html', {"materias":materiasTotal, "materiaBuscada":cursado, "horarios":horarios, "alumnosAsistentes":matriculasAsistentes},RequestContext(request))
         return render_to_response('materias.html', {"materias":materiasTotal},RequestContext(request))
+    else:
+        profesor = Profesor.objects.get(username = request.user)
+        return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
 
 @login_required(login_url='/login')
 def profesores(request):
@@ -117,6 +131,9 @@ def profesores(request):
             cargos = profesor.cargo_set.all()
             return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias, 'cargos':cargos}, RequestContext(request))
         return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
+    else:
+        profesor = Profesor.objects.get(username = request.user)
+        return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
 
 @login_required(login_url='/login')
 def turnos_de_examen(request):
@@ -130,13 +147,17 @@ def turnos_de_examen(request):
             if (turnos[i].fecha > fechaHoy):
                 turnosNoPasaron.append(turnos[i])
         return render_to_response("turnos_examen.html", {"turnos":turnosNoPasaron} , RequestContext(request))
+    else:
+        profesor = Profesor.objects.get(username = request.user)
+        return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
 
 @login_required(login_url='/login')
 def p_inicio(request):
     if not request.user.is_staff:
         profesor = Profesor.objects.get(username = request.user)
-        print profesor.curriculum._get_url
         return render_to_response("Profesor/inicio.html", {"profesor":profesor} , RequestContext(request))
+    else:
+        return render_to_response("inicio.html", RequestContext(request))
 
 @login_required(login_url='/login')
 def p_asistencia(request):
@@ -156,6 +177,8 @@ def p_asistencia(request):
                             print request.POST["idMatricula"]
             return render_to_response("Profesor/asistencia.html", {"cursados":cursados, "matriculas":matriculas} , RequestContext(request))
         return render_to_response("Profesor/asistencia.html", {"cursados":cursados} , RequestContext(request))
+    else:
+        return render_to_response("inicio.html", RequestContext(request))
 
 @login_required(login_url='/login')
 def p_materias(request):
@@ -177,6 +200,8 @@ def p_materias(request):
                 return render_to_response("Profesor/materias.html", {"cursados":cursados} , RequestContext(request))
             return render_to_response("Profesor/materias.html", {"cursados":cursados, "matriculas":matriculas, "CursadoBuscado":cursado} , RequestContext(request))
         return render_to_response("Profesor/materias.html", {"cursados":cursados} , RequestContext(request))
+    else:
+        return render_to_response("inicio.html", RequestContext(request))
 
 @login_required(login_url='/login')
 def p_examen(request):
@@ -202,6 +227,8 @@ def p_examen(request):
                     turnosEsMenorAUnMes.append(turnos[i])
             return render_to_response("Profesor/examen.html", {"cursados":cursados, "matriculas":matriculas, "turnos":turnosEsMenorAUnMes} , RequestContext(request))
         return render_to_response("Profesor/examen.html", {"cursados":cursados} , RequestContext(request))
+    else:
+        return render_to_response("inicio.html", RequestContext(request))
 
 def sePuedeMatricular(alumno, cursado):
     correlativas = cursado.materia.correlativasCursado.all()
