@@ -28,21 +28,15 @@
     <script type="text/javascript">
 	// Tabla de alumnos
 	$(document).ready(function () {
-
     (function ($) {
-
         $('#filter').keyup(function () {
-
             var rex = new RegExp($(this).val(), 'i');
             $('.searcheable tr').hide();
             $('.searcheable tr').filter(function () {
                 return rex.test($(this).text());
             }).show();
-
         })
-
     }(jQuery));
-
 });
     $(document).ready(function (){
         if ($('#infoMateria').length > 0) { 
