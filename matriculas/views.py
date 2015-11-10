@@ -162,13 +162,22 @@ def p_asistencia(request):
 @login_required(login_url='/login')
 def p_materias(request):
     if not request.user.is_staff:
-        cursados = Cursado.objects.all().filter(profesor = request.user)
+        cursados = Cursado.objects.filter(profesor = request.user).filter(finalizada = False)
         if request.method == 'POST':
-            print request.POST
             idCursado = request.POST['idCursado']
             cursado = Cursado.objects.get(id = idCursado)
             matriculas = cursado.matricula_set.all()
-            return render_to_response("Profesor/materias.html", {"cursados":cursados, "matriculas":matriculas} , RequestContext(request))
+            if 'notaCalificacion' in request.POST:
+                calificacion = request.POST['notaCalificacion']
+                idMatricula = request.POST['idMatricula']
+                matricula = Matricula.objects.get(id = idMatricula)
+                observacion = request.POST['notaObservacion']
+                nota = crearNota(calificacion, matricula, observacion)
+            elif 'finalizarCursado' in request.POST:
+                cursado.finalizada = True
+                cursado.save()
+                return render_to_response("Profesor/materias.html", {"cursados":cursados} , RequestContext(request))
+            return render_to_response("Profesor/materias.html", {"cursados":cursados, "matriculas":matriculas, "CursadoBuscado":cursado} , RequestContext(request))
         return render_to_response("Profesor/materias.html", {"cursados":cursados} , RequestContext(request))
 
 @login_required(login_url='/login')
@@ -231,16 +240,13 @@ def matriculasPosibles(alumno):
 
 def matricular(alumno, cursado):
     try:
-        crearCursado = Matricula.objects.create(alumno = alumno, cursado = cursadoId)
-        crearCursado.save()
         matriculas = alumno.matricula_set.all()
         cursadosDelAlumno = []
         for i in range(matriculas.count()):
             if (matriculas[i].cursado.id == cursado.id):
-                print matriculas[i].cursado.id
-                print cursado.id
                 return False
         crearCursado = Matricula.objects.create(alumno = alumno, cursado = cursado)
+        crearCursado.save()
         return True
     except:
         return False
@@ -265,3 +271,13 @@ def tomarAsistencia(matricula, fecha, boolean):
 def crearExamen(nota, matricula, turno):
     examen = ExamenFinal.objects.create(nota = nota, matricula = matricula, turno = turno)
     examen.save()
+
+def crearNota(calificacion, matricula, observacion):
+    try:
+        fecha = time.strftime('%Y-%m-%d')
+        nota = Nota.objects.create(calificacion = calificacion, matricula = matricula, observacion = observacion, fecha = fecha)
+        nota.save()
+        return True
+    except:
+        return False
+

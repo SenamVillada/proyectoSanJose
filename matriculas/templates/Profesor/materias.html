@@ -132,10 +132,6 @@
 				</tbody>
 				</table>
                     <button type="submit" name="crear" class="btn btn-primary">Crear</button>
-				
-				    <form role="form" method="post">
-				      <br />
-				    </form>
 			    </div>
 			</div>
 		    </div>
@@ -143,72 +139,123 @@
         </div>
              <!-- /. PAGE INNER  -->
             </div>
-<!-- /. SECCION AGREGAR NOTAS  -->
-        {% if matriculas %}
-        <div id="page-inner">
+<div id="page-inner">
             <div class="row">
                 <div class="col-lg-12">
-                    <!-- panel (borde) -->
-                    <div class="panel panel-default">
-                        <!-- tabla responsive -->
-                        <div class="table-responsive">
-                            <!-- Tabla para calificar a los alumnos -->
-                            <table class="table table-hover">
-                                <thead>
-                                    <!-- Datos de la tabla -->
-                                    <tr>
-                                        <th>Nombre y apellido</th>
-                                        <th>Notas</th>
-                                        <th>Promedio</th>
-                                        <th>Agregar nota</th>
-                                        <th>Observacion</th>
-                                        <th>Estado</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Lo que contiene la tabla -->
-                                    
-                                    {% for matricula in matriculas %}
-                                    <tr>
-                                        <td>{{matricula.alumno.first_name}} {{matricula.alumno.last_name.upper}}</td>
-                                        <td>
-                                            <select>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                            </select>
-                                            <a href="#" style="margin-left:3%"><i class="fa fa-plus" title="Más información"></i></a>
-                                        </td>
-                                        <td><input id="observacion" type="text" placeholder="Observacion..."></td>
-                                        <td><select><option selected disabled>Seleccionar</option><option>Aprobado</option><option>Desaprobado</option></select></td>
-                                    </tr>
-                                    {% endfor %}
-                                    
-                                </tbody>
-                            </table>
-                        </div> <!-- /. TABLE RESPONSIVE  -->
-                    </div> <!-- /. PANEL -->
-                    <center><button type="submit" name="guardar" class="btn btn-primary">Guardar</button></center>
-                </div> <!-- /. COL-LG-12  -->
-            </div> <!-- /. ROW  -->
-        </div> <!-- /. PAGE INNER  -->
-        {% endif %}
-         <!-- /. PAGE WRAPPER  -->
-				<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
+            {% if CursadoBuscado %}
+                        <div id="infoMateria" class="col-lg-8 informacion informacion-alumno" style="overflow-y: scroll;">
+                            <br /><label>Nombre de la Materia: </label> {{ CursadoBuscado.materia.nombre }}<br /><br />
+                            <label>Profesor: </label> {{ CursadoBuscado.profesor.last_name.upper }}, {{ CursadoBuscado.profesor.first_name.capitalize }}<br /><br />
+                            <label>Correlativas de Cursado: </label> 
+                                {% for correlativa in CursadoBuscado.materia.correlativasCursado.all %}
+                                    {{ correlativa.nombre }},
+                                {% endfor %}
+                            <br /><br />
+                            <label>Tipo de Materia: </label> {{CursadoBuscado.materia.tipo}}
+                            <br /><br />
+                            <label>Correlativas de Rendir: </label>
+                                {% for correlativa in CursadoBuscado.materia.correlativasRendir.all %}
+                                    {{ correlativa.nombre }},
+                                {% endfor %}
+                            <div class="col-lg-offset-9" style="margin-top:20px;">
+                                <form method="POST" role="form">{% csrf_token %}
+                                    <input type="hidden" name="idCursado" id="idCursado" value="{{CursadoBuscado.id}}">
+                                    <button class="btn btn-danger" type="submit" name="finalizarCursado">Finalizar Cursado</button>
+                                </form>
+                            </div>
+                        </div>
+            
+                        <div class="col-lg-4">
+                            <label>Horarios</label>
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="tablaProfes">
+                                    <thead>
+                                        <tr>
+                                            <th>Día</th>
+                                            <th>Horario</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for horario in CursadoBuscado.horario_set.all %}
+                                        <tr>
+                                            <td>{{ horario.dia }}</td>
+                                            <td>de {{ horario.horaInicio }} a {{ horario.horaFinal }} hs.</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+            <div class="col-lg-12 informacion-profesores" style="margin-top:30px;">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="tablaProfes">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>DNI</th>
+                                                <th>Notas</th>
+                                                <th>Prom</th>
+                                                <th>% Asist</th>
+                                                <th>+ Nota</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for matricula in matriculas %}
+                                            <tr>
+                                                <td>{{ matricula.alumno.last_name.upper }}, {{ matricula.alumno.first_name.capitalize }}</td>
+                                                <td>{{ matricula.alumno.dni}}</td>
+                                                <td>
+                                                    {% for nota in matricula.nota_set.all %}
+                                                    {{ nota.calificacion }}, 
+                                                    {% endfor %}
+                                                </td>
+                                                <td>{{ matricula.getPromedio }}</td>
+                                                <td>{{ matricula.porcentajeAsistencia|add:"-1" }}%</td>
+                                                <td>
+                                                    <form method="POST" role="form">{% csrf_token %}
+                                                        <input type="hidden" name="idMatricula" id="idMatricula" value="{{matricula.id}}">
+                                                        <input type="hidden" name="idCursado" id="idCursado" value="{{matricula.cursado.id}}">
+                                                        <div class="col-lg-2">
+                                                            <select class="form-control" name="notaCalificacion">
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                                <option value="6">6</option>
+                                                                <option value="7">7</option>
+                                                                <option value="8">8</option>
+                                                                <option value="9">9</option>
+                                                                <option value="10">10</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <input class="form-control" id="observacion" type="text" placeholder="Observacion..." name="notaObservacion" required>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <button class="form-control" type="submit" name="notaGuardar">
+                                                                <i class="fa fa-plus" title="Más información"></i>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </td> 
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+               </div>
+            </div>
+                </div>
+                {% endif %}
+				<footer class="col-lg-12" style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
 				    Desarrollado por SENAM
             <br><br>
             Copyright © 2015 Instituto Parroquial San José.
             <br><br>
             Todos los Derechos Reservados.
 				</footer>
-        </div>
+            </div>
+            </div>
 </body>
     
 </html>
