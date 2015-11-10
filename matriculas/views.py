@@ -164,9 +164,9 @@ def p_asistencia(request):
     if not request.user.is_staff:
         cursados = Cursado.objects.all().filter(profesor = request.user).filter(finalizada = False)
         if request.method == 'POST':
-            print request.POST
             idCursado = request.POST['idCursado']
             cursado = Cursado.objects.get(id = idCursado)
+            tomoAsistencia = hoyTomoAsistencia(cursado)
             matriculas = cursado.matricula_set.all()
             if not matriculas.count() == 0:
                 if 'guardar' in request.POST:
@@ -176,7 +176,7 @@ def p_asistencia(request):
                             crear = tomarAsistencia(matricula, True)
                         else:
                             crear = tomarAsistencia(matricula, False)
-            return render_to_response("Profesor/asistencia.html", {"cursados":cursados, "cursado":cursado, "matriculas":matriculas} , RequestContext(request))
+            return render_to_response("Profesor/asistencia.html", {"cursados":cursados, "cursado":cursado, "matriculas":matriculas, "noTomoAsistencia": tomoAsistencia} , RequestContext(request))
         return render_to_response("Profesor/asistencia.html", {"cursados":cursados} , RequestContext(request))
     else:
         return render_to_response("inicio.html", RequestContext(request))
@@ -308,3 +308,11 @@ def crearNota(calificacion, matricula, observacion):
     except:
         return False
 
+def hoyTomoAsistencia(cursado):
+    fecha = time.strftime('%Y-%m-%d')
+    matriculas = cursado.matricula_set.all()
+    faltas = matriculas[0].nota_set.all()
+    for i in range(faltas.count()):
+        if faltas[i].fecha == fecha:
+            return False
+    return True

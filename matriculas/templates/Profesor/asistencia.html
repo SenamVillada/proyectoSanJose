@@ -67,6 +67,7 @@
             <!-- Titulo de la pagina  -->
             <div class="row">
                 <div class="col-lg-12">
+                    
                     <center><h2>Tomar asistencia</h2></center>
                 </div>
             </div>
@@ -74,6 +75,7 @@
         <!-- Otra seccion  -->
         <div id="page-inner">
             <div class="row">
+                {% if noTomoAsistencia %}
                 <!-- Formulario para tomar asistencia (seleccionar materia y dia)-->
                 <form method="post" class="form-horizontal" role="form">{% csrf_token %}
                     <div class="col-lg-12">
@@ -92,6 +94,9 @@
                         </div>
                     </div>
                 </form>
+                {% else %}
+                Usted Ya tomó asistencia hoy.
+                {% endif %}
             </div> <!-- /. ROW  -->
         </div> <!-- /. PAGE INNER  -->
         {% if matriculas %}
