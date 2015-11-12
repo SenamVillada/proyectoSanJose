@@ -8,7 +8,7 @@ from matriculas.models import *
 class AlumnoAddForm(UserCreationForm):
     class Meta:
         model = Alumno
-        fields = ('first_name', 'last_name', 'username', 'dni', 'email', 'domicilio', 'estadoCivil', 'fechaNacimiento', 'lugarNacimiento', 'telefonoFijo', 'telefonoMovil', 'sexo', 'lugarDeTrabajo', 'horaDeTrabajo', 'paternidad', 'anioEgreso','situacionExepcional')
+        fields = ('first_name', 'last_name', 'username', 'dni', 'email','foto', 'domicilio', 'estadoCivil', 'fechaNacimiento', 'lugarNacimiento', 'telefonoFijo', 'telefonoMovil', 'sexo', 'lugarDeTrabajo', 'horaDeTrabajo', 'paternidad', 'anioEgreso','situacionExepcional')
 
         def __init__(self, *args, **kwargs):
             return super(AlumnoAddForm,self).__init__( *args, **kwargs)
@@ -17,7 +17,7 @@ class AlumnoForm(UserChangeForm):
 
     class Meta:
         model = Alumno
-        fields = ('first_name', 'last_name', 'username', 'dni', 'email', 'domicilio', 'estadoCivil', 'fechaNacimiento', 'lugarNacimiento', 'telefonoFijo', 'telefonoMovil', 'sexo', 'lugarDeTrabajo', 'horaDeTrabajo', 'paternidad', 'anioEgreso','situacionExepcional')
+        fields = ('first_name', 'last_name', 'username', 'dni', 'email','foto', 'domicilio', 'estadoCivil', 'fechaNacimiento', 'lugarNacimiento', 'telefonoFijo', 'telefonoMovil', 'sexo', 'lugarDeTrabajo', 'horaDeTrabajo', 'paternidad', 'anioEgreso','situacionExepcional')
 
 class AlumnoAdmin(admin.ModelAdmin):
     form = AlumnoForm
