@@ -210,7 +210,13 @@
                                                     {% endfor %}
                                                 </td>
                                                 <td>{{ matricula.getPromedio }}</td>
-                                                <td>{{ matricula.porcentajeAsistencia|add:"-1" }}%</td>
+                                                <td>
+                                                    {% if not matricula.porcentajeAsistencia %}
+                                                        -----
+                                                    {% else %}
+                                                        {{ matricula.porcentajeAsistencia|add:"-1" }}%
+                                                    {% endif %}
+                                                </td>
                                                 <td>
                                                     <form method="POST" role="form">{% csrf_token %}
                                                         <input type="hidden" name="idMatricula" id="idMatricula" value="{{matricula.id}}">
