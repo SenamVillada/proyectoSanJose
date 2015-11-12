@@ -23,6 +23,9 @@ class Persona(User):
             ('Femenino', 'Femenino'))
     sexo = models.CharField("Sexo", max_length=16, choices=sexoOpciones, default='Masculino')
     
+    class Meta:
+        ordering = ("last_name", "first_name")
+    
     
     def __unicode__(self):
 	    return "DNI: " + str(self.dni)+" - "+self.last_name.upper() + ", " + self.first_name.capitalize()
@@ -86,6 +89,9 @@ class Cargo(models.Model):
     fechaAlta = models.DateField("Fecha de Alta")
     fechaBaja = models.DateField("Fecha de Baja", blank=True, null=True)
     profesor = models.ForeignKey(Profesor)
+    
+    class Meta:
+        ordering = ("nombre",)
 
     def __str__(self):
         return self.nombre
@@ -95,6 +101,9 @@ class Licencia(models.Model):
     fechaFinal = models.DateField("Fecha de Baja")
     motivo = models.CharField("Motivo", max_length=200)
     profesor = models.ForeignKey(Profesor)
+    
+    class Meta:
+        ordering = ("-fechaInicio",)
 
 class Materia(models.Model):
     nombre = models.CharField("Nombre de la Materia", max_length=30)
@@ -106,6 +115,9 @@ class Materia(models.Model):
             ('Taller', 'Taller'),
     	)
     tipo = models.CharField("Tipo de Materia", max_length=80, choices=tipoOpciones, default='Asignatura')
+    
+    class Meta:
+        ordering = ("nombre",)
 
     def __unicode__(self):
 	    return self.nombre
@@ -116,12 +128,18 @@ class Cursado(models.Model):
     materia = models.ForeignKey(Materia)
     profesor = models.ForeignKey(Profesor)
     
+    class Meta:
+        ordering = ("materia__nombre", "anio")
+    
     def __unicode__(self):
         return self.materia.nombre + " - " + self.profesor.last_name.upper() + ", " + self.profesor.last_name.capitalize() + " - " + str(self.anio)
 
 class Matricula(models.Model):
     alumno = models.ForeignKey(Alumno)
     cursado = models.ForeignKey(Cursado)
+    
+    class Meta:
+        ordering = ("alumno__last_name", "alumno__first_name")
 
     def __unicode__(self):
         return self.alumno.last_name.upper() + ", " + self.alumno.first_name.capitalize() + " - " + self.cursado.materia.nombre
@@ -249,6 +267,9 @@ class Asistencia(models.Model):
     vino = models.BooleanField("Vino?", default=True)
     matricula = models.ForeignKey(Matricula)
     
+    class Meta:
+        ordering = ("-fecha",)
+    
     def __unicode__(self):
         return str(self.fecha) + ". El alumno: " + str(self.matricula.alumno.dni) + ", vino: " + str(self.vino) + " a " + self.matricula.cursado.materia.nombre
 
@@ -269,6 +290,9 @@ class Nota(models.Model):
             (10, 10),
     	)
     calificacion = models.IntegerField("Calificacion", choices=notaOpciones)
+    
+    class Meta:
+        ordering = ("-fecha",)
 
     def __unicode__(self):
         return str(self.calificacion) + " - " + str(self.matricula.alumno.dni)
@@ -288,7 +312,7 @@ class Horario(models.Model):
     horaFinal = models.CharField("Hora de Final", max_length=20, default="00:00")
 
     def __unicode__(self):
-        return self.dia +" desde "+self.horaInicio+" a "+self.horaFinal
+        return self.dia + " desde " + self.horaInicio + " a " + self.horaFinal
     
     def cantHoras(self):
         hora1 = self.horaInicio
@@ -307,7 +331,8 @@ class TurnoDeExamen(models.Model):
     
     class Meta:
         verbose_name = 'Turno de Exámen'
-        verbose_name_plural = 'Turnos de Exámenes' 
+        verbose_name_plural = 'Turnos de Exámenes'
+        ordering = ("fecha",)
 
     def __unicode__(self):
         return "Turno de " + self.cursado.materia.nombre + " del dia: " + str(self.fecha)
@@ -341,6 +366,7 @@ class ExamenFinal(models.Model):
     class Meta:
         verbose_name = 'Exámen Final'
         verbose_name_plural = 'Exámenes Finales'
+        ordering = ("-turno__fecha",)
 
     def __unicode__(self):
         return "Examen Final de " + self.turno.cursado.materia.nombre + " del alumno: " + str(self.matricula.alumno.dni) + " del dia: " + str(self.turno.fecha)
@@ -348,6 +374,9 @@ class ExamenFinal(models.Model):
 class Log(models.Model):
     fecha = models.DateField("Fecha")
     log = models.CharField("Log", max_length=200)
+    
+    class Meta:
+        ordering = ("-fecha",)
 
     def __unicode__(self):
         return str(self.fecha) + self.log
