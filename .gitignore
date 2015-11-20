@@ -4,18 +4,14 @@ __pycache__/
 *.py~
 *.html~
 *.htm~
-<<<<<<< HEAD
-
 #Binario de la base de datos
 *.db
-
-=======
 *.py~
->>>>>>> 44c9f4bc957889c186c292f4895e69ea2c462932
 # C extensions
 *.so
 #carpeta migrations
 matriculas/migrations
+media
 #binario de la base de datos
 *.db
 *.sqlite

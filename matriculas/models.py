@@ -36,7 +36,7 @@ class Alumno(Persona):
     paternidad = models.BooleanField("Paternidad")
     anioEgreso = models.IntegerField("Año de Egreso", blank=True, null=True)
     situacionExepcional = models.BooleanField("Situacion Excepcional", default=False)
-    #foto = models.ImageField("Perfil", upload_to='perfilPersonas/', blank=True, null=True)
+    foto = models.ImageField("Perfil", upload_to='perfilPersonas/', blank=True, null=True)
     
     class Meta:
         verbose_name = 'Alumno'
@@ -65,7 +65,7 @@ class Alumno(Persona):
 
 class Profesor(Persona):
     cuil = models.IntegerField("CUIL")
-    curriculum = models.FileField("Curriculum",upload_to='curriculums/%Y/%m', blank=True)
+    curriculum = models.FileField("Curriculum",upload_to='curriculums/', blank=True)
     fechaEscalafon = models.DateField("Fecha de Escalafon", blank=True, null=True)
     fechaAptoPsicofisico = models.DateField("Fecha del Apto Psicofisico", blank=True, null=True)
     numeroRegistro = models.IntegerField("Numero de Registro", blank=True, null=True)

@@ -120,6 +120,7 @@ def profesores(request):
         if request.method == 'POST':
             idProf = request.POST['buscarProfesorId']
             profesor = Profesor.objects.get(id = int(idProf))
+            cv = str(profesor.curriculum)
             cursados = profesor.cursado_set.all()
             horarios = []
             for i in range(cursados.count()):
@@ -128,7 +129,7 @@ def profesores(request):
                     horarios.append(materiasEnI[j])
             licencias = profesor.licencia_set.all()
             cargos = profesor.cargo_set.all()
-            return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias, 'cargos':cargos}, RequestContext(request))
+            return render_to_response("profesores.html",{"profesor":profesor,"profesores":profesores, "horarios":horarios, "licencias":licencias, 'cargos':cargos, 'cv':cv}, RequestContext(request))
         return render_to_response('profesores.html', {"profesores":profesores},RequestContext(request))
     else:
         profesor = Profesor.objects.get(username = request.user)
