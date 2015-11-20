@@ -1,0 +1,149 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link href="{% static '../../static/img/admin/logo.png' %}" rel='shortcut icon' type='image/png'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Administracion de alumnos</title>
+	<!-- BOOTSTRAP STYLES-->
+    <link href="{% static '../../static/css/admin/bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static '../../static/css/bootstrap.min.css' %}" rel="stylesheet" />
+     <!-- FONTAWESOME STYLES -->
+    <link href="{% static '../../static/fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
+     <!-- MORRIS CHART STYLES
+    <link href=" js/ morris/morris-0.4.3.min.css" rel="stylesheet" />-->
+        <!-- CUSTOM STYLES-->
+    <link href="{% static '../../static/css/admin/custom.css' %}" rel="stylesheet" />
+     <!-- GOOGLE FONTS-->
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		  <!-- jQuery Version 1.11.0 -->
+    <script src="{% static '../../static/js/jquery-1.11.0.js' %}"></script>
+    <!-- jQueryUi Version 1.8 -->
+    <script src="{% static '../../static/js/jquery-ui.js' %}"></script>
+    <script src="{% static '../../static/js/jquery.dataTables.min.js' %}"></script>
+</head>
+<body>
+    <!-- /. NAV TOP  -->
+    <header class="cd-main-header">
+			<a href="/Profesor/inicio" class="cd-logo"><img style="margin-top: 1%; margin-left: 1%;" src="{% static '../../static/img/admin/logo2.png' %}" alt="Logo"></a>
+			<a href="/Profesor/inicio" class="cd-nav-trigger"><span></span></a>
+			<nav class="cd-nav">
+				<ul class="cd-top-nav">
+				</ul>
+			</nav>
+		</header>
+	  <nav class="navbar-default navbar-side" role="navigation">
+    	<div class="sidebar-collapse">
+				<ul class="nav" id="main-menu" >
+					<div style="background: #1F5B1F; color:#ffffff;margin-bottom:1%;" >
+						<center><br><br><br><br><div>Bienvenido/a, </div><label><span class="resaltado">{{user.username}}</span></center></label>
+						<br>
+					</div>
+          <li>
+    	      <a href="/Profesor/inicio"><i class="fa fa-home"></i>Inicio</a>
+          </li>
+          <li>
+      	    <a href="/Profesor/asistencia" class="active-menu"><i class="fa fa-users"></i>Asistencia</a>
+          </li>
+        <li>
+    	      <a  href="/Profesor/materias"><i class="fa fa-book"></i>Materias</a>
+    	</li>
+        <li>
+    	      <a  href="/Profesor/examen"><i class="fa fa-calendar-check-o"></i>Tomar Exámen</a>
+    	</li>
+        <li>
+    	      <a  href="{% url 'matriculas:logout' %}"><i class="fa fa-sign-out"></i>Salir</a>
+    	</li>
+				</ul>
+			</div>
+    </nav>
+    <!--  Inicia la pagina  -->
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <!-- Titulo de la pagina  -->
+            <div class="row">
+                <div class="col-lg-12">
+                    
+                    <center><h2>Tomar asistencia</h2></center>
+                </div>
+            </div>
+        </div>
+        <!-- Otra seccion  -->
+        <div id="page-inner">
+            <div class="row">
+                
+                <!-- Formulario para tomar asistencia (seleccionar materia y dia)-->
+                <form method="post" class="form-horizontal" role="form">{% csrf_token %}
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <h4 class="col-lg-2">Seleccionar una materia:</h4>
+                            <div class="col-lg-4">
+                            <select id="idCursado" name="idCursado" class="form-control" style="margin-top:10px;">
+                                {% for cursado in cursados %}
+                                <option value="{{cursado.id}}">{{cursado.materia.nombre}} - {{cursado.anio}}</option>
+                                {% endfor %}
+                            </select>
+                            </div>
+                            <div class="col-lg-1">
+                    <button type="submit" name="cargar" class="btn btn-primary">Cargar</button>
+                    </div>
+                        </div>
+                    </div>
+                </form>
+            </div> <!-- /. ROW  -->
+        </div> <!-- /. PAGE INNER  -->
+        {% if matriculas %}
+        <!-- Incia otra seccion  -->
+        <div id="page-inner">
+            {% if noTomoAsistencia %}
+        <form method="POST" role="form">{% csrf_token %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <!--  Tabla para tomar asistencia  -->
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                  <th>APELLIDO, Nombre</th>
+                                  <td>DNI</td>
+                                  <th>Vino?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for matricula in matriculas %}
+                                <tr>
+
+                                    <td>{{matricula.alumno.last_name.upper}}, {{matricula.alumno.first_name.capitalize}}</td>
+                                    <td>{{matricula.alumno.dni}}</td>
+                                    <td>
+                                        <input checked type="checkbox" name="{{matricula.id}}">
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <input type="hidden" name="idCursado" id="idCursado" value="{{cursado.id}}">
+                    <button type="submit" name="guardar" class="btn btn-primary">Guardar</button>
+                </div> <!-- /. COL-LG-12  -->
+            </div> <!-- /. ROW  -->
+            </form>
+            {% else %}
+                Usted Ya tomó asistencia hoy.
+                {% endif %}
+        </div> <!-- /. PAGE INNER  -->
+        {% endif %}
+				<footer style="width:100%; text-align:center; font-size:10px; margin-top:5%; color:grey;">
+					Desarrollado por SENAM
+          <br><br>
+          Copyright © 2015 Instituto Parroquial San José.
+          <br><br>
+          Todos los Derechos Reservados.
+				</footer>
+    </div> <!-- /. WRAPPER  -->
+</body>  
+</html>

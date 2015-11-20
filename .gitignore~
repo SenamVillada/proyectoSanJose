@@ -1,20 +1,14 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*.py~
 *.html~
 *.htm~
-#Binario de la base de datos
-*.db
 *.py~
 # C extensions
 *.so
-#carpeta migrations
-matriculas/migrations
-media
+
 #binario de la base de datos
 *.db
-*.sqlite
 
 # Distribution / packaging
 .Python
