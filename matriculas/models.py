@@ -36,7 +36,7 @@ class Alumno(Persona):
     paternidad = models.BooleanField("Paternidad")
     anioEgreso = models.IntegerField("Año de Egreso", blank=True, null=True)
     situacionExepcional = models.BooleanField("Situacion Excepcional", default=False)
-    foto = models.ImageField("Perfil", upload_to='perfilPersonas/', blank=True, null=True)
+    foto = models.FileField("Perfil", upload_to='perfilPersonas/', blank=True, null=True)
     
     class Meta:
         verbose_name = 'Alumno'
